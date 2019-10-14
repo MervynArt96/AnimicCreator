@@ -4,8 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+	QApplication application(argc, argv);
 	Animic w;
 	w.show();
-	return a.exec();
+	return application.exec();
 }

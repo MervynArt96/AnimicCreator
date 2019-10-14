@@ -123,19 +123,39 @@
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
     <ClCompile Include="AnimicObject.cpp" />
+    <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="AutoTrigger.cpp" />
+    <ClCompile Include="BaseSequence.cpp" />
+    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="DialogueObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MultiSequence.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SubSequence.cpp" />
     <ClCompile Include="TimeTrigger.cpp" />
     <ClCompile Include="Trigger.cpp" />
+    <ClCompile Include="VideoObject.cpp" />
+    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioObject.h" />
     <ClInclude Include="AutoTrigger.h" />
+    <ClInclude Include="BaseSequence.h" />
+    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="DialogueObject.h" />
+    <ClInclude Include="MultiSequence.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SubSequence.h" />
     <ClInclude Include="TimeTrigger.h" />
     <ClInclude Include="Trigger.h" />
+    <ClInclude Include="VideoObject.h" />
+    <ClInclude Include="Viewport.h" />
     <QtMoc Include="animic.h" />
     <ClInclude Include="AnimicObject.h" />
     <ClInclude Include="stdafx.h" />

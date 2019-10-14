@@ -40,6 +40,7 @@ public:
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QMenu *menuEdit;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -82,6 +83,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 1046, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        menuEdit = new QMenu(menuBar);
+        menuEdit->setObjectName(QString::fromUtf8("menuEdit"));
         AnimicClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(AnimicClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -91,6 +94,7 @@ public:
         AnimicClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuEdit->menuAction());
         menuFile->addAction(actionNew_Project);
         menuFile->addAction(actionOpen_Project);
         menuFile->addSeparator();
@@ -126,6 +130,7 @@ public:
         actionClose_Scene->setText(QCoreApplication::translate("AnimicClass", "Close Scene", nullptr));
         actionClose_Project->setText(QCoreApplication::translate("AnimicClass", "Close Project", nullptr));
         menuFile->setTitle(QCoreApplication::translate("AnimicClass", "File", nullptr));
+        menuEdit->setTitle(QCoreApplication::translate("AnimicClass", "Edit", nullptr));
     } // retranslateUi
 
 };

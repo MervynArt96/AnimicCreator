@@ -21,6 +21,11 @@ float AnimicObject::getScaleY()
 	return scaleY;
 }
 
+int AnimicObject::getZIndex() const
+{
+	return zIndex;
+}
+
 void AnimicObject::setPositionX(const float target)
 {
 	posX = target;
@@ -40,3 +45,10 @@ void AnimicObject::setScaleY(const float target)
 {
 	scaleY = target;
 }
+
+void AnimicObject::setZIndex(int index)
+{
+	zIndex = index;
+}
+
+
