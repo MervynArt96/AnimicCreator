@@ -19,7 +19,7 @@ class AnimicObject
 		float posY = 0;
 		float scaleX = 1;
 		float scaleY = 1;
-		int zIndex = 1;
+		int zIndex = 0;
 		
 };
 
