@@ -123,6 +123,9 @@
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
     <ClCompile Include="AnimicObject.cpp" />
+    <ClCompile Include="AnimicProjectExporter.cpp" />
+    <ClCompile Include="AnimicProjectLoader.cpp" />
+    <ClCompile Include="AnimicProjectSaver.cpp" />
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="AutoTrigger.cpp" />
     <ClCompile Include="BaseSequence.cpp" />
@@ -146,6 +149,9 @@
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimicProjectExporter.h" />
+    <ClInclude Include="AnimicProjectLoader.h" />
+    <ClInclude Include="AnimicProjectSaver.h" />
     <ClInclude Include="AudioObject.h" />
     <ClInclude Include="AutoTrigger.h" />
     <ClInclude Include="BaseSequence.h" />
@@ -155,6 +161,7 @@
     <ClInclude Include="MultiSequence.h" />
     <ClInclude Include="ObjectLayer.h" />
     <ClInclude Include="Previewer.h" />
+    <ClInclude Include="AnimicProjectStructure.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SubSequence.h" />
     <ClInclude Include="TimeManipulator.h" />

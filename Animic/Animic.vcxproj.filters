@@ -40,6 +40,18 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{331ba563-f3a0-4c1c-88d9-b8a7c215965e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ProjectFileHandler">
+      <UniqueIdentifier>{658fe90a-f4f6-46e3-b058-806910a2d98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TriggersH">
+      <UniqueIdentifier>{69468fd6-e326-420e-80ec-e91d66ad1cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AnimicObjectsH">
+      <UniqueIdentifier>{b92f5f7a-b1dd-4033-8813-f5858f3c627a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ProjectFileHandlerH">
+      <UniqueIdentifier>{d8a8312c-a9b9-4789-99b5-f791b12387af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,15 +74,6 @@
     </ClCompile>
     <ClCompile Include="AutoTrigger.cpp">
       <Filter>Source Files\Triggers</Filter>
-    </ClCompile>
-    <ClCompile Include="VideoObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogueObject.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseSequence.cpp">
       <Filter>Source Files</Filter>
@@ -102,30 +105,27 @@
     <ClCompile Include="Previewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VideoObject.cpp">
+      <Filter>Source Files\AnimicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioObject.cpp">
+      <Filter>Source Files\AnimicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueObject.cpp">
+      <Filter>Source Files\AnimicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimicProjectLoader.cpp">
+      <Filter>Source Files\ProjectFileHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimicProjectSaver.cpp">
+      <Filter>Source Files\ProjectFileHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimicProjectExporter.cpp">
+      <Filter>Source Files\ProjectFileHandler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimicObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Trigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeTrigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoTrigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VideoObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DialogueObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseSequence.h">
@@ -157,6 +157,39 @@
     </ClInclude>
     <ClInclude Include="Previewer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimicObject.h">
+      <Filter>Header Files\AnimicObjectsH</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioObject.h">
+      <Filter>Header Files\AnimicObjectsH</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueObject.h">
+      <Filter>Header Files\AnimicObjectsH</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoObject.h">
+      <Filter>Header Files\AnimicObjectsH</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Header Files\TriggersH</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeTrigger.h">
+      <Filter>Header Files\TriggersH</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoTrigger.h">
+      <Filter>Header Files\TriggersH</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimicProjectStructure.h">
+      <Filter>Header Files\ProjectFileHandlerH</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimicProjectSaver.h">
+      <Filter>Header Files\ProjectFileHandlerH</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimicProjectLoader.h">
+      <Filter>Header Files\ProjectFileHandlerH</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimicProjectExporter.h">
+      <Filter>Header Files\ProjectFileHandlerH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
