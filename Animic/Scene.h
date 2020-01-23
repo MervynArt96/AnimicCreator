@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-#include "BaseSequence.h"
-#include "Viewport.h"
 
 class Scene
 {
@@ -13,7 +11,7 @@ public:
 		int playbackspeed = 1;
 		// begin transition
 		// end transition
-		BaseSequence sequence;
+		
 	}SequenceData;
 	Scene();
 	~Scene();
@@ -31,6 +29,5 @@ public:
 private:
 
 	std::vector<SequenceData> sequenceList;
-	Viewport viewport;
 };
 

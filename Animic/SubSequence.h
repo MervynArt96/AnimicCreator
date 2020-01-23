@@ -1,14 +1,13 @@
 #pragma once
-#include "BaseSequence.h"
 
-class SubSequence : protected BaseSequence
+
+class SubSequence
 {
 private:
-	BaseSequence* parent = nullptr;
+	//type parent = nullptr;
 
 public:
-	void setParentSequence(BaseSequence target);
-	BaseSequence getParentSequence();
+	void setParentSequence();
 
 };
 

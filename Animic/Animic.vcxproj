@@ -72,7 +72,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
       <ForceInclude>stdafx.h;../../%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
@@ -107,7 +107,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
       <ForceInclude>stdafx.h;../../%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
@@ -122,59 +122,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
-    <ClCompile Include="AnimicObject.cpp" />
-    <ClCompile Include="AnimicProjectExporter.cpp" />
-    <ClCompile Include="AnimicProjectLoader.cpp" />
-    <ClCompile Include="AnimicProjectSaver.cpp" />
-    <ClCompile Include="AudioObject.cpp" />
-    <ClCompile Include="AutoTrigger.cpp" />
-    <ClCompile Include="BaseSequence.cpp" />
-    <ClCompile Include="Canvas.cpp" />
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="DialogueObject.cpp" />
+    <ClCompile Include="AssetHandlerModule\AssetHandler.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MultiSequence.cpp" />
+    <ClCompile Include="NewProjectDialog.cpp" />
     <ClCompile Include="ObjectLayer.cpp" />
-    <ClCompile Include="Previewer.cpp" />
+    <ClCompile Include="ProjectHandler.cpp" />
+    <ClCompile Include="PropertiesModule\PropertiesHandler.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SubSequence.cpp" />
-    <ClCompile Include="TimeManipulator.cpp" />
-    <ClCompile Include="TimeTrigger.cpp" />
-    <ClCompile Include="Trigger.cpp" />
-    <ClCompile Include="VideoObject.cpp" />
-    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimicProjectExporter.h" />
-    <ClInclude Include="AnimicProjectLoader.h" />
-    <ClInclude Include="AnimicProjectSaver.h" />
-    <ClInclude Include="AudioObject.h" />
-    <ClInclude Include="AutoTrigger.h" />
-    <ClInclude Include="BaseSequence.h" />
-    <ClInclude Include="Canvas.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="DialogueObject.h" />
-    <ClInclude Include="MultiSequence.h" />
+    <QtMoc Include="NewProjectDialog.h" />
+    <ClInclude Include="AssetHandlerModule\AssetHandler.h" />
     <ClInclude Include="ObjectLayer.h" />
-    <ClInclude Include="Previewer.h" />
-    <ClInclude Include="AnimicProjectStructure.h" />
+    <ClInclude Include="ProjectHandler.h" />
+    <ClInclude Include="PropertiesModule\PropertiesHandler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SubSequence.h" />
-    <ClInclude Include="TimeManipulator.h" />
-    <ClInclude Include="TimeTrigger.h" />
-    <ClInclude Include="Trigger.h" />
-    <ClInclude Include="VideoObject.h" />
-    <ClInclude Include="Viewport.h" />
     <QtMoc Include="animic.h" />
-    <ClInclude Include="AnimicObject.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="animic.ui" />
+    <QtUic Include="NewProjectDialog.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="animic.qrc" />
