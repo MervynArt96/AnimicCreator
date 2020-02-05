@@ -30,9 +30,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -63,18 +65,18 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)Animic\CanvasModule\CanvasObject;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
-      <ForceInclude>stdafx.h;../../%(Filename)%(Extension)</ForceInclude>
+      <ForceInclude>stdafx.h;%(RelativeDir)%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -98,18 +100,18 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)Animic\CanvasModule\CanvasObject;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5UiTools.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
-      <ForceInclude>stdafx.h;../../%(Filename)%(Extension)</ForceInclude>
+      <ForceInclude>stdafx.h;%(RelativeDir)%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -123,25 +125,39 @@
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
     <ClCompile Include="AssetHandlerModule\AssetHandler.cpp" />
+    <ClCompile Include="CanvasModule\CanvasObject\ImageObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewProjectDialog.cpp" />
     <ClCompile Include="ObjectLayer.cpp" />
     <ClCompile Include="ProjectHandler.cpp" />
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp" />
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="CanvasModule\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SubSequence.cpp" />
+    <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp" />
+    <ClCompile Include="CanvasModule\CanvasObject\TextObject.cpp" />
+    <ClCompile Include="Timeline.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="Timeline.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\CanvasObject\TextObject.h" />
+    <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h" />
     <QtMoc Include="NewProjectDialog.h" />
     <ClInclude Include="AssetHandlerModule\AssetHandler.h" />
+    <QtMoc Include="CanvasModule\CanvasObject\ImageObject.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
+    </QtMoc>
     <ClInclude Include="ObjectLayer.h" />
     <ClInclude Include="ProjectHandler.h" />
     <ClInclude Include="PropertiesModule\PropertiesHandler.h" />
-    <ClInclude Include="Scene.h" />
+    <QtMoc Include="CanvasModule\Scene.h" />
     <ClInclude Include="SubSequence.h" />
     <QtMoc Include="animic.h" />
     <ClInclude Include="stdafx.h" />
@@ -155,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Animic.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

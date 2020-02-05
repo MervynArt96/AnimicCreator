@@ -8,22 +8,18 @@ public:
 	AssetHandler();
 	~AssetHandler();
 	void importAsset();
-	void deleteAsset();
+	void removeAsset();
+	void removeAssetFolder();
 	void importAssetFolder();
 	void assignTreeView(QTreeView*);
+	QString getFilePath();
+	void getAssetInfo();
 
 private:
 
-	struct AssetConfig {
-		
-		QString fileName;
-		QString filePath;
-		
-	};
-
 	QTreeView* assetTree;
 	QFileSystemModel* fsModel;
-	QList<AssetConfig>* assetList;
+	QList<QFileInfo>* assetList;
 	
 };
 

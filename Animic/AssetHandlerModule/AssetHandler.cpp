@@ -4,12 +4,22 @@
 
 AssetHandler::AssetHandler()
 {
-
+	fsModel = new QFileSystemModel();
+	assetList = new QList<QFileInfo>();
+	assetTree = nullptr;
 }
 
 AssetHandler::~AssetHandler()
 {
+	delete fsModel;
+	delete assetList;
+	delete assetTree;
+}
 
+void AssetHandler::assignTreeView(QTreeView* tree)
+{
+	assetTree = tree;
+	assetTree->setModel(fsModel);
 }
 
 void AssetHandler::importAsset()
@@ -19,18 +29,15 @@ void AssetHandler::importAsset()
 	QStringList filters;
 	filters << "Video files (*.mp4 *.avi *.wmv)" << "Image files (*.png *.jpg)";
 	fileDialog->setNameFilters(filters);
-	
-	QFileInfo* info = new QFileInfo();
 
 	QStringList fileNames;
 	QList<QUrl> filePaths;
+	QList<qint64> fileSize;
 
-	if (fileDialog->exec())
+	if (fileDialog->exec())	//dialog accepts user input
 	{
-		fileNames = fileDialog->selectedFiles();
-		filePaths = fileDialog->getOpenFileUrls();
+		assetList->append(fileDialog->getOpenFileName());
 	}
-
 }
 
 void AssetHandler::importAssetFolder()
@@ -41,22 +48,34 @@ void AssetHandler::importAssetFolder()
 	QDir* dir = new QDir();
 	QStringList dirPaths;
 
-
-	if (fileDialog->exec())
+	if (fileDialog->exec())	//dialog accepts user input
 	{
-
+		
 			
 	}
-
 }
 
-void AssetHandler::deleteAsset()
+void AssetHandler::removeAsset()
 {
 	
 }
 
-void AssetHandler::assignTreeView(QTreeView* tree)
+void AssetHandler::removeAssetFolder()
 {
-	assetTree = tree;
-	//assetTree->setModel(fsModel);
+	
 }
+
+void AssetHandler::getAssetInfo()
+{
+	//for (int i = 0; i < assetList->length - 1; i++)
+	{
+		
+	}
+}
+
+QString AssetHandler::getFilePath()
+{
+	//return file path from user selected item in asset tree view 
+	return NULL;
+}
+

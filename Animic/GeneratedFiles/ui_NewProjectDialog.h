@@ -28,13 +28,13 @@ class Ui_NewProjectDialog
 public:
     QVBoxLayout *verticalLayout;
     QStackedWidget *stackedWidget;
-    QWidget *page_3;
+    QWidget *newProjectPage1;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_4;
+    QPushButton *animComic;
     QWidget *widget_2;
     QWidget *widget;
-    QPushButton *pushButton_5;
+    QPushButton *tradComic;
     QTextBrowser *textBrowser;
     QHBoxLayout *horizontalLayout;
     QHBoxLayout *horizontalLayout_2;
@@ -42,7 +42,7 @@ public:
     QPushButton *pushButton_3;
     QPushButton *pushButton_2;
     QPushButton *pushButton;
-    QWidget *page_4;
+    QWidget *newProjectPage2;
     QGridLayout *gridLayout_3;
     QGridLayout *gridLayout_2;
 
@@ -57,15 +57,15 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         stackedWidget = new QStackedWidget(NewProjectDialog);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        page_3 = new QWidget();
-        page_3->setObjectName(QString::fromUtf8("page_3"));
-        page_3->setEnabled(true);
+        newProjectPage1 = new QWidget();
+        newProjectPage1->setObjectName(QString::fromUtf8("newProjectPage1"));
+        newProjectPage1->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(page_3->sizePolicy().hasHeightForWidth());
-        page_3->setSizePolicy(sizePolicy);
-        verticalLayout_2 = new QVBoxLayout(page_3);
+        sizePolicy.setHeightForWidth(newProjectPage1->sizePolicy().hasHeightForWidth());
+        newProjectPage1->setSizePolicy(sizePolicy);
+        verticalLayout_2 = new QVBoxLayout(newProjectPage1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
@@ -73,43 +73,45 @@ public:
         gridLayout->setSpacing(10);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(10, 10, -1, -1);
-        pushButton_4 = new QPushButton(page_3);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        animComic = new QPushButton(newProjectPage1);
+        animComic->setObjectName(QString::fromUtf8("animComic"));
         QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(2);
         sizePolicy1.setVerticalStretch(2);
-        sizePolicy1.setHeightForWidth(pushButton_4->sizePolicy().hasHeightForWidth());
-        pushButton_4->setSizePolicy(sizePolicy1);
-        pushButton_4->setMinimumSize(QSize(100, 100));
-        pushButton_4->setAutoFillBackground(false);
-        pushButton_4->setCheckable(true);
-        pushButton_4->setChecked(false);
+        sizePolicy1.setHeightForWidth(animComic->sizePolicy().hasHeightForWidth());
+        animComic->setSizePolicy(sizePolicy1);
+        animComic->setMinimumSize(QSize(100, 100));
+        animComic->setFocusPolicy(Qt::NoFocus);
+        animComic->setAutoFillBackground(false);
+        animComic->setCheckable(true);
+        animComic->setChecked(false);
 
-        gridLayout->addWidget(pushButton_4, 0, 0, 1, 1);
+        gridLayout->addWidget(animComic, 0, 0, 1, 1);
 
-        widget_2 = new QWidget(page_3);
+        widget_2 = new QWidget(newProjectPage1);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
 
         gridLayout->addWidget(widget_2, 0, 2, 1, 1);
 
-        widget = new QWidget(page_3);
+        widget = new QWidget(newProjectPage1);
         widget->setObjectName(QString::fromUtf8("widget"));
 
         gridLayout->addWidget(widget, 1, 0, 1, 1);
 
-        pushButton_5 = new QPushButton(page_3);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
-        sizePolicy1.setHeightForWidth(pushButton_5->sizePolicy().hasHeightForWidth());
-        pushButton_5->setSizePolicy(sizePolicy1);
-        pushButton_5->setMinimumSize(QSize(100, 100));
-        pushButton_5->setCheckable(true);
+        tradComic = new QPushButton(newProjectPage1);
+        tradComic->setObjectName(QString::fromUtf8("tradComic"));
+        sizePolicy1.setHeightForWidth(tradComic->sizePolicy().hasHeightForWidth());
+        tradComic->setSizePolicy(sizePolicy1);
+        tradComic->setMinimumSize(QSize(100, 100));
+        tradComic->setFocusPolicy(Qt::NoFocus);
+        tradComic->setCheckable(true);
 
-        gridLayout->addWidget(pushButton_5, 0, 1, 1, 1);
+        gridLayout->addWidget(tradComic, 0, 1, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout);
 
-        textBrowser = new QTextBrowser(page_3);
+        textBrowser = new QTextBrowser(newProjectPage1);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
@@ -133,17 +135,17 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer);
 
-        pushButton_3 = new QPushButton(page_3);
+        pushButton_3 = new QPushButton(newProjectPage1);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
 
         horizontalLayout_2->addWidget(pushButton_3);
 
-        pushButton_2 = new QPushButton(page_3);
+        pushButton_2 = new QPushButton(newProjectPage1);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
 
         horizontalLayout_2->addWidget(pushButton_2);
 
-        pushButton = new QPushButton(page_3);
+        pushButton = new QPushButton(newProjectPage1);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
         horizontalLayout_2->addWidget(pushButton);
@@ -151,10 +153,10 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_2);
 
-        stackedWidget->addWidget(page_3);
-        page_4 = new QWidget();
-        page_4->setObjectName(QString::fromUtf8("page_4"));
-        gridLayout_3 = new QGridLayout(page_4);
+        stackedWidget->addWidget(newProjectPage1);
+        newProjectPage2 = new QWidget();
+        newProjectPage2->setObjectName(QString::fromUtf8("newProjectPage2"));
+        gridLayout_3 = new QGridLayout(newProjectPage2);
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
@@ -164,7 +166,7 @@ public:
 
         gridLayout_3->addLayout(gridLayout_2, 0, 0, 1, 1);
 
-        stackedWidget->addWidget(page_4);
+        stackedWidget->addWidget(newProjectPage2);
 
         verticalLayout->addWidget(stackedWidget);
 
@@ -180,8 +182,8 @@ public:
     void retranslateUi(QDialog *NewProjectDialog)
     {
         NewProjectDialog->setWindowTitle(QCoreApplication::translate("NewProjectDialog", "NewProjectDialog", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("NewProjectDialog", "Animated Comic", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("NewProjectDialog", "Traditional Comic", nullptr));
+        animComic->setText(QCoreApplication::translate("NewProjectDialog", "Animated Comic", nullptr));
+        tradComic->setText(QCoreApplication::translate("NewProjectDialog", "Traditional Comic", nullptr));
         pushButton_3->setText(QCoreApplication::translate("NewProjectDialog", "Back", nullptr));
         pushButton_2->setText(QCoreApplication::translate("NewProjectDialog", "Next", nullptr));
         pushButton->setText(QCoreApplication::translate("NewProjectDialog", "Cancel", nullptr));

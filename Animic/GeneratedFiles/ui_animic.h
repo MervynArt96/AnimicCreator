@@ -52,14 +52,14 @@ public:
     QGroupBox *ToolBox;
     QSplitter *PropMainSplitter;
     QSplitter *MainSplitter;
-    QTabWidget *Scene;
+    QTabWidget *SceneWindow;
     QWidget *tab;
     QVBoxLayout *verticalLayout;
-    QScrollArea *Timeline;
+    QScrollArea *TimelineWindow;
     QWidget *scrollAreaWidgetContents;
     QSplitter *propertiesSplitter;
-    QTabWidget *TabWidget_1;
-    QWidget *propertiesTab;
+    QTabWidget *PropertiesTab;
+    QWidget *propTab;
     QTabWidget *ManagementTab;
     QWidget *AssetTab;
     QVBoxLayout *verticalLayout_3;
@@ -76,7 +76,7 @@ public:
     {
         if (AnimicClass->objectName().isEmpty())
             AnimicClass->setObjectName(QString::fromUtf8("AnimicClass"));
-        AnimicClass->resize(1248, 858);
+        AnimicClass->resize(1281, 858);
         actionNewProject = new QAction(AnimicClass);
         actionNewProject->setObjectName(QString::fromUtf8("actionNewProject"));
         actionNewProject->setEnabled(true);
@@ -162,9 +162,10 @@ public:
         MainSplitter->setFrameShape(QFrame::HLine);
         MainSplitter->setOrientation(Qt::Vertical);
         MainSplitter->setChildrenCollapsible(false);
-        Scene = new QTabWidget(MainSplitter);
-        Scene->setObjectName(QString::fromUtf8("Scene"));
-        Scene->setTabsClosable(true);
+        SceneWindow = new QTabWidget(MainSplitter);
+        SceneWindow->setObjectName(QString::fromUtf8("SceneWindow"));
+        SceneWindow->setMinimumSize(QSize(0, 500));
+        SceneWindow->setTabsClosable(true);
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         sizePolicy1.setHeightForWidth(tab->sizePolicy().hasHeightForWidth());
@@ -173,19 +174,19 @@ public:
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        Scene->addTab(tab, QString());
-        MainSplitter->addWidget(Scene);
-        Timeline = new QScrollArea(MainSplitter);
-        Timeline->setObjectName(QString::fromUtf8("Timeline"));
-        Timeline->setMinimumSize(QSize(0, 200));
-        Timeline->setWidgetResizable(true);
+        SceneWindow->addTab(tab, QString());
+        MainSplitter->addWidget(SceneWindow);
+        TimelineWindow = new QScrollArea(MainSplitter);
+        TimelineWindow->setObjectName(QString::fromUtf8("TimelineWindow"));
+        TimelineWindow->setMinimumSize(QSize(0, 200));
+        TimelineWindow->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 761, 198));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 601, 198));
         sizePolicy1.setHeightForWidth(scrollAreaWidgetContents->sizePolicy().hasHeightForWidth());
         scrollAreaWidgetContents->setSizePolicy(sizePolicy1);
-        Timeline->setWidget(scrollAreaWidgetContents);
-        MainSplitter->addWidget(Timeline);
+        TimelineWindow->setWidget(scrollAreaWidgetContents);
+        MainSplitter->addWidget(TimelineWindow);
         PropMainSplitter->addWidget(MainSplitter);
         propertiesSplitter = new QSplitter(PropMainSplitter);
         propertiesSplitter->setObjectName(QString::fromUtf8("propertiesSplitter"));
@@ -197,18 +198,20 @@ public:
         propertiesSplitter->setFrameShape(QFrame::HLine);
         propertiesSplitter->setOrientation(Qt::Vertical);
         propertiesSplitter->setChildrenCollapsible(false);
-        TabWidget_1 = new QTabWidget(propertiesSplitter);
-        TabWidget_1->setObjectName(QString::fromUtf8("TabWidget_1"));
-        TabWidget_1->setMinimumSize(QSize(300, 0));
-        TabWidget_1->setMaximumSize(QSize(16777215, 16777215));
-        TabWidget_1->setTabsClosable(true);
-        propertiesTab = new QWidget();
-        propertiesTab->setObjectName(QString::fromUtf8("propertiesTab"));
-        TabWidget_1->addTab(propertiesTab, QString());
-        propertiesSplitter->addWidget(TabWidget_1);
+        PropertiesTab = new QTabWidget(propertiesSplitter);
+        PropertiesTab->setObjectName(QString::fromUtf8("PropertiesTab"));
+        PropertiesTab->setMinimumSize(QSize(0, 300));
+        PropertiesTab->setMaximumSize(QSize(16777215, 16777215));
+        PropertiesTab->setTabsClosable(true);
+        propTab = new QWidget();
+        propTab->setObjectName(QString::fromUtf8("propTab"));
+        PropertiesTab->addTab(propTab, QString());
+        propertiesSplitter->addWidget(PropertiesTab);
         ManagementTab = new QTabWidget(propertiesSplitter);
         ManagementTab->setObjectName(QString::fromUtf8("ManagementTab"));
-        ManagementTab->setMinimumSize(QSize(300, 0));
+        sizePolicy1.setHeightForWidth(ManagementTab->sizePolicy().hasHeightForWidth());
+        ManagementTab->setSizePolicy(sizePolicy1);
+        ManagementTab->setMinimumSize(QSize(0, 100));
         AssetTab = new QWidget();
         AssetTab->setObjectName(QString::fromUtf8("AssetTab"));
         verticalLayout_3 = new QVBoxLayout(AssetTab);
@@ -217,6 +220,13 @@ public:
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         AssetTreeView = new QTreeView(AssetTab);
         AssetTreeView->setObjectName(QString::fromUtf8("AssetTreeView"));
+        AssetTreeView->setEnabled(true);
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(AssetTreeView->sizePolicy().hasHeightForWidth());
+        AssetTreeView->setSizePolicy(sizePolicy6);
+        AssetTreeView->setMinimumSize(QSize(0, 0));
 
         verticalLayout_3->addWidget(AssetTreeView);
 
@@ -230,11 +240,11 @@ public:
         AllSplitter->addWidget(TopBottomSplotter);
         AuxBox = new QGroupBox(AllSplitter);
         AuxBox->setObjectName(QString::fromUtf8("AuxBox"));
-        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(AuxBox->sizePolicy().hasHeightForWidth());
-        AuxBox->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(AuxBox->sizePolicy().hasHeightForWidth());
+        AuxBox->setSizePolicy(sizePolicy7);
         AuxBox->setMinimumSize(QSize(0, 40));
         AuxBox->setMaximumSize(QSize(16777215, 40));
         AllSplitter->addWidget(AuxBox);
@@ -244,12 +254,12 @@ public:
         AnimicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(AnimicClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1248, 26));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(menuBar->sizePolicy().hasHeightForWidth());
-        menuBar->setSizePolicy(sizePolicy7);
+        menuBar->setGeometry(QRect(0, 0, 1281, 26));
+        QSizePolicy sizePolicy8(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(menuBar->sizePolicy().hasHeightForWidth());
+        menuBar->setSizePolicy(sizePolicy8);
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -259,11 +269,11 @@ public:
         AnimicClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(AnimicClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        QSizePolicy sizePolicy8(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(statusBar->sizePolicy().hasHeightForWidth());
-        statusBar->setSizePolicy(sizePolicy8);
+        QSizePolicy sizePolicy9(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(statusBar->sizePolicy().hasHeightForWidth());
+        statusBar->setSizePolicy(sizePolicy9);
         AnimicClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
@@ -285,7 +295,7 @@ public:
 
         retranslateUi(AnimicClass);
 
-        TabWidget_1->setCurrentIndex(0);
+        PropertiesTab->setCurrentIndex(0);
         ManagementTab->setCurrentIndex(0);
 
 
@@ -310,8 +320,8 @@ public:
         actionCloseProject->setText(QCoreApplication::translate("AnimicClass", "Close Project", nullptr));
         actionAbout->setText(QCoreApplication::translate("AnimicClass", "About", nullptr));
         ToolBox->setTitle(QCoreApplication::translate("AnimicClass", "Tool Box", nullptr));
-        Scene->setTabText(Scene->indexOf(tab), QCoreApplication::translate("AnimicClass", "Scene 1", nullptr));
-        TabWidget_1->setTabText(TabWidget_1->indexOf(propertiesTab), QCoreApplication::translate("AnimicClass", "Properties", nullptr));
+        SceneWindow->setTabText(SceneWindow->indexOf(tab), QCoreApplication::translate("AnimicClass", "Scene 1", nullptr));
+        PropertiesTab->setTabText(PropertiesTab->indexOf(propTab), QCoreApplication::translate("AnimicClass", "Properties", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(AssetTab), QCoreApplication::translate("AnimicClass", "Assets", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(sceneManagementTab), QCoreApplication::translate("AnimicClass", "Scenes", nullptr));
         AuxBox->setTitle(QString());

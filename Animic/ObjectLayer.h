@@ -1,5 +1,4 @@
 #pragma once
-#include "CanvasModule/CanvasObject/AnimicObject.h";
 #include <vector>;
 
 class ObjectLayer
@@ -8,12 +7,8 @@ class ObjectLayer
 public:
 	
 	typedef struct {
-
-		AnimicObject obj;
 		
 		int zIndex;
-
-
 
 	}LayerData;
 
