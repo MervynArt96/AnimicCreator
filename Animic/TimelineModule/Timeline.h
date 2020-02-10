@@ -10,8 +10,17 @@ public:
 	Timeline(QWidget *parent);
 	~Timeline();
 
+
+private:
+
+	//playHead
+	//markers
+	//trackModel?
+	//layer objects
+
 signals:
 
+	void seeked();
 	
 
 public slots:

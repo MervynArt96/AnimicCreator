@@ -39,19 +39,10 @@
     <ClCompile Include="animic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SubSequence.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NewProjectDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AssetHandlerModule\AssetHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp">
@@ -69,7 +60,25 @@
     <ClCompile Include="CanvasModule\CanvasObject\TextObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Timeline.cpp">
+    <ClCompile Include="TimelineModule\SubSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimelineModule\Timeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectManagementModule\AnimicProjectExporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectManagementModule\AnimicProjectLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectManagementModule\AnimicProjectSaver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreviewerModule\Previewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetHandlerModule\AssetHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,19 +86,34 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SubSequence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ProjectHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetHandlerModule\AssetHandler.h">
+    <ClInclude Include="PropertiesModule\PropertiesHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PropertiesModule\PropertiesHandler.h">
+    <ClInclude Include="CanvasModule\CanvasObject\BaseObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimelineModule\SubSequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectManagementModule\AnimicProjectExporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectManagementModule\AnimicProjectLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectManagementModule\AnimicProjectSaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectManagementModule\AnimicProjectStructure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PreviewerModule\Previewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetHandlerModule\AssetHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,7 +136,7 @@
     <QtMoc Include="CanvasModule\CanvasObject\ImageObject.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Timeline.h">
+    <QtMoc Include="TimelineModule\Timeline.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

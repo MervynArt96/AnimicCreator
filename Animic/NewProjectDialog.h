@@ -13,4 +13,9 @@ public:
 
 private:
 	Ui::NewProjectDialog ui;
+
+
+signals:
+	void createProject();
+
 };

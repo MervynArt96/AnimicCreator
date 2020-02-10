@@ -4,11 +4,10 @@
 #include <QtGui>
 #include "ui_animic.h"
 #include "ProjectHandler.h"
-#include "AssetHandlerModule/AssetHandler.h"
 #include "CanvasModule/Scene.h"
 #include <QMediaPlayer>
-#include <QGraphicsVideoItem>
 #include <QDebug>
+#include "CanvasModule/CanvasObject/VideoObject.h"
 
 
 class Animic : public QMainWindow
@@ -18,26 +17,44 @@ class Animic : public QMainWindow
 public:
 	Animic(QWidget *parent = Q_NULLPTR);
 
+	QFileSystemModel* fsModel;
+
+
+	enum class dialogMode
+	{
+		fileMode,
+		dirMode
+	};
+
 private:
 	Ui::AnimicClass ui;
 	void init();
 	void connectSignalSlots();
 	void setupScene();
 	void setupTimeline();
+	void setupAssetHandler();
+
 
 	int sceneTabCount = 1;	//global var, for object naming
 
 	ProjectHandler* projHandler;			//modules
-	AssetHandler* assetHandler;
-
 	Scene* canvas = nullptr;
 	QGraphicsView* sceneView = nullptr;
 	QMediaPlayer* player = nullptr;
-	QGraphicsVideoItem* video = nullptr;
+	VideoObject* video = nullptr;
+	QFileDialog* fileDialog;
+	QGraphicsView* graphicsView;
+	QGraphicsScene* scene;
 
 	//test
-	void addVideo(QGraphicsScene*);
-	void addGraphic(QGraphicsScene*);
+	void addGraphic();
+
+signals:
 
 
+public slots:
+
+	void on_btnImportAsset_clicked();
+	void on_btnImportDir_clicked();
+	void on_btnDeleteAsset_clicked();
 };

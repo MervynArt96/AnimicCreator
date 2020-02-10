@@ -128,37 +128,45 @@
     <ClCompile Include="CanvasModule\CanvasObject\ImageObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewProjectDialog.cpp" />
-    <ClCompile Include="ObjectLayer.cpp" />
+    <ClCompile Include="PreviewerModule\Previewer.cpp" />
     <ClCompile Include="ProjectHandler.cpp" />
+    <ClCompile Include="ProjectManagementModule\AnimicProjectExporter.cpp" />
+    <ClCompile Include="ProjectManagementModule\AnimicProjectLoader.cpp" />
+    <ClCompile Include="ProjectManagementModule\AnimicProjectSaver.cpp" />
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp" />
     <ClCompile Include="CanvasModule\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SubSequence.cpp" />
+    <ClCompile Include="TimelineModule\SubSequence.cpp" />
     <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp" />
     <ClCompile Include="CanvasModule\CanvasObject\TextObject.cpp" />
-    <ClCompile Include="Timeline.cpp" />
+    <ClCompile Include="TimelineModule\Timeline.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Timeline.h">
+    <QtMoc Include="TimelineModule\Timeline.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
     </QtMoc>
     <QtMoc Include="CanvasModule\CanvasObject\TextObject.h" />
     <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h" />
     <QtMoc Include="NewProjectDialog.h" />
-    <ClInclude Include="AssetHandlerModule\AssetHandler.h" />
     <QtMoc Include="CanvasModule\CanvasObject\ImageObject.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)Animic\CanvasModule;$(SolutionDir)Animic\Common;$(SolutionDir)Animic\PreviewerModule;$(SolutionDir)Animic\ProjectManagementModule;$(SolutionDir)Animic\PropertiesModule;$(SolutionDir)Animic\SceneManagementModule;$(SolutionDir)Animic\TimelineModule;$(SolutionDir)Animic\TriggerModule</IncludePath>
     </QtMoc>
-    <ClInclude Include="ObjectLayer.h" />
+    <ClInclude Include="AssetHandlerModule\AssetHandler.h" />
+    <ClInclude Include="CanvasModule\CanvasObject\BaseObject.h" />
+    <ClInclude Include="PreviewerModule\Previewer.h" />
     <ClInclude Include="ProjectHandler.h" />
+    <ClInclude Include="ProjectManagementModule\AnimicProjectExporter.h" />
+    <ClInclude Include="ProjectManagementModule\AnimicProjectLoader.h" />
+    <ClInclude Include="ProjectManagementModule\AnimicProjectSaver.h" />
+    <ClInclude Include="ProjectManagementModule\AnimicProjectStructure.h" />
     <ClInclude Include="PropertiesModule\PropertiesHandler.h" />
     <QtMoc Include="CanvasModule\Scene.h" />
-    <ClInclude Include="SubSequence.h" />
+    <ClInclude Include="TimelineModule\SubSequence.h" />
     <QtMoc Include="animic.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
