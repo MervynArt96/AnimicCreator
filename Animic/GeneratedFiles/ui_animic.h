@@ -12,10 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -25,7 +23,6 @@
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -49,7 +46,7 @@ public:
     QAction *actionCloseProject;
     QAction *actionAbout;
     QWidget *centralWidget;
-    QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout_2;
     QSplitter *AllSplitter;
     QSplitter *TopBottomSplotter;
     QGroupBox *ToolBox;
@@ -67,8 +64,9 @@ public:
     QWidget *AssetTab;
     QVBoxLayout *verticalLayout_2;
     QSplitter *splitter;
-    QTreeWidget *assetTree;
-    QWidget *layoutWidget;
+    QWidget *treeHolder;
+    QHBoxLayout *horizontalLayout_3;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnImportAsset;
     QPushButton *btnImportDir;
@@ -124,10 +122,10 @@ public:
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         centralWidget->setMinimumSize(QSize(0, 0));
-        gridLayout = new QGridLayout(centralWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        horizontalLayout_2 = new QHBoxLayout(centralWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         AllSplitter = new QSplitter(centralWidget);
         AllSplitter->setObjectName(QString::fromUtf8("AllSplitter"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -231,33 +229,31 @@ public:
         splitter = new QSplitter(AssetTab);
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setOrientation(Qt::Vertical);
-        assetTree = new QTreeWidget(splitter);
-        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
-        __qtreewidgetitem->setText(0, QString::fromUtf8("1"));
-        assetTree->setHeaderItem(__qtreewidgetitem);
-        assetTree->setObjectName(QString::fromUtf8("assetTree"));
-        assetTree->setEnabled(true);
-        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Maximum);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(assetTree->sizePolicy().hasHeightForWidth());
-        assetTree->setSizePolicy(sizePolicy6);
-        assetTree->setMinimumSize(QSize(100, 0));
-        splitter->addWidget(assetTree);
-        layoutWidget = new QWidget(splitter);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setSpacing(6);
+        treeHolder = new QWidget(splitter);
+        treeHolder->setObjectName(QString::fromUtf8("treeHolder"));
+        treeHolder->setAutoFillBackground(false);
+        horizontalLayout_3 = new QHBoxLayout(treeHolder);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        splitter->addWidget(treeHolder);
+        widget = new QWidget(splitter);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setSpacing(7);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        btnImportAsset = new QPushButton(layoutWidget);
+        btnImportAsset = new QPushButton(widget);
         btnImportAsset->setObjectName(QString::fromUtf8("btnImportAsset"));
+        btnImportAsset->setMinimumSize(QSize(0, 25));
 
         horizontalLayout->addWidget(btnImportAsset);
 
-        btnImportDir = new QPushButton(layoutWidget);
+        btnImportDir = new QPushButton(widget);
         btnImportDir->setObjectName(QString::fromUtf8("btnImportDir"));
+        btnImportDir->setMinimumSize(QSize(0, 25));
 
         horizontalLayout->addWidget(btnImportDir);
 
@@ -265,16 +261,25 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        btnDeleteAsset = new QPushButton(layoutWidget);
+        btnDeleteAsset = new QPushButton(widget);
         btnDeleteAsset->setObjectName(QString::fromUtf8("btnDeleteAsset"));
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(btnDeleteAsset->sizePolicy().hasHeightForWidth());
+        btnDeleteAsset->setSizePolicy(sizePolicy6);
+        btnDeleteAsset->setMinimumSize(QSize(0, 25));
 
         horizontalLayout->addWidget(btnDeleteAsset);
 
-        splitter->addWidget(layoutWidget);
+        splitter->addWidget(widget);
 
         verticalLayout_2->addWidget(splitter);
 
         ManagementTab->addTab(AssetTab, QString());
+        btnDeleteAsset->raise();
+        splitter->raise();
+        treeHolder->raise();
         sceneManagementTab = new QWidget();
         sceneManagementTab->setObjectName(QString::fromUtf8("sceneManagementTab"));
         ManagementTab->addTab(sceneManagementTab, QString());
@@ -293,7 +298,7 @@ public:
         AuxBox->setMaximumSize(QSize(16777215, 40));
         AllSplitter->addWidget(AuxBox);
 
-        gridLayout->addWidget(AllSplitter, 0, 0, 1, 1);
+        horizontalLayout_2->addWidget(AllSplitter);
 
         AnimicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(AnimicClass);

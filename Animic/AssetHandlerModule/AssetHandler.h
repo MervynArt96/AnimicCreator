@@ -1,30 +1,41 @@
 #pragma once
-#include <QTreeView>
+#include <QTreeWidget>
 #include <QDebug>
+#include "AssetHandlerModule/AssetItem.h"
 
-class AssetHandler
+class AssetHandler : public QTreeWidget
 {
+	Q_OBJECT
+
 public:
 	
 	AssetHandler();
 	~AssetHandler();
-
-	void assignTreeView(QTreeView*);
-	QString getFilePath();
-	void getAssetInfo();
 	
+	void importAsset();
+	void importDirectory();
+	void deleteAsset();
+
+	QString mimeTypes();
+	QString getMimeTypeFromFile(const QString);
+
+protected:
+
+	void mousePressEvent(QMouseEvent* event);
+	void dragEnterEvent(QDragEnterEvent* event);
+	void dropEvent(QDropEvent* event);
+	void dragMoveEvent(QDragMoveEvent* event);
+	void dragLeaveEvent(QDragLeaveEvent* event);
 
 private:
 
-	QTreeView* assetTree;
-	QFileSystemModel* fsModel;
-	QList<QFileInfo>* assetList;
 
 signals:
-
+	
 
 
 public slots:
+
 
 };
 

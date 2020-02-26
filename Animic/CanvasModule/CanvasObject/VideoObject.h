@@ -1,43 +1,48 @@
 #pragma once
 #include <QGraphicsVideoItem>
 #include "CanvasModule/CanvasObject/BaseObject.h"
+#include "CanvasModule/AnimicScene.h"
 #include <QMediaPlayer>
 #include <QGraphicsScene>
 #include <QFile>
 #include <QPixmap>
+#include <QGraphicsItem>
 
-class VideoObject : public QGraphicsVideoItem//, public BaseObject
+class VideoObject : public QGraphicsVideoItem, public BaseObject
 {
 	Q_OBJECT
 
 public:
-	VideoObject(QObject* parent, QString);
-	VideoObject(QString);
+
+	VideoObject(QObject*, QUrl*);//, AnimicScene*);
 	~VideoObject();
 
 	QString getVideoPath();
 	QMediaPlayer* getPlayer();
 
-	QRectF boundingRect();
-	void drawBoundingRect();
+	//QRectF boundingRect();
 	
-	/*
-	void mousePressEvent(QGraphicsSceneMouseEvent* event) override;      //user input events
-	void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-	void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
-	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) override;
-	void mouseDragMoveEvent(QGraphicsSceneMouseEvent*) override;
-	bool mousePosOnHandles(QPointF pos) override;
-	*/
+	void setPixmap(QPixmap*);
+	void playMedia();
+
+	void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);// override;
+
+protected:
+	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
+	void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+	void hoverMoveEvent(QGraphicsSceneHoverEvent*) override;
+	//bool mousePosOnHandles(QPointF) override;
+	//QVariant itemChange(QGraphicsItem::GraphicsItemChange, const QVariant) override;
 
 private:
 
-	QString videoPath;
-	QMediaPlayer* player;
-	QPixmap* pixmapFrame;
+	QUrl* videoPath;
+	QMediaPlayer* player = nullptr;
+	QPixmap* pixmapFrame = nullptr;
+
+	QPointF mousePos;
+	bool init = false;
 
 public slots:
 

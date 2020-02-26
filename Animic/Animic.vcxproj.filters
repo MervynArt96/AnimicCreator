@@ -54,9 +54,6 @@
     <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CanvasModule\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CanvasModule\CanvasObject\TextObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,6 +76,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AssetHandlerModule\AssetHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasModule\CanvasObject\RectHandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasModule\AnimicScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimelineModule\TimelineItemModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,7 +119,7 @@
     <ClInclude Include="PreviewerModule\Previewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetHandlerModule\AssetHandler.h">
+    <ClInclude Include="CanvasModule\CanvasObject\RectHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -127,9 +133,6 @@
     <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="CanvasModule\Scene.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="CanvasModule\CanvasObject\TextObject.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -137,6 +140,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TimelineModule\Timeline.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AssetHandlerModule\AssetHandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\AnimicScene.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TimelineModule\TimelineItemModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -158,5 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="TimelineModule\TimelineQML\trackClip.qml" />
   </ItemGroup>
 </Project>

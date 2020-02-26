@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include "TimelineModule/TimelineItemModel.h"
 
 class Timeline : public QWidget
 {
@@ -13,10 +14,10 @@ public:
 
 private:
 
-	//playHead
-	//markers
-	//trackModel?
-	//layer objects
+	class TimelineCommand
+	{
+
+	};
 
 signals:
 
@@ -26,6 +27,9 @@ signals:
 public slots:
 
 	void onSeeked();
-
+	void addVideoObject();
+	void addImageObject();
+	void addAudioObject();
+	void addDialogueObject();
 
 };
