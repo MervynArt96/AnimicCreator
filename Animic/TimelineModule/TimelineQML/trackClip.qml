@@ -1,8 +1,12 @@
 import QtQuick 2.2
-import QtQuick.Control 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
+import QtQuick.Layouts 1.0
 
 Rectangle{
-	id: clipBase
+
+	id: clipRoot
+    /*
 	property string clipName: ''
     property int inPoint: 0
     property int outPoint: 0
@@ -15,7 +19,6 @@ Rectangle{
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
 
-
 	signal clicked(var clip, var mouse)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
@@ -27,6 +30,7 @@ Rectangle{
     signal trimmedOut(var clip)
 
     SystemPalette { id: activePalette }
+
     gradient: Gradient {
         GradientStop {
             id: gradientStop
@@ -49,5 +53,5 @@ Rectangle{
 
     MouseArea{
         //handle drag and drop
-    }
+    }*/
 }

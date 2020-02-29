@@ -1,7 +1,6 @@
 #pragma once
 #include <QTreeWidget>
 #include <QDebug>
-#include "AssetHandlerModule/AssetItem.h"
 
 class AssetHandler : public QTreeWidget
 {

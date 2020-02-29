@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 #include "animic.h"
 
@@ -18,9 +17,12 @@ void Animic::init()
 	setupTimeline();
 	setupAssetHandler();
 
+	/*
 	QUrl videoName = QUrl("D:/My Documents/Videos/singsing.mp4");
 	video = new VideoObject(nullptr ,&videoName);
+	video->getPlayer()->pause();
 	scene->addItem(video);
+	*/
 
 	connectSignalSlots();
 }
@@ -40,7 +42,12 @@ void Animic::setupScene()	//set up graphics scene and canvas
 
 void Animic::setupTimeline()
 {
+	timelineWidget = new Timeline(ui.TimelineWindow);
+	qDebug() << timelineWidget->errors();
 
+	QVBoxLayout* layout = new QVBoxLayout(timelineWidget);
+	ui.TimelineWindow->setLayout(layout);
+	
 }
 
 void Animic::connectSignalSlots()

@@ -2,13 +2,17 @@
 #include <QtWidgets/QMainWindow>
 #include <QtCore>
 #include <QtGui>
-#include "ui_animic.h"
-#include "ProjectHandler.h"
-#include "CanvasModule/AnimicScene.h"
-#include <QMediaPlayer>
 #include <QDebug>
+#include <QQmlComponent>
+#include <QQuickWidget>
+#include <QQmlProperty>
+#include "ui_animic.h"
+
+#include "ProjectManagementModule/ProjectHandler.h"
+#include "CanvasModule/AnimicScene.h"
 #include "CanvasModule/CanvasObject/VideoObject.h"
 #include "AssetHandlerModule/AssetHandler.h"
+#include "TimelineModule/Timeline.h"
 
 class Animic : public QMainWindow
 {
@@ -41,6 +45,9 @@ private:
 	QFileDialog* fileDialog;
 	QGraphicsView* graphicsView;
 	AnimicScene* scene;
+	Timeline* timelineWidget;
+	//QQuickWidget* timelineWidget;
+
 
 	//test
 	void addGraphic();

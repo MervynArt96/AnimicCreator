@@ -1,5 +1,5 @@
 #pragma once
-#include "NewProjectDialog.h"
+#include "ProjectManagementModule/Dialogs/NewProjectDialog.h"
 #include "QFileDialog"
 
 class ProjectHandler

@@ -3,6 +3,8 @@
 
 Timeline::Timeline(QWidget *parent)
 {
+	this->setParent(parent);
+	this->setSource(QUrl::fromLocalFile("D:/My Documents/Programming/ProjectAnimic/Animic/TimelineModule/TimelineQML/Timelineqml.qml"));
 
 }
 
@@ -38,3 +40,4 @@ void Timeline::addDialogueObject()
 {
 
 }
+

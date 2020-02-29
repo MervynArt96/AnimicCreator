@@ -39,12 +39,6 @@
     <ClCompile Include="animic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NewProjectDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,12 +81,18 @@
     <ClCompile Include="TimelineModule\TimelineItemModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TimelineModule\TimelineComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectManagementModule\ProjectHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectManagementModule\Dialogs\NewProjectDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertiesModule\PropertiesHandler.h">
@@ -122,12 +122,24 @@
     <ClInclude Include="CanvasModule\CanvasObject\RectHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TimelineModule\TimelineComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectManagementModule\ProjectHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimelineModule\TimelineQML\timelineqml.qml">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimelineModule\TimelineQML\Ruler.qml">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimelineModule\TimelineQML\Minimap.qml">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="animic.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="NewProjectDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h">
@@ -151,6 +163,9 @@
     <QtMoc Include="TimelineModule\TimelineItemModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ProjectManagementModule\Dialogs\NewProjectDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="animic.ui">
@@ -170,6 +185,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="TimelineModule\TimelineQML\trackClip.qml" />
+    <None Include="TimelineModule\TimelineQML\track.qml" />
+    <None Include="TimelineModule\TimelineQML\TrackHead.qml" />
+    <None Include="TimelineModule\TimelineQML\TrackClip.qml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TimelineModule\TimelineQML\qmldir" />
   </ItemGroup>
 </Project>
