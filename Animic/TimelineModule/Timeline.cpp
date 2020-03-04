@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "Timeline.h"
 
-Timeline::Timeline(QWidget *parent)
+Timeline::Timeline(QWidget* parent) : QQuickWidget(parent)
 {
-	this->setParent(parent);
-	this->setSource(QUrl::fromLocalFile("D:/My Documents/Programming/ProjectAnimic/Animic/TimelineModule/TimelineQML/Timelineqml.qml"));
-
+	setResizeMode(QQuickWidget::SizeRootObjectToView);
+	setSource(QUrl::fromLocalFile("D:/My Documents/Programming/ProjectAnimic/Animic/TimelineModule/TimelineQML/Timelineqml.qml"));
 }
 
 Timeline::~Timeline()
@@ -19,7 +18,6 @@ void Timeline::onSeeked()
 {
 
 }
-
 
 void Timeline::addVideoObject()
 {

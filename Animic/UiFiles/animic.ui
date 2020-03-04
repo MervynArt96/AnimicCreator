@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1281</width>
-    <height>858</height>
+    <width>1243</width>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
      <height>0</height>
     </size>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QSplitter" name="AllSplitter">
       <property name="sizePolicy">
@@ -109,7 +109,7 @@
          <widget class="QTabWidget" name="SceneWindow">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>800</width>
             <height>500</height>
            </size>
           </property>
@@ -127,33 +127,6 @@
             <string>Scene 1</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout"/>
-          </widget>
-         </widget>
-         <widget class="QScrollArea" name="TimelineWindow">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>200</height>
-           </size>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>534</width>
-             <height>198</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
           </widget>
          </widget>
         </widget>
@@ -174,10 +147,16 @@
           <bool>false</bool>
          </property>
          <widget class="QTabWidget" name="PropertiesTab">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>300</height>
+            <width>100</width>
+            <height>200</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -190,7 +169,7 @@
            <number>0</number>
           </property>
           <property name="tabsClosable">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <widget class="QWidget" name="propTab">
            <attribute name="title">
@@ -218,9 +197,15 @@
            <attribute name="title">
             <string>Assets</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QSplitter" name="splitter">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -243,7 +228,7 @@
                 </property>
                </layout>
               </widget>
-              <widget class="QWidget" name="">
+              <widget class="QWidget" name="layoutWidget">
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <property name="spacing">
                  <number>7</number>
@@ -314,42 +299,33 @@
              </widget>
             </item>
            </layout>
-           <zorder>btnDeleteAsset</zorder>
-           <zorder>splitter</zorder>
-           <zorder></zorder>
-           <zorder>treeHolder</zorder>
           </widget>
           <widget class="QWidget" name="sceneManagementTab">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <attribute name="title">
             <string>Scenes</string>
            </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QListWidget" name="sceneListWidget">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
         </widget>
        </widget>
-      </widget>
-      <widget class="QGroupBox" name="AuxBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="title">
-        <string/>
-       </property>
       </widget>
      </widget>
     </item>
@@ -360,7 +336,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1281</width>
+     <width>1243</width>
      <height>26</height>
     </rect>
    </property>
@@ -382,7 +358,7 @@
     <addaction name="actionSaveAs"/>
     <addaction name="actionOpen_2"/>
     <addaction name="separator"/>
-    <addaction name="actionPreference"/>
+    <addaction name="actionStitching"/>
     <addaction name="separator"/>
     <addaction name="actionCloseScene"/>
     <addaction name="actionCloseProject"/>
@@ -463,9 +439,9 @@
     <string>Open</string>
    </property>
   </action>
-  <action name="actionPreference">
+  <action name="actionStitching">
    <property name="text">
-    <string>Preference</string>
+    <string>Stitch Scene</string>
    </property>
   </action>
   <action name="actionCloseScene">
@@ -486,7 +462,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="animic.qrc"/>
+  <include location="../animic.qrc"/>
  </resources>
  <connections/>
 </ui>

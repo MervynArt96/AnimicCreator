@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QQuickWidget>
+#include <QQuickView>
 #include "TimelineModule/TimelineItemModel.h"
 
 class Timeline : public QQuickWidget
@@ -8,7 +9,7 @@ class Timeline : public QQuickWidget
 	Q_OBJECT
 
 public:
-	Timeline(QWidget *parent);
+	Timeline(QWidget*);
 	~Timeline();
 
 

@@ -5,7 +5,7 @@
 AssetHandler::AssetHandler()
 {
 	setHeaderLabels({ "Name" , "Path" });
-	setSelectionMode(QAbstractItemView::MultiSelection);
+	//setSelectionMode(QAbstractItemView::MultiSelection);
 	setDragEnabled(true);
 	viewport()->setAcceptDrops(true);
 	setDropIndicatorShown(true);
@@ -55,20 +55,16 @@ void AssetHandler::importDirectory()
 		item->setIcon(0, QIcon(url.path()));
 
 		this->addTopLevelItem(item);
-		item->setFlags(Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled);
-
+		item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled);
 
 		QFileInfoList fileList = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
 
 		for (QFileInfo info : fileList)
 		{
-			QString temp = info.path();
-			temp.remove(0, 1);
-
 			QTreeWidgetItem* child = new QTreeWidgetItem(item);
 			child->setText(0, info.fileName());
 			child->setIcon(0, QIcon(url.path()));
-			child->setText(1, temp);
+			child->setText(1, info.filePath());
 
 			item->addChild(child);
 		}
@@ -136,6 +132,7 @@ void AssetHandler::mousePressEvent(QMouseEvent* event)
 		drag->setMimeData(mimeData);
 
 		Qt::DropAction dropAction = drag->exec();
+		qDebug() << mimeData->urls();
 	}
 }
 
@@ -171,6 +168,8 @@ void AssetHandler::dropEvent(QDropEvent* event)
 			QTreeWidgetItem* item = new QTreeWidgetItem(this);
 			item->setText(0, url.fileName());
 			item->setText(1, temp);	//trim here
+
+			//check type here
 		}
 	}
 }

@@ -1,9 +1,7 @@
 #pragma once
 #include <QGraphicsVideoItem>
 #include "CanvasModule/CanvasObject/BaseObject.h"
-#include "CanvasModule/AnimicScene.h"
 #include <QMediaPlayer>
-#include <QGraphicsScene>
 #include <QFile>
 #include <QPixmap>
 #include <QGraphicsItem>
@@ -14,7 +12,7 @@ class VideoObject : public QGraphicsVideoItem, public BaseObject
 
 public:
 
-	VideoObject(QObject*, QUrl*);//, AnimicScene*);
+	VideoObject(QObject*, QUrl*);
 	~VideoObject();
 
 	QString getVideoPath();
@@ -34,7 +32,7 @@ protected:
 	void hoverMoveEvent(QGraphicsSceneHoverEvent*) override;
 	//bool mousePosOnHandles(QPointF) override;
 	//QVariant itemChange(QGraphicsItem::GraphicsItemChange, const QVariant) override;
-
+	
 private:
 
 	QUrl* videoPath;

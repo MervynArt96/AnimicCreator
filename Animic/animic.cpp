@@ -12,48 +12,33 @@ Animic::Animic(QWidget *parent): QMainWindow(parent)
 void Animic::init()
 {
 	projectHandler = new ProjectHandler();
-
 	setupScene();
-	setupTimeline();
 	setupAssetHandler();
-
-	/*
-	QUrl videoName = QUrl("D:/My Documents/Videos/singsing.mp4");
-	video = new VideoObject(nullptr ,&videoName);
-	video->getPlayer()->pause();
-	scene->addItem(video);
-	*/
-
+	setupDemo();
+	ui.sceneListWidget->setSortingEnabled(false);
+	stitchDialog = new StitchingDialog(ui.sceneListWidget);
 	connectSignalSlots();
 }
 
 void Animic::setupScene()	//set up graphics scene and canvas
 {
-	graphicsView = new QGraphicsView();
-	//graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+	graphicsView = new QGraphicsView(ui.tab);
 	ui.tab->layout()->addWidget(graphicsView);
 	graphicsView->adjustSize();
-	scene = new AnimicScene();
-	graphicsView->setSceneRect(QRectF(QPointF(0, 0) , QPointF(800, 600)));
+	scene = new AnimicScene(ui.sceneListWidget);
+	graphicsView->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	graphicsView->setScene(scene);
+	graphicsView->setBackgroundBrush(QBrush(Qt::gray, Qt::SolidPattern));
 	graphicsView->setAcceptDrops(true);
 	graphicsView->show();
-}
-
-void Animic::setupTimeline()
-{
-	timelineWidget = new Timeline(ui.TimelineWindow);
-	qDebug() << timelineWidget->errors();
-
-	QVBoxLayout* layout = new QVBoxLayout(timelineWidget);
-	ui.TimelineWindow->setLayout(layout);
-	
 }
 
 void Animic::connectSignalSlots()
 {
 	connect(ui.actionNewProject, &QAction::triggered, projectHandler->getNewProjectDialog(), &NewProjectDialog::exec);
-
+	connect(ui.actionStitching, &QAction::triggered, stitchDialog, &StitchingDialog::openDialog);
+	connect(ui.SceneWindow, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+	
 }
 
 void Animic::setupAssetHandler()
@@ -62,22 +47,20 @@ void Animic::setupAssetHandler()
 	ui.treeHolder->layout()->addWidget(assetHandler);
 }
 
-//Debug functions
-
-void Animic::addGraphic()
+void Animic::setupStitchingModule()
 {
-	QColor color = Qt::blue;
-	QBrush brush = Qt::SolidPattern;
-	brush.setColor(color);
-
-	QGraphicsRectItem* item = new QGraphicsRectItem(0, 0, 100, 100);
-	item->setFlag(QGraphicsItem::ItemIsMovable);
-	item->setBrush(brush);
-
-	scene->addItem(item);
 
 }
 
+void Animic::setupDemo()
+{
+	QString path = "D:/My Documents/Digital Art/Asset/Logo.png";
+
+	QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap(path));
+	item->setScale(0.25);
+	scene->addItem(item);
+
+}
 
 //ui functions
 
@@ -95,3 +78,50 @@ void Animic::on_btnDeleteAsset_clicked()
 {
 	assetHandler->deleteAsset();
 }
+
+void Animic::closeTab(int index)
+{
+	QGraphicsView* view = ui.SceneWindow->widget(index)->findChild<QGraphicsView*>();
+	AnimicScene* sc = dynamic_cast<AnimicScene*>(view->scene());
+
+	//disconnect(sc, &AnimicScene::objectInserted, item, &SceneAssetItem::onObjectInserted);
+
+	if (sc)
+	{
+		sc->clear();
+		sc->~AnimicScene();
+	}
+
+	if (view)
+	{
+		view->~QGraphicsView();
+	}
+
+	ui.SceneWindow->removeTab(index);
+	sceneTabCount--;
+}
+
+void Animic::on_actionNewScene_triggered()
+{
+	QWidget* widget = new QWidget(ui.SceneWindow);
+
+	ui.SceneWindow->addTab(widget, QString("Scene " + QString(sceneTabCount)));
+	QGraphicsView* view = new QGraphicsView(widget);
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(view);
+	widget->setLayout(layout);
+
+	AnimicScene* sc = new AnimicScene(ui.sceneListWidget);
+	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
+	view->setScene(sc);
+	view->setAcceptDrops(true);
+	view->show();
+
+	sceneTabCount++;
+
+	SceneAssetItem* item = new SceneAssetItem(QString("Scene " + QString(sceneTabCount)), ui.sceneListWidget);
+	ui.sceneListWidget->addItem(item);
+
+	//connect(sc, &AnimicScene::objectInserted, item, &SceneAssetItem::onObjectInserted);
+}
+

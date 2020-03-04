@@ -3,16 +3,13 @@
 #include <QtCore>
 #include <QtGui>
 #include <QDebug>
-#include <QQmlComponent>
-#include <QQuickWidget>
-#include <QQmlProperty>
 #include "ui_animic.h"
 
 #include "ProjectManagementModule/ProjectHandler.h"
 #include "CanvasModule/AnimicScene.h"
-#include "CanvasModule/CanvasObject/VideoObject.h"
 #include "AssetHandlerModule/AssetHandler.h"
-#include "TimelineModule/Timeline.h"
+#include "StitchingModule/StitchingDialog.h"
+#include "SceneHandlerModule/SceneAssetItem.h"
 
 class Animic : public QMainWindow
 {
@@ -34,8 +31,10 @@ private:
 	void init();
 	void connectSignalSlots();
 	void setupScene();
-	void setupTimeline();
 	void setupAssetHandler();
+	void setupStitchingModule();
+
+	void setupDemo();
 
 	int sceneTabCount = 1;	//global var, for object naming
 
@@ -45,19 +44,19 @@ private:
 	QFileDialog* fileDialog;
 	QGraphicsView* graphicsView;
 	AnimicScene* scene;
-	Timeline* timelineWidget;
-	//QQuickWidget* timelineWidget;
-
-
-	//test
-	void addGraphic();
+	StitchingDialog* stitchDialog;
 
 signals:
 
 
 public slots:
-
+	
 	void on_btnImportAsset_clicked();
 	void on_btnImportDir_clicked();
 	void on_btnDeleteAsset_clicked();
+
+	void on_actionNewScene_triggered();
+
+	void closeTab(int);
+	
 };

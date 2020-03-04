@@ -1,7 +1,20 @@
 #pragma once
 
-#include "TimelineModule/Timeline.h"
 #include "CanvasModule/CanvasObject/VideoObject.h"
+#include "CanvasModule/CanvasObject/ImageObject.h"
+#include "CanvasModule/CanvasObject/AudioObject.h"
+#include "CanvasModule/CanvasObject/DialogueObject.h"
+
+enum SceneType
+{
+	AutoScene,
+	SingleButtonScene,
+	MashButtonScene,
+	HoldButtonScene,
+	TimeLimitedScene,
+	TwoWayScene,
+	MultiWayScene
+};
 
 class AnimicScene : public QGraphicsScene
 {
@@ -9,7 +22,7 @@ class AnimicScene : public QGraphicsScene
 
 public:
 
-	AnimicScene();
+	AnimicScene(QListWidget*);
 	~AnimicScene();
 
 protected:
@@ -22,9 +35,17 @@ protected:
 	void dropEvent(QGraphicsSceneDragDropEvent* event);
 	void dragMoveEvent(QGraphicsSceneDragDropEvent* event);
 
+	void keyPressEvent(QKeyEvent* event);
+
 private:
 
+	//QList<VideoObject*> videoList;
 
+	QListWidget* sceneList;
+
+signals:
+
+	void objectInserted();
 
 
 };

@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "AnimicScene.h"
 
-AnimicScene::AnimicScene()
+AnimicScene::AnimicScene(QListWidget* list)
 {
-	
+	sceneList = list;
 }
 
 AnimicScene::~AnimicScene()
@@ -39,18 +39,35 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 	for (QUrl url : mimedata->urls())
 	{
 		VideoObject* video = new VideoObject(this , &url);
+		video->setPos(event->scenePos());
 		this->addItem(video);
+
+		emit objectInserted();
 	}
+	
 	event->acceptProposedAction();
 
 }
 
 void AnimicScene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
 {
-
+	Q_UNUSED(event);
 }
 
 void AnimicScene::dragLeaveEvent(QGraphicsSceneDragDropEvent* event)
 {
+	Q_UNUSED(event);
+}
 
+void AnimicScene::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Space)
+	{
+
+		//for (VideoObject* item : );
+		{
+			
+			
+		}
+	}
 }

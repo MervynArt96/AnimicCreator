@@ -2,9 +2,8 @@
 #include "VideoObject.h"
 
 
-VideoObject::VideoObject(QObject* parent, QUrl* filePath)//, AnimicScene* sceneSource)
+VideoObject::VideoObject(QObject* parent, QUrl* filePath)
 {
-    //this->objectScene = sceneSource;
 	if (QFile::exists(filePath->path()))
 	{
 		videoPath = filePath;
@@ -14,7 +13,7 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)//, AnimicScene* sceneS
 		player->setMedia(QUrl::fromLocalFile(filePath->path()));
 		player->setVideoOutput(this);
         player->play();
-		pixmapFrame = new QPixmap();
+		//pixmapFrame = new QPixmap();
         this->currentHandle = nullptr;   
 	}
     else
@@ -244,7 +243,7 @@ void VideoObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
         painter->drawLine(p1, p2);
         painter->drawPoint(this->origin);
     }
+    
 
     scene()->update();
-
 }

@@ -1,20 +1,29 @@
 #pragma once
 #include <QGraphicsPixmapItem>
+//#include "CanvasModule/CanvasObject/BaseObject.h"
 
-class ImageObject : public QObject, public QGraphicsPixmapItem
+class ImageObject : public QGraphicsPixmapItem//, public BaseObject
 {
-	Q_OBJECT
 
 public:
-	ImageObject(QObject *parent);
+	ImageObject(QObject *parent, QUrl*);
 	~ImageObject();
 
-	void disableImageObject();
+	//void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override;
+
+protected:
+
+	//void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
+	//void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+	//void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+	//void hoverMoveEvent(QGraphicsSceneHoverEvent*) override;
 	
 private:
 
+	QUrl* imagePath;
 
-
+	QPointF mousePos;
+	bool init = false;
 
 public slots:
 

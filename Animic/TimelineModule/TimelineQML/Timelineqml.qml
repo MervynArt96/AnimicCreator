@@ -1,34 +1,46 @@
-import QtQuick 2.2
+import QtQuick 1.0
 import QtQml.Models 2.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.11
 import "../TimelineQML" 1.0			
 
-Rectangle{
-	id: root
-	property color animicBlue: dodgerblue
-	width: 100
-	height: 100
+Rectangle
+{
+	property color animicBlue: "dodgerblue"
+    property int headerWidth: 150
+    //property alias trackCount: tracksRepeater.count
+    color: animicBlue
+    
+    width: 100
+    height:100
 
-	MouseArea {
+    /*
+	MouseArea
+    {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         onClicked: menu.popup()
     }
 
-	DropArea {
+	DropArea
+    {
         anchors.fill: parent
-        onEntered: {
+        onEntered:
+        {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
                 drag.acceptProposedAction()
         }
         onExited: Logic.dropped()
-        onPositionChanged: {
+        onPositionChanged: 
+        {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
                 Logic.dragging(drag, drag.text)
         }
         onDropped: {
-            if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
-                if (currentTrack >= 0) {
+            if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) 
+            {
+                if (currentTrack >= 0)
+                {
                     Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'))
                     drop.acceptProposedAction()
                 }
@@ -37,23 +49,64 @@ Rectangle{
         }
     }
 
-	Row{
+	Row
+    {
 		id: minimapRow
-		
+
+
+		Rectangle
+        {
+
+        }
+
+        Minimap
+        {
+
+        }
 
 	}
 
-	Row{
+	Row
+    {
 		id: trackRow
+        Flickable
+        {
+            //contentY: ScrollView.flickableItem.contentY
+            //width: headerWidth
+            //height: trackHeaders.height
+            //interactive: false
+            Column
+            {
+                id: trackHeadList
+                Repeater
+                {
+                    TrackHead
+                    {
 
+                    }
+                }
+            }
 
-
+        }
 	}
 
-	DelegateModel{
+
+    Menu
+    {
+        id: menu
+
+        MenuItem
+        {
+            text: qsTr('Test')
+        }
+    
+    }
+
+	DelegateModel
+    {
 		id: timelineModel
 
 	
 	}
-
+    */
 }
