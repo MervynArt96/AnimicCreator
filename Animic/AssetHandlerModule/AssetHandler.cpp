@@ -61,12 +61,15 @@ void AssetHandler::importDirectory()
 
 		for (QFileInfo info : fileList)
 		{
-			QTreeWidgetItem* child = new QTreeWidgetItem(item);
-			child->setText(0, info.fileName());
-			child->setIcon(0, QIcon(url.path()));
-			child->setText(1, info.filePath());
+			if (!info.isDir()) 
+			{
+				QTreeWidgetItem* child = new QTreeWidgetItem(item);
+				child->setText(0, info.fileName());
+				child->setIcon(0, QIcon(url.path()));
+				child->setText(1, info.filePath());
 
-			item->addChild(child);
+				item->addChild(child);
+			}
 		}
 		item->setExpanded(true);
 	}

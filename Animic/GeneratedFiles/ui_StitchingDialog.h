@@ -14,9 +14,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
@@ -30,17 +28,17 @@ public:
     QVBoxLayout *verticalLayout;
     QSplitter *splitter_4;
     QSplitter *splitter_3;
-    QSplitter *splitter_2;
-    QListWidget *SceneList;
+    QSplitter *splitter;
+    QWidget *listHolder;
     QGroupBox *TriggerContainer;
     QVBoxLayout *verticalLayout_4;
     QPushButton *pushButton;
-    QSplitter *splitter;
+    QSplitter *splitter_2;
     QWidget *previewWidget;
     QWidget *widget;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
-    QSlider *timeSlider;
+    QWidget *sliderHolder;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *pushButton_5;
@@ -66,19 +64,14 @@ public:
         splitter_3 = new QSplitter(splitter_4);
         splitter_3->setObjectName(QString::fromUtf8("splitter_3"));
         splitter_3->setOrientation(Qt::Horizontal);
-        splitter_2 = new QSplitter(splitter_3);
-        splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
-        splitter_2->setOrientation(Qt::Horizontal);
-        SceneList = new QListWidget(splitter_2);
-        SceneList->setObjectName(QString::fromUtf8("SceneList"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(SceneList->sizePolicy().hasHeightForWidth());
-        SceneList->setSizePolicy(sizePolicy);
-        SceneList->setMinimumSize(QSize(100, 0));
-        splitter_2->addWidget(SceneList);
-        TriggerContainer = new QGroupBox(splitter_2);
+        splitter = new QSplitter(splitter_3);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        listHolder = new QWidget(splitter);
+        listHolder->setObjectName(QString::fromUtf8("listHolder"));
+        listHolder->setMinimumSize(QSize(250, 0));
+        splitter->addWidget(listHolder);
+        TriggerContainer = new QGroupBox(splitter);
         TriggerContainer->setObjectName(QString::fromUtf8("TriggerContainer"));
         TriggerContainer->setMinimumSize(QSize(100, 0));
         verticalLayout_4 = new QVBoxLayout(TriggerContainer);
@@ -90,21 +83,21 @@ public:
 
         verticalLayout_4->addWidget(pushButton);
 
-        splitter_2->addWidget(TriggerContainer);
-        splitter_3->addWidget(splitter_2);
-        splitter = new QSplitter(splitter_3);
-        splitter->setObjectName(QString::fromUtf8("splitter"));
-        splitter->setOrientation(Qt::Vertical);
-        previewWidget = new QWidget(splitter);
+        splitter->addWidget(TriggerContainer);
+        splitter_3->addWidget(splitter);
+        splitter_2 = new QSplitter(splitter_3);
+        splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
+        splitter_2->setOrientation(Qt::Vertical);
+        previewWidget = new QWidget(splitter_2);
         previewWidget->setObjectName(QString::fromUtf8("previewWidget"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(10);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(previewWidget->sizePolicy().hasHeightForWidth());
-        previewWidget->setSizePolicy(sizePolicy1);
-        previewWidget->setMinimumSize(QSize(700, 0));
-        splitter->addWidget(previewWidget);
-        widget = new QWidget(splitter);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(10);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(previewWidget->sizePolicy().hasHeightForWidth());
+        previewWidget->setSizePolicy(sizePolicy);
+        previewWidget->setMinimumSize(QSize(700, 500));
+        splitter_2->addWidget(previewWidget);
+        widget = new QWidget(splitter_2);
         widget->setObjectName(QString::fromUtf8("widget"));
         widget->setMinimumSize(QSize(700, 0));
         widget->setMaximumSize(QSize(16777215, 150));
@@ -115,17 +108,10 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        timeSlider = new QSlider(widget);
-        timeSlider->setObjectName(QString::fromUtf8("timeSlider"));
-        timeSlider->setSizeIncrement(QSize(0, 0));
-        timeSlider->setValue(0);
-        timeSlider->setTracking(false);
-        timeSlider->setOrientation(Qt::Horizontal);
-        timeSlider->setInvertedAppearance(false);
-        timeSlider->setTickPosition(QSlider::TicksBelow);
-        timeSlider->setTickInterval(10);
+        sliderHolder = new QWidget(widget);
+        sliderHolder->setObjectName(QString::fromUtf8("sliderHolder"));
 
-        verticalLayout_2->addWidget(timeSlider);
+        verticalLayout_2->addWidget(sliderHolder);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
@@ -169,11 +155,12 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
-        splitter->addWidget(widget);
-        splitter_3->addWidget(splitter);
+        splitter_2->addWidget(widget);
+        splitter_3->addWidget(splitter_2);
         splitter_4->addWidget(splitter_3);
         triggerSetting = new QWidget(splitter_4);
         triggerSetting->setObjectName(QString::fromUtf8("triggerSetting"));
+        triggerSetting->setMinimumSize(QSize(0, 200));
         splitter_4->addWidget(triggerSetting);
 
         verticalLayout->addWidget(splitter_4);

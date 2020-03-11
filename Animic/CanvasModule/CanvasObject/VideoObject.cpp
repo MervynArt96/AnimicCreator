@@ -15,6 +15,7 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)
         player->play();
 		//pixmapFrame = new QPixmap();
         this->currentHandle = nullptr;   
+        qDebug() << player->error();
 	}
     else
     {

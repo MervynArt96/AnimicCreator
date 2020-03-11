@@ -5,17 +5,6 @@
 #include "CanvasModule/CanvasObject/AudioObject.h"
 #include "CanvasModule/CanvasObject/DialogueObject.h"
 
-enum SceneType
-{
-	AutoScene,
-	SingleButtonScene,
-	MashButtonScene,
-	HoldButtonScene,
-	TimeLimitedScene,
-	TwoWayScene,
-	MultiWayScene
-};
-
 class AnimicScene : public QGraphicsScene
 {
 	Q_OBJECT
@@ -40,7 +29,6 @@ protected:
 private:
 
 	//QList<VideoObject*> videoList;
-
 	QListWidget* sceneList;
 
 signals:

@@ -14,7 +14,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -46,7 +45,7 @@ public:
     QAction *actionCloseProject;
     QAction *actionAbout;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_2;
     QSplitter *AllSplitter;
     QSplitter *TopBottomSplotter;
     QGroupBox *ToolBox;
@@ -71,8 +70,8 @@ public:
     QSpacerItem *horizontalSpacer;
     QPushButton *btnDeleteAsset;
     QWidget *sceneManagementTab;
-    QVBoxLayout *verticalLayout_3;
-    QListWidget *sceneListWidget;
+    QHBoxLayout *horizontalLayout_5;
+    QWidget *sceneListHolder;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -121,10 +120,10 @@ public:
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         centralWidget->setMinimumSize(QSize(0, 0));
-        verticalLayout_2 = new QVBoxLayout(centralWidget);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        horizontalLayout_2 = new QHBoxLayout(centralWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         AllSplitter = new QSplitter(centralWidget);
         AllSplitter->setObjectName(QString::fromUtf8("AllSplitter"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -270,16 +269,18 @@ public:
         ManagementTab->addTab(AssetTab, QString());
         sceneManagementTab = new QWidget();
         sceneManagementTab->setObjectName(QString::fromUtf8("sceneManagementTab"));
-        sceneManagementTab->setMinimumSize(QSize(0, 0));
-        verticalLayout_3 = new QVBoxLayout(sceneManagementTab);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        sceneListWidget = new QListWidget(sceneManagementTab);
-        sceneListWidget->setObjectName(QString::fromUtf8("sceneListWidget"));
-        sceneListWidget->setMinimumSize(QSize(300, 0));
+        horizontalLayout_5 = new QHBoxLayout(sceneManagementTab);
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
+        sceneListHolder = new QWidget(sceneManagementTab);
+        sceneListHolder->setObjectName(QString::fromUtf8("sceneListHolder"));
+        sizePolicy1.setHeightForWidth(sceneListHolder->sizePolicy().hasHeightForWidth());
+        sceneListHolder->setSizePolicy(sizePolicy1);
+        sceneListHolder->setAutoFillBackground(true);
 
-        verticalLayout_3->addWidget(sceneListWidget);
+        horizontalLayout_5->addWidget(sceneListHolder);
 
         ManagementTab->addTab(sceneManagementTab, QString());
         propertiesSplitter->addWidget(ManagementTab);
@@ -287,7 +288,7 @@ public:
         TopBottomSplotter->addWidget(PropMainSplitter);
         AllSplitter->addWidget(TopBottomSplotter);
 
-        verticalLayout_2->addWidget(AllSplitter);
+        horizontalLayout_2->addWidget(AllSplitter);
 
         AnimicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(AnimicClass);
@@ -364,7 +365,7 @@ public:
         btnImportDir->setText(QCoreApplication::translate("AnimicClass", "Import Directory", nullptr));
         btnDeleteAsset->setText(QCoreApplication::translate("AnimicClass", "Delete", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(AssetTab), QCoreApplication::translate("AnimicClass", "Assets", nullptr));
-        ManagementTab->setTabText(ManagementTab->indexOf(sceneManagementTab), QCoreApplication::translate("AnimicClass", "Scenes", nullptr));
+        ManagementTab->setTabText(ManagementTab->indexOf(sceneManagementTab), QCoreApplication::translate("AnimicClass", "Scene", nullptr));
         menuFile->setTitle(QCoreApplication::translate("AnimicClass", "File", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("AnimicClass", "Edit", nullptr));
         menuHelp->setTitle(QCoreApplication::translate("AnimicClass", "Help", nullptr));

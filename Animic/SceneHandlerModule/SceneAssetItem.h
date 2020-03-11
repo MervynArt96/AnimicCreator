@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QListWidgetItem>
-
+#include "CanvasModule/AnimicScene.h"
 
 struct VideoAsset
 {
@@ -36,11 +36,14 @@ public:
 	SceneAssetItem(QString ,QListWidget*);
 	~SceneAssetItem();
 
+	/*
 	QList<VideoAsset> getVideoList();
 	QList<ImageAsset> getImageList();
 	QList<AudioAsset> getAudioList();
 	QList<DialogueAsset> getDialogueList();
 
+	AnimicScene* getScene();
+	*/
 	enum AssetType
 	{
 		Video,Image,
@@ -56,6 +59,8 @@ private:
 		QList<AudioAsset> audioList;
 		QList<DialogueAsset> dialogueList;
 	};
+
+	AnimicScene* scene;
 
 public slots:
 

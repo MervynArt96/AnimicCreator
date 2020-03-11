@@ -55,7 +55,7 @@
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_QUICK_LIB;QT_QUICKWIDGETS_LIB;QT_QUICKCONTROLS2_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -74,7 +74,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;%(AdditionalIncludeDirectories)</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_QUICK_LIB;QT_QUICKWIDGETS_LIB;QT_QUICKCONTROLS2_LIB;%(PreprocessorDefinitions)</Define>
       <ForceInclude>stdafx.h;%(RelativeDir)%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
@@ -93,7 +93,7 @@
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_QUICK_LIB;QT_QUICKWIDGETS_LIB;QT_QUICKCONTROLS2_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -111,7 +111,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;%(AdditionalIncludeDirectories)</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_QUICK_LIB;QT_QUICKWIDGETS_LIB;QT_QUICKCONTROLS2_LIB;%(PreprocessorDefinitions)</Define>
       <ForceInclude>stdafx.h;%(RelativeDir)%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
+    <ClCompile Include="CanvasModule\AnimicView.cpp" />
     <ClCompile Include="AssetHandlerModule\AssetHandler.cpp" />
     <ClCompile Include="CanvasModule\CanvasObject\AudioObject.cpp" />
     <ClCompile Include="CanvasModule\CanvasObject\ImageObject.cpp" />
@@ -143,14 +144,30 @@
     <ClCompile Include="CanvasModule\AnimicScene.cpp" />
     <ClCompile Include="CanvasModule\CanvasObject\RectHandle.cpp" />
     <ClCompile Include="SceneHandlerModule\SceneAssetItem.cpp" />
+    <ClCompile Include="SceneHandlerModule\SceneListWidget.cpp" />
+    <ClCompile Include="SceneListModel.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp" />
+    <ClCompile Include="StitchingModule\StitchingListWidget.cpp" />
     <ClCompile Include="StitchingModule\StitchingDialog.cpp" />
+    <ClCompile Include="StitchingModule\StitchingScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="StitchingModule\StitchingListWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\StitchingScene.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\AnimicView.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
+    </QtMoc>
     <ClInclude Include="CanvasModule\CanvasObject\AudioObject.h" />
     <ClInclude Include="CanvasModule\CanvasObject\DialogueObject.h" />
     <ClInclude Include="PropertiesModule\PropertiesQML\TransformProperties.qml" />
@@ -190,6 +207,14 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2</IncludePath>
     </ClInclude>
+    <QtMoc Include="SceneHandlerModule\SceneListWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+    </QtMoc>
+    <QtMoc Include="SceneListModel.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule</IncludePath>
+    </QtMoc>
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

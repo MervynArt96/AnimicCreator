@@ -26,7 +26,7 @@
      <height>0</height>
     </size>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QSplitter" name="AllSplitter">
       <property name="sizePolicy">
@@ -301,23 +301,32 @@
            </layout>
           </widget>
           <widget class="QWidget" name="sceneManagementTab">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
            <attribute name="title">
-            <string>Scenes</string>
+            <string>Scene</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
-             <widget class="QListWidget" name="sceneListWidget">
-              <property name="minimumSize">
-               <size>
-                <width>300</width>
-                <height>0</height>
-               </size>
+             <widget class="QWidget" name="sceneListHolder" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

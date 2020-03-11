@@ -10,6 +10,8 @@
 #include "AssetHandlerModule/AssetHandler.h"
 #include "StitchingModule/StitchingDialog.h"
 #include "SceneHandlerModule/SceneAssetItem.h"
+#include "CanvasModule/AnimicView.h"
+#include "SceneHandlerModule/SceneListWidget.h"
 
 class Animic : public QMainWindow
 {
@@ -33,18 +35,23 @@ private:
 	void setupScene();
 	void setupAssetHandler();
 	void setupStitchingModule();
-
-	void setupDemo();
+	void setupSceneListWidget();
 
 	int sceneTabCount = 1;	//global var, for object naming
 
 	ProjectHandler* projectHandler;			//modules
 	AssetHandler* assetHandler;
-	VideoObject* video = nullptr;
 	QFileDialog* fileDialog;
-	QGraphicsView* graphicsView;
-	AnimicScene* scene;
+	SceneListWidget* sceneListWidget;
 	StitchingDialog* stitchDialog;
+
+	//demo only
+	void setupDemo();
+
+	AnimicView* graphicsView;
+	AnimicScene* scene;
+	AnimicScene* scene2;
+	SceneAssetItem* sceneItem;
 
 signals:
 
