@@ -19,7 +19,7 @@ AssetHandler::~AssetHandler()
 void AssetHandler::importAsset()
 {
 	QFileDialog* fileDialog = new QFileDialog();
-	QString filters = "Video files (*.mp4 *.avi *.wmv);; Image files (*.png *.jpg)";
+	QString filters = "Video files (*.mp4 *.avi);; Image files (*.png *.jpg)";
 
 	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
 	QList<QUrl> urls = fileDialog->getOpenFileUrls(this, tr("Import Asset"), tr(""), filters);

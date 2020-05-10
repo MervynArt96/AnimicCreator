@@ -8,14 +8,15 @@ StitchingDialog::StitchingDialog(SceneListWidget* list)
 	refList = list;
 
 	AnimicView* view = new AnimicView(ui.previewWidget);
-	StitchingScene* scene = new StitchingScene();
 	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	view->setAcceptDrops(true);
 
-	QVBoxLayout* layout = new QVBoxLayout(view);
+	StitchingScene* scene = new StitchingScene();
+
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(view);
 
 	ui.previewWidget->setLayout(layout);
-
 }
 
 StitchingDialog::~StitchingDialog()

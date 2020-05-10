@@ -17,20 +17,17 @@ void Animic::init()
 	setupSceneListWidget();
 	setupStitchingModule();
 
-
-
-	setupDemo();
-	
-
 	connectSignalSlots();
 }
 
 void Animic::setupScene()	//set up graphics scene and canvas
 {
 	graphicsView = new AnimicView(ui.tab);
-	ui.tab->layout()->addWidget(graphicsView);
+
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(graphicsView);
+	ui.tab->setLayout(layout);
 	scene = new AnimicScene(sceneListWidget);
-	graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 	graphicsView->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	graphicsView->setScene(scene);
 	//graphicsView->setBackgroundBrush(QBrush(Qt::darkGray, Qt::SolidPattern));
@@ -43,7 +40,10 @@ void Animic::connectSignalSlots()
 	connect(ui.actionNewProject, &QAction::triggered, projectHandler->getNewProjectDialog(), &NewProjectDialog::exec);
 	connect(ui.actionStitching, &QAction::triggered, stitchDialog, &StitchingDialog::openDialog);
 	connect(ui.SceneWindow, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
-	
+	connect(ui.stitchButton, &QPushButton::clicked, stitchDialog, &StitchingDialog::openDialog);
+	connect(ui.playButton, &QPushButton::clicked, scene, &AnimicScene::playAll);
+	connect(ui.SceneWindow, SIGNAL(currentChanged(int)), this, SLOT(setCurrentScene(int)));
+
 }
 
 void Animic::setupAssetHandler()
@@ -69,17 +69,6 @@ void Animic::setupSceneListWidget()
 	sceneItem = new SceneAssetItem("ABC", sceneListWidget);
 }
 
-void Animic::setupDemo()
-{
-	QString path = "D:/My Documents/Digital Art/Asset/Logo.png";
-
-	QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap(path));
-	item->setScale(0.25);
-	scene2 = new AnimicScene(sceneListWidget);
-
-	scene2->addItem(item);
-}
-
 //ui functions
 
 void Animic::on_btnImportAsset_clicked()
@@ -100,20 +89,20 @@ void Animic::on_btnDeleteAsset_clicked()
 void Animic::closeTab(int index)
 {
 	AnimicView* view = ui.SceneWindow->widget(index)->findChild<AnimicView*>();
-	AnimicScene* sc = dynamic_cast<AnimicScene*>(view->scene());
-
 	//disconnect(sc, &AnimicScene::objectInserted, item, &SceneAssetItem::onObjectInserted);
-
-	if (sc)
-	{
-		sc->clear();
-		//sc->~AnimicScene();
-
-		//assign reference to list for future retrieval
-	}
 
 	if (view)
 	{
+		AnimicScene* sc = dynamic_cast<AnimicScene*>(view->scene());
+		if (sc)
+		{
+			//disconnect objects 
+
+			sc->stopAll();
+			//sc->~AnimicScene();
+
+			//assign reference to list for future retrieval, not final???
+		}
 		view->~AnimicView();
 	}
 
@@ -141,5 +130,41 @@ void Animic::on_actionNewScene_triggered()
 	sceneListWidget->addItem(item);
 
 	//connect(sc, &AnimicScene::objectInserted, item, &SceneAssetItem::onObjectInserted);
+}
+
+void Animic::setCurrentScene(int index)
+{
+	if (index >= 0)
+	{
+		AnimicView* view = ui.SceneWindow->currentWidget()->findChild<AnimicView*>();
+
+		if (view != nullptr)
+		{
+			AnimicScene* sc = dynamic_cast<AnimicScene*>(view->scene());
+
+			if (sc != nullptr)
+			{
+				connect(ui.playButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
+				connect(ui.pauseButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
+				connect(ui.stopButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
+
+				QList<QGraphicsItem*> allItems = sc->items();
+
+				foreach(QGraphicsItem * item, allItems)
+				{
+					VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
+					if (videoObj != nullptr)
+					{
+						//get videoObj attribute
+						//update layer window
+						//reconnect slider
+					}
+					else return;
+				}
+
+				//update properties window, maybe need to clear only
+			}
+		}
+	}
 }
 

@@ -102,12 +102,21 @@
     <ClCompile Include="SceneListModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TimelineModule\AnimicSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertiesModule\VideoProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertiesModule\DroppableLineEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertiesModule\SceneProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesModule\PropertiesHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CanvasModule\CanvasObject\BaseObject.h">
@@ -132,12 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProjectManagementModule\ProjectHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesModule\PropertiesQML\VideoProperties.qml">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesModule\PropertiesQML\TransformProperties.qml">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CanvasModule\CanvasObject\ImageObject.h">
@@ -185,6 +188,21 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SceneListModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TimelineModule\AnimicSlider.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PropertiesModule\PropertiesHandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PropertiesModule\VideoProperties.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PropertiesModule\DroppableLineEdit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PropertiesModule\SceneProperties.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -12,6 +12,8 @@
 #include "SceneHandlerModule/SceneAssetItem.h"
 #include "CanvasModule/AnimicView.h"
 #include "SceneHandlerModule/SceneListWidget.h"
+#include "PropertiesModule/PropertiesHandler.h"
+#include <TimelineModule\AnimicSlider.h>
 
 class Animic : public QMainWindow
 {
@@ -44,13 +46,11 @@ private:
 	QFileDialog* fileDialog;
 	SceneListWidget* sceneListWidget;
 	StitchingDialog* stitchDialog;
+	PropertiesHandler* propHandler;
+	AnimicSlider* mainSlider;
 
-	//demo only
-	void setupDemo();
-
-	AnimicView* graphicsView;
+	AnimicView* graphicsView;		//to skip new project
 	AnimicScene* scene;
-	AnimicScene* scene2;
 	SceneAssetItem* sceneItem;
 
 signals:
@@ -61,9 +61,9 @@ public slots:
 	void on_btnImportAsset_clicked();
 	void on_btnImportDir_clicked();
 	void on_btnDeleteAsset_clicked();
-
 	void on_actionNewScene_triggered();
 
 	void closeTab(int);
+	void setCurrentScene(int);
 	
 };

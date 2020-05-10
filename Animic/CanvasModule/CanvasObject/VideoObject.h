@@ -22,8 +22,15 @@ public:
 	
 	void setPixmap(QPixmap*);
 	void playMedia();
+	void pauseMedia();
+	void stopMedia();
+	void toggleMute();
 
 	void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);// override;
+	enum { Type = UserType + 1 };
+
+	inline int type() const { return Type;}
+
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
@@ -42,15 +49,22 @@ private:
 	QPointF mousePos;
 	bool init = false;
 
+	qreal oriSizeX;
+	qreal oriSizeY;
+
+signals:
+
+	void scaleChanged();
+
 public slots:
 
-	//void onScrubEnter();
-	//void onScrubExit();
+	void onFocused();	
+	void onFocusExit();
 
-	//void onFocused();
-	//void onFocusExit();
+	void onSliderPositionMoved();
 
-	//void onDurationChanged();
-	//void onSourceChanged();
+	//void onPosXChanged(); void onPosYChanged();
+	//scale change
+	//url change
 
 };

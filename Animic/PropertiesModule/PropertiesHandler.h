@@ -1,16 +1,37 @@
 #pragma once
-class PropertiesHandler
+
+#include "PropertiesModule/VideoProperties.h"
+#include <PropertiesModule/SceneProperties.h>
+
+class PropertiesHandler : public QWidget
 {
+	Q_OBJECT
+
 public:
-	//getter
-	//setter
+
+	enum ObjectType {
+		Video, Image, Dialogue
+	};
+
+
+	PropertiesHandler();
+	~PropertiesHandler();
+
+	VideoProperties* getVideoPropertiesWidget();
+
+	void changePropertiesType();
 
 private:
 	
-	//VideoProperties	qt classes
+	SceneProperties* sceneProperties;
+	VideoProperties* videoProperties;
 	//ImageProperties
 	//AudioProperties
 	//TextProperties
+
+public slots:
+
+	void updateCurrentProperties();
 
 };
 

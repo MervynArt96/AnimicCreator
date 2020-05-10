@@ -5,6 +5,7 @@ AnimicView::AnimicView(QWidget* parent): QGraphicsView(parent)
 {
     this->viewport()->installEventFilter(this);
     this->setMouseTracking(true);
+    setDragMode(QGraphicsView::NoDrag);
     modifiers = Qt::ControlModifier;
     zoom_factor_base = 1.0015;
 }
@@ -15,11 +16,31 @@ AnimicView::~AnimicView()
 }
 
 
-void AnimicView::keyPressEvent(QKeyEvent* event)
+void AnimicView::keyPressEvent(QKeyEvent* event) //Need Test
 {
     if (event->key() == Qt::Key_Space)
     {
-        qDebug() << "Space";
+        setDragMode(QGraphicsView::ScrollHandDrag);
+        AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
+
+        if (scene != nullptr)
+        {
+            scene->disableObjectDragging();
+        }
+    }
+}
+
+void AnimicView::keyReleaseEvent(QKeyEvent* event)  //Need Test
+{
+    if (event->key() == Qt::Key_Space)
+    {
+        setDragMode(QGraphicsView::NoDrag);
+        AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
+
+        if (scene != nullptr)
+        {
+            scene->enableObjectDragging();
+        }
     }
 }
 
@@ -68,6 +89,7 @@ bool AnimicView::eventFilter(QObject* object, QEvent* event)
                 double factor = qPow(zoom_factor_base, angle);
                 gentle_zoom(factor);
                 return true;
+                qDebug() << this->transform();
             }
         }
     }

@@ -41,8 +41,24 @@ QMediaPlayer* VideoObject::getPlayer()
 void VideoObject::playMedia()
 {
     //if(!player->NoMedia)
-        player->play();
+    player->play();
 }
+
+void VideoObject::pauseMedia()
+{
+    player->pause();
+}
+
+void VideoObject::stopMedia()
+{
+    player->stop();
+}
+
+void VideoObject::toggleMute()
+{
+    player->isMuted() ? player->setMuted(false) : player->setMuted(true); //toggle mute switch
+}
+
 
 /*
 QRectF VideoObject::boundingRect() 
@@ -51,7 +67,7 @@ QRectF VideoObject::boundingRect()
 }*/
 
 
-void VideoObject::setPixmap(QPixmap* pixmap)
+void VideoObject::setPixmap(QPixmap* pixmap) //might not need
 {
 	this->pixmapFrame = pixmap;
 }
@@ -149,6 +165,7 @@ void VideoObject::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         else if (this->currentHandle->getHandleType() == HandleType::Origin)
         {
             this->currentHandle->setPosition(event->pos());
+            this->transformOriginPoint() = event->pos();
             this->origin = currentHandle->getPosition();
         }
         
@@ -247,4 +264,19 @@ void VideoObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     
 
     scene()->update();
+}
+
+void VideoObject::onFocused()
+{
+
+}
+
+void VideoObject::onFocusExit()
+{
+
+}
+
+void VideoObject::onSliderPositionMoved()
+{
+
 }

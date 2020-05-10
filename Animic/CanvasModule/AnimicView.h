@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QGraphicsView>
+#include "CanvasModule/AnimicScene.h"
 
 class AnimicView : public QGraphicsView
 {
@@ -12,7 +13,9 @@ public:
     void gentle_zoom(double factor);
     void set_modifiers(Qt::KeyboardModifiers modifiers);
     void set_zoom_factor_base(double value);
+
     void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent* event);
 
 private:
 
@@ -24,6 +27,7 @@ private:
     int upperLimit = 0.5;
 
 signals:
+    
     void zoomed();
 
 
