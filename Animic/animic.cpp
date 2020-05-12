@@ -16,6 +16,7 @@ void Animic::init()
 	setupAssetHandler();
 	setupSceneListWidget();
 	setupStitchingModule();
+	setupTimeline();
 
 	connectSignalSlots();
 }
@@ -33,17 +34,35 @@ void Animic::setupScene()	//set up graphics scene and canvas
 	//graphicsView->setBackgroundBrush(QBrush(Qt::darkGray, Qt::SolidPattern));
 	graphicsView->setAcceptDrops(true);
 	graphicsView->show();
+
+	connect(ui.playButton, &QPushButton::clicked, scene, &AnimicScene::playAll);
+	connect(ui.pauseButton, &QPushButton::clicked, scene, &AnimicScene::pauseAll);
+	connect(ui.stopButton, &QPushButton::clicked, scene, &AnimicScene::stopAll);
 }
 
 void Animic::connectSignalSlots()
 {
 	connect(ui.actionNewProject, &QAction::triggered, projectHandler->getNewProjectDialog(), &NewProjectDialog::exec);
 	connect(ui.actionStitching, &QAction::triggered, stitchDialog, &StitchingDialog::openDialog);
+
 	connect(ui.SceneWindow, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
-	connect(ui.stitchButton, &QPushButton::clicked, stitchDialog, &StitchingDialog::openDialog);
-	connect(ui.playButton, &QPushButton::clicked, scene, &AnimicScene::playAll);
 	connect(ui.SceneWindow, SIGNAL(currentChanged(int)), this, SLOT(setCurrentScene(int)));
 
+	connect(ui.stitchButton, &QPushButton::clicked, stitchDialog, &StitchingDialog::openDialog);
+}
+
+void Animic::setupTimeline()
+{
+	mainSlider = new AnimicSlider(ui.SliderHolder);
+	mainSlider->setScene(scene);
+
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(mainSlider);
+	ui.SliderHolder->setLayout(layout);
+
+	connect(mainSlider, SIGNAL(valueChanged(int)), scene, SLOT(setVideoFrameTime(int)));
+	connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
+	connect(scene, SIGNAL(subscribeTimeline(QMediaPlayer*)), mainSlider, SLOT(subscribeVideo(QMediaPlayer*)));
 }
 
 void Animic::setupAssetHandler()

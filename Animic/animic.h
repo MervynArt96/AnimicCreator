@@ -38,6 +38,7 @@ private:
 	void setupAssetHandler();
 	void setupStitchingModule();
 	void setupSceneListWidget();
+	void setupTimeline();
 
 	int sceneTabCount = 1;	//global var, for object naming
 

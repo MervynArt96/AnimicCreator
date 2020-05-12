@@ -35,7 +35,6 @@ void AnimicScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 
 void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
-
 	const QMimeData* mimedata = event->mimeData();
 
 	for (QUrl url : mimedata->urls())
@@ -44,7 +43,10 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 		video->setPos(event->scenePos());
 		this->addItem(video);
 
-		emit objectInserted();
+		temp = video->getPlayer();
+		connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
+
+		pauseAll();
 	}
 	
 	event->acceptProposedAction();
@@ -63,17 +65,34 @@ void AnimicScene::dragLeaveEvent(QGraphicsSceneDragDropEvent* event)
 
 void AnimicScene::playAll()
 {
+	bool found = false;
+	bool first = false;
 	QList<QGraphicsItem*> allItems = items();
 
-	foreach(QGraphicsItem * item, allItems)
+	for(QGraphicsItem * item : allItems)
 	{
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
 		{
 			videoObj->playMedia();
+			found = true;
+			if(videoObj->getPlayer()->duration() >= maxDuration)
+			{
+				temp = videoObj->getPlayer();
+				temp->setNotifyInterval(50);
+			}
 		}
 		else return;
+
+		if (found && !first)
+		{
+			qDebug() << "Subbed timeline";
+			emit subscribeTimeline(temp);
+			found = false;
+			first = true;
+		}
 	}
+
 	bgmPlayer->play();
 }
 
@@ -81,7 +100,7 @@ void AnimicScene::pauseAll()
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	foreach(QGraphicsItem * item, allItems)
+	for(QGraphicsItem* item : allItems)
 	{
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
@@ -97,7 +116,7 @@ void AnimicScene::stopAll()
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	foreach(QGraphicsItem * item, allItems)
+	for(QGraphicsItem * item : allItems)
 	{
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
@@ -113,7 +132,7 @@ void AnimicScene::disableObjectDragging()
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	foreach(QGraphicsItem * item, allItems)
+	for(QGraphicsItem * item : allItems)
 	{
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
@@ -130,7 +149,7 @@ void AnimicScene::enableObjectDragging()
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	foreach(QGraphicsItem * item, allItems)
+	for(QGraphicsItem * item : allItems)
 	{
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
@@ -141,5 +160,30 @@ void AnimicScene::enableObjectDragging()
 		}
 		else return;
 	}
+}
+
+void AnimicScene::setVideoFrameTime(int pos)
+{
+	QList<QGraphicsItem*> allItems = items();
+
+	for(QGraphicsItem * item : allItems)
+	{
+		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
+		if (videoObj != nullptr)
+		{
+			videoObj->getPlayer()->setPosition(pos);
+		}
+		else return;
+	}
+}
+
+void AnimicScene::onVideoLoaded(qint64 length)
+{
+	if (length > maxDuration)
+	{
+		maxDuration = length;
+	}
+	emit objectInserted(maxDuration);
+	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onVideoLoaded(qint64))));
 }
 

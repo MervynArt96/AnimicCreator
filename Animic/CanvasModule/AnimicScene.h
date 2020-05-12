@@ -1,9 +1,6 @@
 #pragma once
 
 #include "CanvasModule/CanvasObject/VideoObject.h"
-#include "CanvasModule/CanvasObject/ImageObject.h"
-#include "CanvasModule/CanvasObject/AudioObject.h"
-#include "CanvasModule/CanvasObject/DialogueObject.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
@@ -26,9 +23,7 @@ protected:
 	void dropEvent(QGraphicsSceneDragDropEvent* event);
 	void dragMoveEvent(QGraphicsSceneDragDropEvent* event);
 
-	int maxDuration = 0;
-
-	//override items();
+	qint64 maxDuration = 0;
 
 private:
 
@@ -38,12 +33,16 @@ private:
 	QMediaPlaylist* bgmList = nullptr;
 	QMediaPlayer* bgmPlayer = nullptr;
 
+	QMediaPlayer* temp = nullptr;
+
 	/*QMediaPlaylist* bgmLoopList = nullptr;
 	QMediaPlayer* bgmLoopPlayer = nullptr;
 	*/
 signals:
 
-	void objectInserted();
+	void objectInserted(qint64);
+	void subscribeTimeline(QMediaPlayer*);
+	void unscubscribeTimeline();
 
 public slots:
 
@@ -54,5 +53,7 @@ public slots:
 	void disableObjectDragging();
 	void enableObjectDragging();
 
+	void setVideoFrameTime(int);
+	void onVideoLoaded(qint64);
 };
 

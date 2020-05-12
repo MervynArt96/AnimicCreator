@@ -18,8 +18,11 @@ AnimicView::~AnimicView()
 
 void AnimicView::keyPressEvent(QKeyEvent* event) //Need Test
 {
+    QKeyEvent* f_event = event;
+
     if (event->key() == Qt::Key_Space)
     {
+       
         setDragMode(QGraphicsView::ScrollHandDrag);
         AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
 
@@ -95,4 +98,3 @@ bool AnimicView::eventFilter(QObject* object, QEvent* event)
     }
     return false;
 }
-
