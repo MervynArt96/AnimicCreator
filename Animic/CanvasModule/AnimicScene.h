@@ -11,7 +11,11 @@ class AnimicScene : public QGraphicsScene
 public:
 
 	AnimicScene(QListWidget*);
+	AnimicScene();
 	~AnimicScene();
+
+	QString getName();
+	void setName(QString);
 
 protected:
 
@@ -28,6 +32,7 @@ protected:
 private:
 
 	//QList<VideoObject*> videoList;
+	QString name = "Scene";
 	QListWidget* sceneList;
 
 	QMediaPlaylist* bgmList = nullptr;
@@ -56,4 +61,3 @@ public slots:
 	void setVideoFrameTime(int);
 	void onVideoLoaded(qint64);
 };
-

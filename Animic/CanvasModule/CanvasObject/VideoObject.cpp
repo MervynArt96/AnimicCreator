@@ -220,63 +220,60 @@ void VideoObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    QGraphicsVideoItem::paint(painter, option, widget);
-    
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    
-    if (this->isSelected())
+    if (showRect)
     {
-        if (this->isDrawRect)
-        {
-            QPen pen(QColor::fromRgb(80,80,250));
-            painter->setPen(pen);
-            painter->drawRect(boundingRect());
+        QGraphicsVideoItem::paint(painter, option, widget);
 
-            //painter->drawRect(QRectF(boundingRect().left() - 5, boundingRect().top() - 5, boundingRect().right() + 10, boundingRect().bottom() - 20));
+        painter->setRenderHint(QPainter::Antialiasing, true);
+
+        if (this->isSelected())
+        {
+            if (this->isDrawRect)
+            {
+                QPen pen(QColor::fromRgb(80, 80, 250));
+                painter->setPen(pen);
+                painter->drawRect(boundingRect());
+
+                //painter->drawRect(QRectF(boundingRect().left() - 5, boundingRect().top() - 5, boundingRect().right() + 10, boundingRect().bottom() - 20));
+            }
+
+            QPointF p1;
+            QPointF p2;
+            for (RectHandle* handle : handleList)
+            {
+                if (handle->getHandleType() == HandleType::Rotation)
+                {
+                    p1 = handle->getPosition();
+                }
+                else if (handle->getHandleType() == HandleType::Top)
+                {
+                    p2 = handle->getPosition();
+                }
+
+                if (handle->getHandleShape() == HandleShape::RectangleShape)
+                {
+                    painter->drawRect(handle->boundingRect());
+                }
+                else if (handle->getHandleShape() == HandleShape::CircleShape)
+                {
+                    painter->drawEllipse(handle->boundingRect());
+                }
+            }
+
+            painter->drawLine(p1, p2);
+            painter->drawPoint(this->origin);
         }
 
-        QPointF p1;
-        QPointF p2;
-        for(RectHandle* handle : handleList)
-        {
-            if (handle->getHandleType() == HandleType::Rotation)
-            {
-                p1 = handle->getPosition();
-            }
-            else if (handle->getHandleType() == HandleType::Top) 
-            {
-                p2 = handle->getPosition();
-            }
-     
-            if (handle->getHandleShape() == HandleShape::RectangleShape)
-            {
-                painter->drawRect(handle->boundingRect());
-            }
-            else if (handle->getHandleShape() == HandleShape::CircleShape)
-            {
-                painter->drawEllipse(handle->boundingRect());
-            }
-        }
-
-        painter->drawLine(p1, p2);
-        painter->drawPoint(this->origin);
+        scene()->update();
     }
-    
-
-    scene()->update();
 }
 
 void VideoObject::onFocused()
 {
-
+    showRect = true;
 }
 
 void VideoObject::onFocusExit()
 {
-
-}
-
-void VideoObject::onSliderPositionMoved()
-{
-
+    showRect = false;
 }

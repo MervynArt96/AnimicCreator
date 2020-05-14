@@ -22,6 +22,7 @@
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -80,7 +81,13 @@ public:
     QPushButton *btnDeleteAsset;
     QWidget *sceneManagementTab;
     QHBoxLayout *horizontalLayout_5;
+    QVBoxLayout *verticalLayout_2;
     QWidget *sceneListHolder;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_7;
+    QPushButton *pushButton;
+    QSpacerItem *horizontalSpacer_4;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -92,7 +99,7 @@ public:
     {
         if (AnimicClass->objectName().isEmpty())
             AnimicClass->setObjectName(QString::fromUtf8("AnimicClass"));
-        AnimicClass->resize(1245, 825);
+        AnimicClass->resize(1252, 825);
         actionNewProject = new QAction(AnimicClass);
         actionNewProject->setObjectName(QString::fromUtf8("actionNewProject"));
         actionNewProject->setEnabled(true);
@@ -184,7 +191,7 @@ public:
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(PlaybackButtonHolder->sizePolicy().hasHeightForWidth());
         PlaybackButtonHolder->setSizePolicy(sizePolicy3);
-        PlaybackButtonHolder->setMinimumSize(QSize(0, 30));
+        PlaybackButtonHolder->setMinimumSize(QSize(0, 50));
         PlaybackButtonHolder->setMaximumSize(QSize(16777215, 50));
         horizontalLayout_8 = new QHBoxLayout(PlaybackButtonHolder);
         horizontalLayout_8->setSpacing(6);
@@ -321,13 +328,41 @@ public:
         horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         sceneListHolder = new QWidget(sceneManagementTab);
         sceneListHolder->setObjectName(QString::fromUtf8("sceneListHolder"));
-        sizePolicy2.setHeightForWidth(sceneListHolder->sizePolicy().hasHeightForWidth());
-        sceneListHolder->setSizePolicy(sizePolicy2);
-        sceneListHolder->setAutoFillBackground(true);
 
-        horizontalLayout_5->addWidget(sceneListHolder);
+        verticalLayout_2->addWidget(sceneListHolder);
+
+        widget = new QWidget(sceneManagementTab);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setMinimumSize(QSize(0, 30));
+        widget->setMaximumSize(QSize(16777215, 50));
+        horizontalLayout_7 = new QHBoxLayout(widget);
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        pushButton = new QPushButton(widget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        horizontalLayout_7->addWidget(pushButton);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_4);
+
+        pushButton_2 = new QPushButton(widget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        horizontalLayout_7->addWidget(pushButton_2);
+
+
+        verticalLayout_2->addWidget(widget);
+
+
+        horizontalLayout_5->addLayout(verticalLayout_2);
 
         ManagementTab->addTab(sceneManagementTab, QString());
         MainRightSplitter->addWidget(ManagementTab);
@@ -342,7 +377,7 @@ public:
         AnimicClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(AnimicClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1245, 26));
+        menuBar->setGeometry(QRect(0, 0, 1252, 26));
         QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Minimum);
         sizePolicy7.setHorizontalStretch(0);
         sizePolicy7.setVerticalStretch(0);
@@ -384,7 +419,7 @@ public:
         retranslateUi(AnimicClass);
 
         PropertiesTab->setCurrentIndex(0);
-        ManagementTab->setCurrentIndex(1);
+        ManagementTab->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(AnimicClass);
@@ -419,6 +454,8 @@ public:
         btnImportDir->setText(QCoreApplication::translate("AnimicClass", "Import Directory", nullptr));
         btnDeleteAsset->setText(QCoreApplication::translate("AnimicClass", "Delete", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(AssetTab), QCoreApplication::translate("AnimicClass", "Assets", nullptr));
+        pushButton->setText(QCoreApplication::translate("AnimicClass", "PushButton", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("AnimicClass", "PushButton", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(sceneManagementTab), QCoreApplication::translate("AnimicClass", "Scene", nullptr));
         menuFile->setTitle(QCoreApplication::translate("AnimicClass", "File", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("AnimicClass", "Edit", nullptr));

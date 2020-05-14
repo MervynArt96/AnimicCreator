@@ -57,9 +57,6 @@
     <ClCompile Include="ProjectManagementModule\AnimicProjectSaver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PreviewerModule\Previewer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AssetHandlerModule\AssetHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="StitchingModule\StitchingListWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneListModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TimelineModule\AnimicSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,6 +106,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesModule\SceneProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\Triggers\TwoWayTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\Triggers\TimedMashTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\TriggerProperties\TwoWayTriggerProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreviewerModule\PreviewDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewModule\AnimicListView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewModule\SceneListModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewModule\SceneListDelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,9 +147,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProjectManagementModule\AnimicProjectStructure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PreviewerModule\Previewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CanvasModule\CanvasObject\RectHandle.h">
@@ -187,9 +199,6 @@
     <QtMoc Include="StitchingModule\StitchingListWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="SceneListModel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="TimelineModule\AnimicSlider.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -205,6 +214,27 @@
     <QtMoc Include="PropertiesModule\SceneProperties.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="StitchingModule\Triggers\TwoWayTrigger.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\Triggers\TimedMashTrigger.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\TriggerProperties\TwoWayTriggerProperties.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PreviewerModule\PreviewDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelViewModule\AnimicListView.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelViewModule\SceneListModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelViewModule\SceneListDelegate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="UiFiles\NewProjectDialog.ui">
@@ -214,6 +244,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="UiFiles\animic.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UiFiles\PreviewDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -95,5 +95,5 @@ void AnimicSlider::scrubPosition(qint64 val)
 
 void AnimicSlider::subscribeVideo(QMediaPlayer* player)
 {
-	connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(scrubPosition(qint64)));
+	connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(scrubPosition(qint64)),Qt::UniqueConnection);
 }

@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "StitchingDialog.h"
 
-StitchingDialog::StitchingDialog(SceneListWidget* list)
+StitchingDialog::StitchingDialog(AnimicListView* listView, SceneListModel* model)
 {
 	ui.setupUi(this);
-	//insert Scene list init here
-	refList = list;
-
+	
+	QVBoxLayout* listLayout = new QVBoxLayout();
+	listLayout->addWidget(listView);
+	ui.listHolder->setLayout(listLayout);
+	
 	AnimicView* view = new AnimicView(ui.previewWidget);
 	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	view->setAcceptDrops(true);
@@ -27,13 +29,7 @@ StitchingDialog::~StitchingDialog()
 
 void StitchingDialog::openDialog()
 {
-	qDebug() << refList->count();
-
-	for (int i = 0; i < refList->count(); i++)
-	{
-		qDebug() << refList->item(i)->text();
-		
-	}
+	
 
 	this->exec();
 }

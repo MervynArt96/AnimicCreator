@@ -9,10 +9,39 @@ AnimicScene::AnimicScene(QListWidget* list)
 	bgmPlayer->setPlaylist(bgmList);
 }
 
+AnimicScene::AnimicScene()
+{
+	bgmList = new QMediaPlaylist();
+	bgmPlayer = new QMediaPlayer();
+	bgmPlayer->setPlaylist(bgmList);
+}
+
 AnimicScene::~AnimicScene()
 {
+	delete bgmList;
+	delete bgmPlayer;
+	QList<QGraphicsItem*> allItems = items();
 
+	for (QGraphicsItem* item : allItems)
+	{
+		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
+		if (videoObj != nullptr)
+		{
+			delete videoObj;
+		}
+	}
 }
+
+QString AnimicScene::getName()
+{
+	return name;
+}
+
+void AnimicScene::setName(QString k)
+{
+	name = k;
+}
+
 
 QString AnimicScene::mimeType()
 {
@@ -86,7 +115,6 @@ void AnimicScene::playAll()
 
 		if (found && !first)
 		{
-			qDebug() << "Subbed timeline";
 			emit subscribeTimeline(temp);
 			found = false;
 			first = true;

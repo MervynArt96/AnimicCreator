@@ -44,6 +44,7 @@ private:
 
 	QUrl* videoPath;
 	QMediaPlayer* player = nullptr;
+	QMediaPlaylist* playList = nullptr;
 	QPixmap* pixmapFrame = nullptr;
 
 	QPointF mousePos;
@@ -51,6 +52,8 @@ private:
 
 	qreal oriSizeX;
 	qreal oriSizeY;
+
+	bool showRect = true;
 
 signals:
 
@@ -60,8 +63,6 @@ public slots:
 
 	void onFocused();	
 	void onFocusExit();
-
-	void onSliderPositionMoved();
 
 	//void onPosXChanged(); void onPosYChanged();
 	//scale change

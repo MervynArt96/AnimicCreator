@@ -18,11 +18,8 @@ AnimicView::~AnimicView()
 
 void AnimicView::keyPressEvent(QKeyEvent* event) //Need Test
 {
-    QKeyEvent* f_event = event;
-
-    if (event->key() == Qt::Key_Space)
+    if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
     {
-       
         setDragMode(QGraphicsView::ScrollHandDrag);
         AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
 
@@ -35,7 +32,7 @@ void AnimicView::keyPressEvent(QKeyEvent* event) //Need Test
 
 void AnimicView::keyReleaseEvent(QKeyEvent* event)  //Need Test
 {
-    if (event->key() == Qt::Key_Space)
+    if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
     {
         setDragMode(QGraphicsView::NoDrag);
         AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());

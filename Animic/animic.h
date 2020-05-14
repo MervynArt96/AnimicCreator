@@ -13,7 +13,10 @@
 #include "CanvasModule/AnimicView.h"
 #include "SceneHandlerModule/SceneListWidget.h"
 #include "PropertiesModule/PropertiesHandler.h"
-#include <TimelineModule\AnimicSlider.h>
+#include "TimelineModule/AnimicSlider.h"
+#include "ModelViewModule/AnimicListView.h"
+#include "ModelViewModule/SceneListModel.h"
+#include "ModelViewModule/SceneListDelegate.h"
 
 class Animic : public QMainWindow
 {
@@ -37,22 +40,30 @@ private:
 	void setupScene();
 	void setupAssetHandler();
 	void setupStitchingModule();
-	void setupSceneListWidget();
 	void setupTimeline();
+	void setupListModel();
 
 	int sceneTabCount = 1;	//global var, for object naming
 
 	ProjectHandler* projectHandler;			//modules
 	AssetHandler* assetHandler;
 	QFileDialog* fileDialog;
-	SceneListWidget* sceneListWidget;
 	StitchingDialog* stitchDialog;
 	PropertiesHandler* propHandler;
 	AnimicSlider* mainSlider;
 
+	AnimicListView* mainList = new AnimicListView();
+	AnimicListView* stitchList = new AnimicListView();
+	SceneListModel* sceneModel = new SceneListModel();
+	SceneListDelegate* mainDelegate = new SceneListDelegate(this);
+	SceneListDelegate* stitchDelegate = new SceneListDelegate(this);
+
 	AnimicView* graphicsView;		//to skip new project
 	AnimicScene* scene;
+	AnimicScene sc;
 	SceneAssetItem* sceneItem;
+
+	QPointF* canvasSize;
 
 signals:
 
@@ -66,5 +77,7 @@ public slots:
 
 	void closeTab(int);
 	void setCurrentScene(int);
+
+	void debug();
 	
 };
