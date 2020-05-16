@@ -16,7 +16,6 @@ void Animic::init()
 	projectHandler = new ProjectHandler();
 	setupScene();
 	setupAssetHandler();
-	//setupSceneListWidget();
 	setupListModel();
 	setupStitchingModule();
 	setupTimeline();

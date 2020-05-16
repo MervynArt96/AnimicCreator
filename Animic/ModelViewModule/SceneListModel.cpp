@@ -32,11 +32,11 @@ QVariant SceneListModel::data(const QModelIndex& index, int role) const
 	if (index.row() >= sceneList->size())
 		return QVariant();
 
-	if (role == Qt::DisplayRole)
+	if (role == Qt::BackgroundRole)
 	{
 		return QVariant::fromValue<AnimicScene*>(sceneList->at(index.row()));
 	}
-	else if (role == Qt::EditRole)
+	else if (role == Qt::EditRole || role == Qt::DisplayRole)
 	{
 		return sceneList->at(index.row())->getName();
 	}

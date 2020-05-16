@@ -59,6 +59,15 @@ void VideoObject::toggleMute()
     player->isMuted() ? player->setMuted(false) : player->setMuted(true); //toggle mute switch
 }
 
+void VideoObject::setName(QString str)
+{
+    name = str;
+}
+
+QString VideoObject::getName()
+{
+    return name;
+}
 
 /*
 QRectF VideoObject::boundingRect() 
@@ -220,60 +229,74 @@ void VideoObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    if (showRect)
+    QGraphicsVideoItem::paint(painter, option, widget);
+
+    painter->setRenderHint(QPainter::Antialiasing, true);
+
+    if (this->isSelected())
     {
-        QGraphicsVideoItem::paint(painter, option, widget);
-
-        painter->setRenderHint(QPainter::Antialiasing, true);
-
-        if (this->isSelected())
+        if (this->showRect)
         {
-            if (this->isDrawRect)
-            {
-                QPen pen(QColor::fromRgb(80, 80, 250));
-                painter->setPen(pen);
-                painter->drawRect(boundingRect());
+            QPen pen(QColor::fromRgb(80, 80, 250));
+            painter->setPen(pen);
+            painter->drawRect(boundingRect());
 
-                //painter->drawRect(QRectF(boundingRect().left() - 5, boundingRect().top() - 5, boundingRect().right() + 10, boundingRect().bottom() - 20));
-            }
-
-            QPointF p1;
-            QPointF p2;
-            for (RectHandle* handle : handleList)
-            {
-                if (handle->getHandleType() == HandleType::Rotation)
-                {
-                    p1 = handle->getPosition();
-                }
-                else if (handle->getHandleType() == HandleType::Top)
-                {
-                    p2 = handle->getPosition();
-                }
-
-                if (handle->getHandleShape() == HandleShape::RectangleShape)
-                {
-                    painter->drawRect(handle->boundingRect());
-                }
-                else if (handle->getHandleShape() == HandleShape::CircleShape)
-                {
-                    painter->drawEllipse(handle->boundingRect());
-                }
-            }
-
-            painter->drawLine(p1, p2);
-            painter->drawPoint(this->origin);
+            //painter->drawRect(QRectF(boundingRect().left() - 5, boundingRect().top() - 5, boundingRect().right() + 10, boundingRect().bottom() - 20));
         }
 
-        scene()->update();
+        //QPointF p1;
+        //QPointF p2;
+        for (RectHandle* handle : handleList)
+        {
+            /*if (handle->getHandleType() == HandleType::Rotation)
+            {
+                p1 = handle->getPosition();
+            }
+            else if (handle->getHandleType() == HandleType::Top)
+            {
+                p2 = handle->getPosition();
+            }*/
+
+            if (handle->getHandleShape() == HandleShape::RectangleShape)
+            {
+                painter->drawRect(handle->boundingRect());
+            }
+            else if (handle->getHandleShape() == HandleShape::CircleShape)
+            {
+                painter->drawEllipse(handle->boundingRect());
+            }
+        }
+
+        //painter->drawLine(p1, p2);
+        //painter->drawPoint(this->origin);
     }
+
+    scene()->update();
 }
 
 void VideoObject::onFocused()
 {
-    showRect = true;
+    //connect to
 }
 
 void VideoObject::onFocusExit()
 {
+    
+}
+
+void VideoObject::disableRect()
+{
     showRect = false;
+}
+
+void VideoObject::enableRect()
+{
+    showRect = true;
+}
+
+void VideoObject::onUrlChanged(QString str)
+{
+    qint64 pos = player->position();
+    player->setMedia(QUrl(str));
+    player->setPosition(pos);
 }

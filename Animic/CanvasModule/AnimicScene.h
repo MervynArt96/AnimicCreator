@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CanvasModule/CanvasObject/VideoObject.h"
+#include "AssetHandlerModule/AssetHandler.h"
+#include "AssetHandlerModule/TriggerAssetHandler.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 

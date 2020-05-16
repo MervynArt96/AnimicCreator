@@ -129,6 +129,18 @@
     <ClCompile Include="ModelViewModule\SceneListDelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LayerModule\LayerList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerModule\LayerListItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetHandlerModule\TriggerAssetHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\Triggers\BaseTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -165,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneHandlerModule\SceneAssetItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StitchingModule\Triggers\BaseTrigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -233,6 +248,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ModelViewModule\SceneListDelegate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="LayerModule\LayerList.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="LayerModule\LayerListItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AssetHandlerModule\TriggerAssetHandler.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

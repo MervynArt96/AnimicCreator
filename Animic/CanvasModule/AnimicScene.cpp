@@ -66,20 +66,40 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
 	const QMimeData* mimedata = event->mimeData();
 
-	for (QUrl url : mimedata->urls())
+	if (dynamic_cast<AssetHandler*>(event->source()))
 	{
-		VideoObject* video = new VideoObject(this , &url);
-		video->setPos(event->scenePos());
-		this->addItem(video);
+		for (QUrl url : mimedata->urls())
+		{
+			VideoObject* video = new VideoObject(this, &url);
+			video->setPos(event->scenePos());
+			this->addItem(video);
 
-		temp = video->getPlayer();
-		connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
+			temp = video->getPlayer();
+			connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
 
-		pauseAll();
+			pauseAll();
+		}
+	}
+	else if (dynamic_cast<TriggerAssetHandler*>(event->source()))
+	{
+		if (1)
+		{
+			qDebug() << "Dropping from trigger asset";
+			for (QUrl url : mimedata->urls())
+			{
+				VideoObject* video = new VideoObject(this, &url);
+				video->setPos(event->scenePos());
+				this->addItem(video);
+
+				temp = video->getPlayer();
+				connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
+
+				pauseAll();
+			}
+		}
 	}
 	
 	event->acceptProposedAction();
-
 }
 
 void AnimicScene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
@@ -214,4 +234,8 @@ void AnimicScene::onVideoLoaded(qint64 length)
 	emit objectInserted(maxDuration);
 	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onVideoLoaded(qint64))));
 }
+
+//disable triggers
+//enable triggers
+//play trigger
 

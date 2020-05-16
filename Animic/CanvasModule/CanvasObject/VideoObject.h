@@ -26,13 +26,16 @@ public:
 	void stopMedia();
 	void toggleMute();
 
+	void setName(QString);
+	QString getName();
+
 	void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);// override;
 	enum { Type = UserType + 1 };
 
 	inline int type() const { return Type;}
 
-
 protected:
+
 	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
@@ -46,6 +49,8 @@ private:
 	QMediaPlayer* player = nullptr;
 	QMediaPlaylist* playList = nullptr;
 	QPixmap* pixmapFrame = nullptr;
+
+	QString name = "Video Layer";
 
 	QPointF mousePos;
 	bool init = false;
@@ -64,8 +69,11 @@ public slots:
 	void onFocused();	
 	void onFocusExit();
 
+	void disableRect();
+	void enableRect();
+
 	//void onPosXChanged(); void onPosYChanged();
 	//scale change
-	//url change
+	void onUrlChanged(QString);
 
 };

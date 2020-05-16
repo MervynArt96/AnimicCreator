@@ -39,3 +39,8 @@ void SceneListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 {
 
 }
+
+QSize SceneListDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	
+}

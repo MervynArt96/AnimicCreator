@@ -31,13 +31,11 @@ protected:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) = 0;
 
     //virtual QRectF boundingRect() const = 0;
-    inline void setDrawRect(bool);
 
     QList<RectHandle*> handleList;
     QRectF objectRect;
     QPointF origin;
 
-    bool isDrawRect;
     RectHandle* currentHandle;
 
 private:
@@ -49,11 +47,6 @@ private:
 
 
 BaseObject::BaseObject() {};
-
-void BaseObject::setDrawRect(bool value)
-{
-    isDrawRect = value;
-}
 
 void BaseObject::createHandles()
 {
@@ -69,15 +62,16 @@ void BaseObject::createHandles()
     QPointF rotate(top.x(), top.y() - 50);
 
     handleList.append(new RectHandle(objectRect.topLeft() + QPointF(5,5), size, HandleShape::RectangleShape, HandleType::TopLeft));
-    handleList.append(new RectHandle(top, size, HandleShape::RectangleShape, HandleType::Top));
     handleList.append(new RectHandle(objectRect.topRight() + QPointF(-5, 5), size, HandleShape::RectangleShape, HandleType::TopRight));
-    handleList.append(new RectHandle(left, size, HandleShape::RectangleShape, HandleType::MidLeft));
-    handleList.append(new RectHandle(right, size, HandleShape::RectangleShape, HandleType::MidRight));
     handleList.append(new RectHandle(objectRect.bottomLeft() + QPointF(5, -5), size, HandleShape::RectangleShape, HandleType::BtmLeft));
-    handleList.append(new RectHandle(bottom, size, HandleShape::RectangleShape, HandleType::Btm));
     handleList.append(new RectHandle(objectRect.bottomRight() + QPointF(-5, -5), size, HandleShape::RectangleShape, HandleType::BtmRight));
-    handleList.append(new RectHandle(rotate, size, HandleShape::CircleShape, HandleType::Rotation));
-    handleList.append(new RectHandle(origin, size, HandleShape::CircleShape, HandleType::Origin));
+
+    //handleList.append(new RectHandle(top, size, HandleShape::RectangleShape, HandleType::Top));
+    //handleList.append(new RectHandle(left, size, HandleShape::RectangleShape, HandleType::MidLeft));
+    //handleList.append(new RectHandle(right, size, HandleShape::RectangleShape, HandleType::MidRight));
+    //handleList.append(new RectHandle(bottom, size, HandleShape::RectangleShape, HandleType::Btm));
+    //handleList.append(new RectHandle(rotate, size, HandleShape::CircleShape, HandleType::Rotation));
+    //handleList.append(new RectHandle(origin, size, HandleShape::CircleShape, HandleType::Origin));
 }
 
 
