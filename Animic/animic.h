@@ -11,12 +11,12 @@
 #include "StitchingModule/StitchingDialog.h"
 #include "SceneHandlerModule/SceneAssetItem.h"
 #include "CanvasModule/AnimicView.h"
-#include "SceneHandlerModule/SceneListWidget.h"
 #include "PropertiesModule/PropertiesHandler.h"
 #include "TimelineModule/AnimicSlider.h"
 #include "ModelViewModule/AnimicListView.h"
 #include "ModelViewModule/SceneListModel.h"
 #include "ModelViewModule/SceneListDelegate.h"
+#include <LayerModule\LayerList.h>
 
 class Animic : public QMainWindow
 {
@@ -43,13 +43,15 @@ private:
 	void setupTimeline();
 	void setupListModel();
 
-	int sceneTabCount = 1;	//global var, for object naming
+	int sceneTabCount = 1;	//global var, for object naming, might not need
 
-	ProjectHandler* projectHandler;			//modules
+	ProjectHandler* projectHandler;			
 	AssetHandler* assetHandler;
 	QFileDialog* fileDialog;
 	StitchingDialog* stitchDialog;
 	PropertiesHandler* propHandler;
+	LayerList* layerList;
+
 	AnimicSlider* mainSlider;
 
 	AnimicListView* mainList = new AnimicListView();
@@ -60,10 +62,6 @@ private:
 
 	AnimicView* graphicsView;		//to skip new project
 	AnimicScene* scene;
-	AnimicScene sc;
-	SceneAssetItem* sceneItem;
-
-	QPointF* canvasSize;
 
 signals:
 

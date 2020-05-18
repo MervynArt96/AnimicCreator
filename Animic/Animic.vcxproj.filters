@@ -42,9 +42,6 @@
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CanvasModule\CanvasObject\ImageObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,15 +69,6 @@
     <ClCompile Include="ProjectManagementModule\Dialogs\NewProjectDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneHandlerModule\SceneAssetItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasModule\CanvasObject\AudioObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasModule\CanvasObject\DialogueObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StitchingModule\StitchingDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,9 +76,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StitchingModule\StitchingScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneHandlerModule\SceneListWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StitchingModule\StitchingListWidget.cpp">
@@ -167,19 +152,10 @@
     <ClInclude Include="ProjectManagementModule\ProjectHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CanvasModule\CanvasObject\ImageObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CanvasModule\CanvasObject\AudioObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CanvasModule\CanvasObject\DialogueObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneHandlerModule\SceneAssetItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StitchingModule\Triggers\BaseTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerModule\LayerListItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -206,9 +182,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StitchingModule\StitchingScene.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="SceneHandlerModule\SceneListWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StitchingModule\StitchingListWidget.h">
@@ -250,13 +223,10 @@
     <QtMoc Include="ModelViewModule\SceneListDelegate.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="LayerModule\LayerList.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="LayerModule\LayerListItem.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="AssetHandlerModule\TriggerAssetHandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="LayerModule\LayerList.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

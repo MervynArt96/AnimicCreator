@@ -15,3 +15,8 @@ void LayerList::clearItems()
 {
 	qDeleteAll(selectedItems());
 }
+
+void LayerList::onObjectInserted()
+{
+
+}

@@ -37,10 +37,12 @@ void SceneListDelegate::updateEditorGeometry(QWidget* editor, const QStyleOption
 
 void SceneListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-
+	QItemDelegate::paint(painter, option, index);
 }
 
+/*
 QSize SceneListDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	
 }
+*/

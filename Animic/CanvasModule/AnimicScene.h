@@ -33,8 +33,7 @@ protected:
 
 private:
 
-	//QList<VideoObject*> videoList;
-	QString name = "Scene";
+	QString name = "Scene x";
 	QListWidget* sceneList;
 
 	QMediaPlaylist* bgmList = nullptr;
@@ -48,7 +47,7 @@ private:
 signals:
 
 	void objectInserted(qint64);
-	void subscribeTimeline(QMediaPlayer*);
+	void subscribeTimeline(QMediaPlayer*); 
 	void unscubscribeTimeline();
 
 public slots:
@@ -62,4 +61,9 @@ public slots:
 
 	void setVideoFrameTime(int);
 	void onVideoLoaded(qint64);
+	void onEndOfMedia();
+
+	void enableTrigger();
+	void disableTrigger();
+	void playTrigger();
 };

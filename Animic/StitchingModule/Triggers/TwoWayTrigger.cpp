@@ -13,7 +13,7 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
         this->setAcceptHoverEvents(true);
         player->setVideoOutput(this);
         player->play();
-        //pixmapFrame = new QPixmap();
+        player->pause();
         this->currentHandle = nullptr;
         qDebug() << player->error();
     }
@@ -27,6 +27,17 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
 TwoWayTrigger::~TwoWayTrigger()
 {
 
+}
+
+
+AnimicScene* TwoWayTrigger::getDefaultScene()
+{
+    return sceneDefault;
+}
+
+AnimicScene* TwoWayTrigger::getAltScene()
+{
+    return sceneAlt;
 }
 
 QString TwoWayTrigger::getName()
@@ -276,7 +287,7 @@ void TwoWayTrigger::enableRect()
 
 void TwoWayTrigger::toggleLoop()
 {
-    if(playList->playbackMode == QMediaPlaylist::CurrentItemOnce)
+    if(playList->playbackMode() == QMediaPlaylist::CurrentItemOnce)
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
     else playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 }

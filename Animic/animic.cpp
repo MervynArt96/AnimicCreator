@@ -6,7 +6,6 @@ Animic::Animic(QWidget *parent): QMainWindow(parent)
 	ui.setupUi(this);
 	this->setWindowTitle("Animic Creator");
 	init();
-	canvasSize = new QPointF(800, 600);
 }
 
 #pragma region Helper Functions
@@ -32,14 +31,15 @@ void Animic::setupScene()	//set up graphics scene and canvas
 	ui.tab->setLayout(layout);
 	scene = new AnimicScene();
 	graphicsView->setSceneRect(QRectF(QPointF(0, 0), QPointF(800,600)));
-	graphicsView->setScene(&sc);
+	graphicsView->setScene(scene);
 	//graphicsView->setBackgroundBrush(QBrush(Qt::darkGray, Qt::SolidPattern));
 	graphicsView->setAcceptDrops(true);
 	graphicsView->show();
 
-	connect(ui.playButton, &QPushButton::clicked, &sc, &AnimicScene::playAll);
-	connect(ui.pauseButton, &QPushButton::clicked, &sc, &AnimicScene::pauseAll);
-	connect(ui.stopButton, &QPushButton::clicked, &sc, &AnimicScene::stopAll);
+	connect(ui.playButton, &QPushButton::clicked, scene, &AnimicScene::playAll);
+	connect(ui.pauseButton, &QPushButton::clicked, scene, &AnimicScene::pauseAll);
+	connect(ui.stopButton, &QPushButton::clicked, scene, &AnimicScene::stopAll);
+
 }
 
 void Animic::connectSignalSlots()
@@ -92,7 +92,7 @@ void Animic::setupListModel()
 	stitchList->setModel(sceneModel);
 	stitchList->setItemDelegate(stitchDelegate);
 
-	sceneModel->appendRow(scene);
+	sceneModel->appendRow(scene);	//demo
 }
 
 void Animic::setCurrentScene(int index)
@@ -184,13 +184,12 @@ void Animic::on_actionNewScene_triggered()
 	widget->setLayout(layout);
 
 	AnimicScene* sc = new AnimicScene();
-	view->setSceneRect(QRectF(QPointF(0, 0), *canvasSize));
+	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800,600)));
 	view->setScene(sc);
 	view->setAcceptDrops(true);
 	view->show();
 
 	sceneModel->appendRow(sc);
-	debug();
 
 }
 #pragma endregion
@@ -198,9 +197,5 @@ void Animic::on_actionNewScene_triggered()
 
 void Animic::debug()
 {
-	for (int i = 0; i < sceneModel->getList()->size()-1; i++)
-	{
-		qDebug() << sceneModel->getList()->size();
-		qDebug() << sceneModel->getList()[i];
-	}
+
 }

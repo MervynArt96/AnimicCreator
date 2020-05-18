@@ -16,7 +16,7 @@ public:
 	~TwoWayTrigger();
 
 	AnimicScene* getDefaultScene();
-	AnimicScene getAltScene();
+	AnimicScene* getAltScene();
 
 	QString getName();
 	void setName(QString);

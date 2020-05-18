@@ -235,7 +235,22 @@ void AnimicScene::onVideoLoaded(qint64 length)
 	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onVideoLoaded(qint64))));
 }
 
-//disable triggers
-//enable triggers
-//play trigger
+void AnimicScene::onEndOfMedia()
+{
 
+}
+
+void AnimicScene::enableTrigger()
+{
+
+}
+
+void AnimicScene::disableTrigger()
+{
+
+}
+
+void AnimicScene::playTrigger()
+{
+
+}

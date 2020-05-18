@@ -92,21 +92,11 @@ void SceneListModel::appendRow()
 
 void SceneListModel::appendRow(AnimicScene* sc)
 {
-	if (sceneList->size() == 0)
-	{
-		beginInsertRows(QModelIndex(), sceneList->size(), sceneList->size());
-		sceneList->append(sc);
+	beginInsertRows(QModelIndex(), sceneList->size(), sceneList->size());
+	sceneList->append(sc);
 
-		endInsertRows();
-	}
-	else
-	{
-		//qDebug() << 
-		beginInsertRows(QModelIndex(), sceneList->size(), sceneList->size());
-		sceneList->append(sc);
+	endInsertRows();
 
-		endInsertRows();
-	}
 }
 
 QModelIndex SceneListModel::sibling(int row, int column, const QModelIndex& idx) const
