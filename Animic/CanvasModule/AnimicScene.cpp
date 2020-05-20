@@ -42,6 +42,63 @@ void AnimicScene::setName(QString k)
 	name = k;
 }
 
+VideoObject* AnimicScene::selectedItem()
+{
+	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
+
+	for (QGraphicsItem* item : itemList)
+	{
+		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);
+		if (obj != nullptr)
+		{
+			return obj;
+		}
+	}
+	return nullptr;
+}
+
+TwoWayTrigger* AnimicScene::selectedTWTrigger()
+{
+	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
+	for (QGraphicsItem* item : itemList)
+	{
+		TwoWayTrigger* obj = qgraphicsitem_cast<TwoWayTrigger*>(item);
+		if (obj != nullptr)
+		{
+			return obj;
+		}
+	}
+	return nullptr;
+
+}
+
+TimedMashTrigger* AnimicScene::selectedTMTrigger()
+{
+	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
+	for (QGraphicsItem* item : itemList)
+	{
+		TimedMashTrigger* obj = qgraphicsitem_cast<TimedMashTrigger*>(item);
+		if (obj != nullptr)
+		{
+			return obj;
+		}
+	}
+	return nullptr;
+}
+
+OneWayTrigger* AnimicScene::selectedOWTrigger()
+{
+	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
+	for (QGraphicsItem* item : itemList)
+	{
+		OneWayTrigger* obj = qgraphicsitem_cast<OneWayTrigger*>(item);
+		if (obj != nullptr)
+		{
+			return obj;
+		}
+	}
+	return nullptr;
+}
 
 QString AnimicScene::mimeType()
 {
@@ -238,6 +295,24 @@ void AnimicScene::onVideoLoaded(qint64 length)
 void AnimicScene::onEndOfMedia()
 {
 
+}
+
+void AnimicScene::getTrigger()
+{
+	QList<QGraphicsItem*> allItems = items();
+
+	for (QGraphicsItem* item : allItems)
+	{
+		TwoWayTrigger* TW_trigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
+		TimedMashTrigger* TM_trigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
+
+		if (TW_trigger != nullptr)
+		{
+			
+		}
+		if(trigger)
+		else return;
+	}
 }
 
 void AnimicScene::enableTrigger()

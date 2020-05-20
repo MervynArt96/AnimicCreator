@@ -3,7 +3,7 @@
 #include <QGraphicsVideoItem>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>;
-#include <CanvasModule\AnimicScene.h>
+#include <CanvasModule/AnimicScene.h>
 #include "StitchingModule/Triggers/BaseTrigger.h"
 
 class TwoWayTrigger : public QGraphicsVideoItem, public BaseTrigger
@@ -20,6 +20,9 @@ public:
 
 	QString getName();
 	void setName(QString);
+
+	QUrl getUrl();
+	void setUrl(QUrl);
 
 	QMediaPlayer* getPlayer();
 	QMediaPlaylist* getPlayList();
@@ -39,6 +42,7 @@ public:
 	void hoverMoveEvent(QGraphicsSceneHoverEvent*) override;
 
 	void createHandles();
+	void transformHandle();
 
 private:
 
@@ -55,8 +59,6 @@ private:
 
 	QPointF mousePos;
 	bool init = false;
-
-private:
 
 	AnimicScene* sceneDefault = nullptr;
 	AnimicScene* sceneAlt = nullptr;

@@ -50,6 +50,17 @@ void TwoWayTrigger::setName(QString str)
     this->name = str;
 }
 
+QUrl TwoWayTrigger::getUrl()
+{
+
+}
+
+void TwoWayTrigger::setUrl(QUrl)
+{
+
+}
+
+
 QMediaPlaylist* TwoWayTrigger::getPlayList()
 {
     return playList;
@@ -127,7 +138,6 @@ void TwoWayTrigger::mousePressEvent(QGraphicsSceneMouseEvent* event)
     {
         qDebug() << "Right Click";
         //open context menu here
-
     }
     QGraphicsVideoItem::mousePressEvent(event);
     //event->accept();
@@ -137,59 +147,52 @@ void TwoWayTrigger::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (event->buttons() == Qt::LeftButton && this->currentHandle != nullptr)
     {
-        qreal sensitivity = 1;
-        qreal dirX = 1.15;
-        qreal dirY = 1.15;
+        const qreal sensitivity = 1;
+        qreal dir = 1.15;
         QPointF deltaPos = event->pos() - mousePos;
 
-        if (deltaPos.x() < 0)
-            dirX = 0.9;
-        if (deltaPos.y() < 0)
-            dirY = 0.9;
-
-        dirX *= sensitivity;
-        dirY *= sensitivity;
+        if (deltaPos.x() < 0 || deltaPos.y() < 0)
+            dir = 0.9 * sensitivity;
 
         mousePos = event->pos();
         QTransform transform = this->transform();
 
         if (this->currentHandle->getHandleType() == HandleType::MidLeft)
         {
-            this->setTransform(this->transform().scale(dirX, 1));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::MidRight)
         {
-            this->setTransform(this->transform().scale(dirX, 1));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::Top)
         {
-            this->setTransform(this->transform().scale(1, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::Btm)
         {
-            this->setTransform(this->transform().scale(1, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::TopLeft)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::TopRight)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::BtmLeft)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
 
         }
         else if (this->currentHandle->getHandleType() == HandleType::BtmRight)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::Rotation)
         {
             this->setTransform(QTransform().translate(origin.x(), origin.y()).rotate(-QLineF(event->scenePos(),
-                mapToScene(origin)).angle() + QLineF(event->lastScenePos(), mapToScene(origin)).angle()).translate(-origin.x(), -origin.y()), true);
+            mapToScene(origin)).angle() + QLineF(event->lastScenePos(), mapToScene(origin)).angle()).translate(-origin.x(), -origin.y()), true);
         }
         else if (this->currentHandle->getHandleType() == HandleType::Origin)
         {
@@ -208,6 +211,7 @@ void TwoWayTrigger::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 void TwoWayTrigger::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsVideoItem::mouseReleaseEvent(event);
+    currentHandle = nullptr;
     event->accept();
 }
 
@@ -267,7 +271,7 @@ void TwoWayTrigger::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
 void TwoWayTrigger::onFocused()
 {
-
+    //connect to trigger properties
 }
 
 void TwoWayTrigger::onFocusExit()
@@ -295,5 +299,10 @@ void TwoWayTrigger::toggleLoop()
 void TwoWayTrigger::onUrlChanged()
 {
     playList->removeMedia(playList->currentIndex());
+
+}
+
+void TwoWayTrigger::transformHandle()
+{
 
 }

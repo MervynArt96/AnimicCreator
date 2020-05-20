@@ -18,7 +18,7 @@ public:
 	QString getVideoPath();
 	QMediaPlayer* getPlayer();
 
-	//QRectF boundingRect();
+	QRectF boundingRect();
 	
 	void setPixmap(QPixmap*);
 	void playMedia();

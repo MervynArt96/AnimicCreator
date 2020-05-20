@@ -81,16 +81,13 @@ void AnimicListView::onDeleteScene()
 {
 	if (selectedIndexes().size() > 0)
 	{
-		for (int i = 0; i < selectedIndexes().size();i ++)
-		{
-			//remove current scene from main view 
-			//close tab
-			//disconnect from slider, 
-				//playback buttons, 
-				//layer, 
-				//properties
-			setCurrentIndex(selectedIndexes()[i]);
-			model()->removeRows(selectedIndexes()[i].row(), 1, QModelIndex());
-		}
+		//remove current scene from main view 
+		//close tab
+		//disconnect from slider, 
+			//playback buttons, 
+			//layer, 
+			//properties
+
+		model()->removeRows(currentIndex().row(), 1, QModelIndex());
 	}
 }

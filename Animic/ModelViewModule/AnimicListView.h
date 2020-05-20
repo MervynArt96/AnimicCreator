@@ -2,6 +2,8 @@
 
 #include <QListView>
 #include <QModelIndex>
+#include <CanvasModule/AnimicScene.h>
+#include <ModelViewModule/SceneListModel.h>
 
 class AnimicListView : public QListView
 {

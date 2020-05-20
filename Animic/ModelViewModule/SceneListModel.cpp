@@ -74,10 +74,7 @@ bool SceneListModel::insertRows(int row, int count, const QModelIndex& parent)
 bool SceneListModel::removeRows(int row, int count, const QModelIndex& parent)
 {
 	beginRemoveRows(QModelIndex(), row, row + count - 1);
-
-	for (int row = 0; row < count; ++row) {
-		sceneList->removeAt(row);
-	}
+	sceneList->removeAt(row);
 
 	endRemoveRows();
 	return true;

@@ -69,11 +69,12 @@ QString VideoObject::getName()
     return name;
 }
 
-/*
+
 QRectF VideoObject::boundingRect() 
 {
+
     return QRectF(0, 0, 200, 200);
-}*/
+}
 
 
 void VideoObject::setPixmap(QPixmap* pixmap) //might not need
@@ -92,7 +93,7 @@ void VideoObject::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 	if (event->buttons() == Qt::LeftButton)
     {
-        mousePos = event->pos();
+        mousePos = event->scenePos();
 		for(RectHandle* handle : this->handleList)
         {
             if (handle->boundingRect().contains(event->pos()))
@@ -117,54 +118,53 @@ void VideoObject::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (event->buttons() == Qt::LeftButton && this->currentHandle != nullptr)
     {
-        qreal sensitivity = 1;
-        qreal dirX = 1.15;
-        qreal dirY = 1.15;
-        QPointF deltaPos = event->pos() - mousePos;
+        //qreal sensitivity = 0.1;
+        qreal dir = 1.0001;
+        QPointF deltaPos = event->scenePos() - mousePos;
 
-        if (deltaPos.x() < 0)
-            dirX = 0.9;
-        if (deltaPos.y() < 0)
-            dirY = 0.9;
+        qDebug() << deltaPos;
 
-        dirX *= sensitivity;
-        dirY *= sensitivity;
+        if (deltaPos.x() <= 0 || deltaPos.y() <= 0)
+        {
+            //sensitivity = 1;
+            dir = 0.0099;
+        }
 
-        mousePos = event->pos();
         QTransform transform = this->transform();
+
+        mousePos = event->scenePos();
 
         if (this->currentHandle->getHandleType() == HandleType::MidLeft)
         {
-            this->setTransform(this->transform().scale(dirX, 1));
+            this->setTransform(this->transform().scale(dir, 1));
         }
         else if (this->currentHandle->getHandleType() == HandleType::MidRight)
         {
-            this->setTransform(this->transform().scale(dirX, 1));
+            this->setTransform(this->transform().scale(dir, 1));
         }
         else if (this->currentHandle->getHandleType() == HandleType::Top)
         {
-            this->setTransform(this->transform().scale(1, dirY));
+            this->setTransform(this->transform().scale(1, dir));
         }
         else if (this->currentHandle->getHandleType() == HandleType::Btm)
         {
-            this->setTransform(this->transform().scale(1, dirY));
+            this->setTransform(this->transform().scale(1, dir));
         }
         else if (this->currentHandle->getHandleType() == HandleType::TopLeft)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+            //use bounding rect
         }
         else if (this->currentHandle->getHandleType() == HandleType::TopRight)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::BtmLeft)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
 
         }
         else if (this->currentHandle->getHandleType() == HandleType::BtmRight)
         {
-            this->setTransform(this->transform().scale(dirX, dirY));
+
         }
         else if (this->currentHandle->getHandleType() == HandleType::Rotation)
         {
@@ -189,6 +189,7 @@ void VideoObject::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 void VideoObject::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
     QGraphicsVideoItem::mouseReleaseEvent(event);
+    currentHandle = nullptr;
     event->accept();
 }
 

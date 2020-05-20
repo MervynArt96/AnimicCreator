@@ -15,6 +15,12 @@ AnimicView::~AnimicView()
 
 }
 
+void AnimicView::setAnimicScene(AnimicScene* sc)
+{
+    QGraphicsView::setScene(sc);
+    emit sceneChanged(sc);
+}
+
 
 void AnimicView::keyPressEvent(QKeyEvent* event) //Need Test
 {

@@ -18,20 +18,17 @@ public:
 	~PropertiesHandler();
 
 	VideoProperties* getVideoPropertiesWidget();
-
-	void changePropertiesType();
+	SceneProperties* getScenePropertiesWidget();
 
 private:
 	
 	SceneProperties* sceneProperties;
 	VideoProperties* videoProperties;
-	//ImageProperties
-	//AudioProperties
-	//TextProperties
 
 public slots:
 
-	void updateCurrentProperties();
+	void onSceneChanged(AnimicScene*);
+	void onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
 
 };
 

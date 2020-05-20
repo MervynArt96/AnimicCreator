@@ -74,6 +74,11 @@ void Animic::setupAssetHandler()
 	ui.treeHolder->layout()->addWidget(assetHandler);
 }
 
+void Animic::setupProperties()
+{
+	connect(scene, &QGraphicsScene::focusItemChanged, propHandler, &PropertiesHandler::onFocusChanged);
+}
+
 void Animic::setupStitchingModule()
 {
 	stitchDialog = new StitchingDialog(stitchList, sceneModel);

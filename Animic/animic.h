@@ -9,7 +9,6 @@
 #include "CanvasModule/AnimicScene.h"
 #include "AssetHandlerModule/AssetHandler.h"
 #include "StitchingModule/StitchingDialog.h"
-#include "SceneHandlerModule/SceneAssetItem.h"
 #include "CanvasModule/AnimicView.h"
 #include "PropertiesModule/PropertiesHandler.h"
 #include "TimelineModule/AnimicSlider.h"
@@ -35,6 +34,7 @@ public:
 
 private:
 	Ui::AnimicClass ui;
+
 	void init();
 	void connectSignalSlots();
 	void setupScene();
@@ -42,6 +42,7 @@ private:
 	void setupStitchingModule();
 	void setupTimeline();
 	void setupListModel();
+	void setupProperties();
 
 	int sceneTabCount = 1;	//global var, for object naming, might not need
 

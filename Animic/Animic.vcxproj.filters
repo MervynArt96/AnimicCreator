@@ -126,6 +126,21 @@
     <ClCompile Include="StitchingModule\Triggers\BaseTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StitchingModule\Triggers\OneWayTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\TriggerProperties\TriggerPropertiesHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\TriggerProperties\TimedMashTriggerProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StitchingModule\TriggerProperties\OneWayTriggerProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackEngineCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -156,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerModule\LayerListItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackEngineCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,6 +245,18 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="LayerModule\LayerList.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\Triggers\OneWayTrigger.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\TriggerProperties\TriggerPropertiesHandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\TriggerProperties\TimedMashTriggerProperties.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StitchingModule\TriggerProperties\OneWayTriggerProperties.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

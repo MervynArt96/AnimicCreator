@@ -41,10 +41,12 @@ void VideoProperties::connectComponent()
 	}
 }
 
-void VideoProperties::onFocusChanged(VideoObject* target)
+void VideoProperties::onFocusChanged(QGraphicsItem* target)
 {
-	obj = target;
+	obj = qgraphicsitem_cast<VideoObject*>(target);
 	
+	nameText->setText(obj->getName());
+
 	posXEdit->setText(QString::number(obj->scenePos().x()));
 	posYEdit->setText(QString::number(obj->scenePos().y()));
 

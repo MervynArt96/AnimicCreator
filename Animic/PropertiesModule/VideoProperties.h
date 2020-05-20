@@ -57,7 +57,7 @@ signals:
 public slots:
 
 	//on every attribute change
-	void onFocusChanged(VideoObject*);
+	void onFocusChanged(QGraphicsItem*);
 
 	void onSizeXChanged();	void onSizeYChanged();
 	void onScaleXChanged();	void onScaleYChanged();

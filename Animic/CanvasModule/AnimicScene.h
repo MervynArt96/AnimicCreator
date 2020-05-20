@@ -3,6 +3,9 @@
 #include "CanvasModule/CanvasObject/VideoObject.h"
 #include "AssetHandlerModule/AssetHandler.h"
 #include "AssetHandlerModule/TriggerAssetHandler.h"
+#include <StitchingModule\Triggers\TwoWayTrigger.h>
+#include <StitchingModule\Triggers\TimedMashTrigger.h>
+#include <StitchingModule/Triggers/OneWayTrigger.h>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
@@ -18,6 +21,12 @@ public:
 
 	QString getName();
 	void setName(QString);
+	void getTrigger();
+
+	VideoObject* selectedItem();
+	TwoWayTrigger* selectedTWTrigger();
+	TimedMashTrigger* selectedTMTrigger();
+	OneWayTrigger* selectedOWTrigger();
 
 protected:
 

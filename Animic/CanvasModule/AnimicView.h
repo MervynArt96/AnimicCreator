@@ -17,6 +17,8 @@ public:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent* event);
 
+    void setAnimicScene(AnimicScene*);
+
 private:
 
     Qt::KeyboardModifiers modifiers;
@@ -29,6 +31,9 @@ private:
 signals:
     
     void zoomed();
+    void sceneChanged(AnimicScene*);
+
+public slots:
 
 
 };
