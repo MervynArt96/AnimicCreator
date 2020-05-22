@@ -29,6 +29,47 @@ TwoWayTrigger::~TwoWayTrigger()
 
 }
 
+void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
+{
+    if (activeTrigger)
+    {
+        if (event->key() == Qt::Key_E)
+        {
+            emit sendDefaultScene(sceneDefault);
+            activeTrigger = false;
+        }
+        else if (event->key() == Qt::Key_Q)
+        {
+            emit sendAltScene(sceneAlt);
+            activeTrigger = false;
+        }
+    }
+}
+
+void TwoWayTrigger::setActiveTrigger(bool x)
+{
+    activeTrigger = x;
+}
+
+void TwoWayTrigger::sendDefaultScene(AnimicScene* sc)
+{
+
+}
+
+void TwoWayTrigger::sendAltScene(AnimicScene* sc)
+{
+
+}
+
+void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
+{
+    sceneDefault = sc;
+}
+
+void TwoWayTrigger::setAltScene(AnimicScene* sc)
+{
+    sceneAlt = sc;
+}
 
 AnimicScene* TwoWayTrigger::getDefaultScene()
 {
@@ -50,14 +91,16 @@ void TwoWayTrigger::setName(QString str)
     this->name = str;
 }
 
-QUrl TwoWayTrigger::getUrl()
+QUrl* TwoWayTrigger::getUrl()
 {
-
+    return videoPath;
 }
 
-void TwoWayTrigger::setUrl(QUrl)
+void TwoWayTrigger::setUrl(QUrl* str)
 {
-
+    playList->removeMedia(0);
+    playList->addMedia(*str);
+    videoPath = str;
 }
 
 

@@ -138,7 +138,10 @@
     <ClCompile Include="StitchingModule\TriggerProperties\OneWayTriggerProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlaybackEngineCore.cpp">
+    <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -171,9 +174,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerModule\LayerListItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlaybackEngineCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,6 +257,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StitchingModule\TriggerProperties\OneWayTriggerProperties.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

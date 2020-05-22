@@ -21,12 +21,15 @@ public:
 
 	QString getName();
 	void setName(QString);
-	void getTrigger();
+
+	QGraphicsItem* getTrigger();
 
 	VideoObject* selectedItem();
 	TwoWayTrigger* selectedTWTrigger();
 	TimedMashTrigger* selectedTMTrigger();
 	OneWayTrigger* selectedOWTrigger();
+
+	void playThrough();
 
 protected:
 
@@ -42,13 +45,18 @@ protected:
 
 private:
 
-	QString name = "Scene x";
+	QString name = "Scene ";
 	QListWidget* sceneList;
 
 	QMediaPlaylist* bgmList = nullptr;
 	QMediaPlayer* bgmPlayer = nullptr;
 
-	QMediaPlayer* temp = nullptr;
+	QMediaPlayer* temp = nullptr;	//temp holder for video object/ trigger media player
+	QMediaPlayer* max = nullptr;
+
+	int triggerToBeInserted = -1; // null = -1, TW = 0, TM = 1, OW = 2
+
+	bool checkForTrigger();
 
 	/*QMediaPlaylist* bgmLoopList = nullptr;
 	QMediaPlayer* bgmLoopPlayer = nullptr;
@@ -58,6 +66,8 @@ signals:
 	void objectInserted(qint64);
 	void subscribeTimeline(QMediaPlayer*); 
 	void unscubscribeTimeline();
+	void nextScene(AnimicScene*);
+	void lastScene();
 
 public slots:
 
@@ -69,10 +79,13 @@ public slots:
 	void enableObjectDragging();
 
 	void setVideoFrameTime(int);
+
 	void onVideoLoaded(qint64);
+	void onTriggerLoaded(qint64);
+
 	void onEndOfMedia();
 
 	void enableTrigger();
 	void disableTrigger();
-	void playTrigger();
+	void activateTrigger();
 };

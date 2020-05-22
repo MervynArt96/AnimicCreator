@@ -9,11 +9,6 @@ class PropertiesHandler : public QWidget
 
 public:
 
-	enum ObjectType {
-		Video, Image, Dialogue
-	};
-
-
 	PropertiesHandler();
 	~PropertiesHandler();
 
@@ -29,6 +24,6 @@ public slots:
 
 	void onSceneChanged(AnimicScene*);
 	void onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
-
+	
 };
 

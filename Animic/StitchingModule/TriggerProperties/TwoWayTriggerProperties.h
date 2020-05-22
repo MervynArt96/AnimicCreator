@@ -3,15 +3,19 @@
 #include <QWidget>
 #include <PropertiesModule/DroppableLineEdit.h>
 #include <StitchingModule/Triggers/TwoWayTrigger.h>
-#include <CanvasModule\AnimicView.h>
+#include <CanvasModule/AnimicView.h>
 
 class TwoWayTriggerProperties : public QWidget
 {
 	Q_OBJECT
 
 public:
-	TwoWayTriggerProperties(QWidget *parent);
+
+	TwoWayTriggerProperties(QWidget*);
 	~TwoWayTriggerProperties();
+
+	void connectTrigger(TwoWayTrigger*);
+	void connectTrigger();
 
 private:
 
@@ -19,9 +23,6 @@ private:
 
 	TwoWayTrigger* trigger;
 
-	QComboBox* sceneDefaultComboBox;
-	QComboBox* sceneAltComboBox;
-	
 	QLineEdit* nameEdit;
 
 	QLineEdit* posXEdit;
@@ -35,19 +36,18 @@ private:
 	QLabel* sceneDefaultLabel;
 	QLabel* sceneAltLabel;
 
+	QComboBox* sceneDefaultComboBox;
+	QComboBox* sceneAltComboBox;
+
 	QLabel* posXLabel;
 	QLabel* posYLabel;
 
 	QLabel* urlLabel;
 	QLabel* scaleLabel;
 
-signals:
+	QCheckBox* loopToggle;
 
-	void changeName(QString);
-	void changePosX(qreal);
-	void changePosY(qreal);
-	void changeScale(qreal);
-	void changeUrl(QString);
+signals:
 
 public slots:
 
@@ -56,7 +56,10 @@ public slots:
 	void onChangePosX(qreal);
 	void onChangePosY(qreal);
 	void onChangeScale(qreal);
-	void onChangeUrl(QString);
+	void onChangeUrl(QUrl);
+	void onChangeUrl(QString str);
+
+	void onToggleLoop();
 
 	void TwoWayTriggerProperties::onChangeTrigger(TwoWayTrigger*);
 };

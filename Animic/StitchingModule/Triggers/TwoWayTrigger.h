@@ -21,11 +21,13 @@ public:
 	QString getName();
 	void setName(QString);
 
-	QUrl getUrl();
-	void setUrl(QUrl);
+	QUrl* getUrl();
+	void setUrl(QUrl*);
 
 	QMediaPlayer* getPlayer();
 	QMediaPlaylist* getPlayList();
+
+	void setActiveTrigger(bool);
 
 	void playMedia();
 	void pauseMedia();
@@ -35,6 +37,8 @@ public:
 	enum { Type = UserType + 101 };
 
 	inline int type() const { return Type; }
+
+	void keyPressEvent(QKeyEvent*) override;
 
 	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
@@ -69,7 +73,12 @@ private:
 
 	QString name = "TwoWayTrigger1";
 
-	bool persist = true;
+	bool activeTrigger = false;
+
+signals:
+
+	void sendDefaultScene(AnimicScene*);
+	void sendAltScene(AnimicScene*);
 
 public slots:
 
@@ -82,4 +91,7 @@ public slots:
 	void toggleLoop();
 
 	void onUrlChanged();
+
+	void setDefaultScene(AnimicScene* sc);
+	void setAltScene(AnimicScene* sc);
 };

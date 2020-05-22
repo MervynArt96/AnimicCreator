@@ -1,10 +1,13 @@
 #pragma once
 
 #include <CanvasModule\AnimicScene.h>
-
+#include <QTimer>
+#include <QtCore\qeventloop.h>
 
 class PlaybackEngineCore
 {
+	Q_OBJECT
+
 public:
 
 	PlaybackEngineCore();
@@ -12,13 +15,23 @@ public:
 	~PlaybackEngineCore();
 
 	void refreshList(QList<AnimicScene*>);
-	void setList();
-	void getList();
+	void setList(QList<AnimicScene*>);
+	QList<AnimicScene*> getList();
 	void playback();
 
 private:
 
 	QList<AnimicScene*> sceneList;
+	QTimer* timer;
+	QEventLoop* loop;
+
+signals:
+
+	void playNextScene(AnimicScene*);
+
+public slots:
+
+	void onNextScene(AnimicScene*);
 
 };
 
