@@ -4,7 +4,7 @@
 #include <QTimer>
 #include <QtCore\qeventloop.h>
 
-class PlaybackEngineCore
+class PlaybackEngineCore : public QObject
 {
 	Q_OBJECT
 

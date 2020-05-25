@@ -3,6 +3,8 @@
 
 PropertiesHandler::PropertiesHandler()
 {
+	sceneProperties = new SceneProperties(this);
+	videoProperties = new VideoProperties(this);
 	QGridLayout* baseLayout = new QGridLayout();
 	setLayout(baseLayout);
 

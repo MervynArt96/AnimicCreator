@@ -41,11 +41,6 @@ void PlaybackEngineCore::playback()
 	}
 }
 
-void PlaybackEngineCore::playNextScene(AnimicScene* sc)
-{
-
-}
-
 void PlaybackEngineCore::onNextScene(AnimicScene* sc)
 {
 	emit playNextScene(sc);

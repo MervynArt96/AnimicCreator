@@ -13,7 +13,7 @@ public:
 
 private:
 
-	AnimicScene* nextScene;
+	//AnimicScene* nextScene;
 
 
 

@@ -3,9 +3,6 @@
 #include "CanvasModule/CanvasObject/VideoObject.h"
 #include "AssetHandlerModule/AssetHandler.h"
 #include "AssetHandlerModule/TriggerAssetHandler.h"
-#include <StitchingModule\Triggers\TwoWayTrigger.h>
-#include <StitchingModule\Triggers\TimedMashTrigger.h>
-#include <StitchingModule/Triggers/OneWayTrigger.h>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
@@ -23,11 +20,12 @@ public:
 	void setName(QString);
 
 	QGraphicsItem* getTrigger();
+	QMediaPlayer* getMaxPlayer();
 
 	VideoObject* selectedItem();
-	TwoWayTrigger* selectedTWTrigger();
-	TimedMashTrigger* selectedTMTrigger();
-	OneWayTrigger* selectedOWTrigger();
+	//TwoWayTrigger* selectedTWTrigger();
+	//TimedMashTrigger* selectedTMTrigger();
+	//OneWayTrigger* selectedOWTrigger();
 
 	void playThrough();
 
@@ -77,6 +75,9 @@ public slots:
 
 	void disableObjectDragging();
 	void enableObjectDragging();
+
+	void disconnectObject();
+	void disconnectScene();
 
 	void setVideoFrameTime(int);
 

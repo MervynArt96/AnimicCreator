@@ -6,6 +6,7 @@ AnimicListView::AnimicListView()
 	setMovement(QListView::Free);
 	setEditTriggers(EditTrigger::EditKeyPressed);
 	setContextMenuPolicy(Qt::CustomContextMenu);
+	setSelectionMode(QAbstractItemView::SingleSelection);
 
 	connect(this, &AnimicListView::doubleClicked, this, &AnimicListView::onDoubleClicked);
 	connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)));
@@ -21,30 +22,15 @@ void AnimicListView::setListMode(bool x)
 	mode = x; //true = main, false = stitch
 }
 
-void AnimicListView::mousePressEvent(QMouseEvent* event)
-{
-	QAbstractItemView::mousePressEvent(event);
-	if (event->button() == Qt::RightButton)
-	{
-
-	}
-}
-
 void AnimicListView::onDoubleClicked(const QModelIndex& index)
 {
-	//override edit?
 	if (mode)
 	{
-		qDebug() << this->model()->data(index, Qt::DisplayRole);
-		//get scene from list
-		//create new tab, set active tab if haven't
-		//create new animic view
-		//set sceneRect
-		//connect playback buttons, layer, properties, slider
+		emit openNewSceneTab(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index);
 	}
 	else
 	{
-		qDebug() << this->model()->data(index, Qt::DisplayRole);
+		emit switchScene(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index);
 	}
 }
 
@@ -59,7 +45,6 @@ void AnimicListView::showContextMenu(const QPoint& pos)
 	QAction deleteAction("Delete Scene", this);
 	connect(&deleteAction, SIGNAL(triggered()), this, SLOT(onDeleteScene()));
 	contextMenu.addAction(&deleteAction);
-
 
 	contextMenu.exec(mapToGlobal(pos));
 }
@@ -81,13 +66,6 @@ void AnimicListView::onDeleteScene()
 {
 	if (selectedIndexes().size() > 0)
 	{
-		//remove current scene from main view 
-		//close tab
-		//disconnect from slider, 
-			//playback buttons, 
-			//layer, 
-			//properties
-
-		model()->removeRows(currentIndex().row(), 1, QModelIndex());
+		emit deleteScene(qvariant_cast<AnimicScene*>(currentIndex().data(Qt::BackgroundRole)));
 	}
 }

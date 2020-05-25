@@ -93,7 +93,6 @@ void SceneListModel::appendRow(AnimicScene* sc)
 	sceneList->append(sc);
 
 	endInsertRows();
-
 }
 
 QModelIndex SceneListModel::sibling(int row, int column, const QModelIndex& idx) const
@@ -104,4 +103,24 @@ QModelIndex SceneListModel::sibling(int row, int column, const QModelIndex& idx)
 QList<AnimicScene*>* SceneListModel::getList()
 {
 	return sceneList;
+}
+
+void SceneListModel::setSceneToEditMode(QModelIndexList* list)
+{
+	for (QModelIndex index : *list)
+	{
+		sceneList->at(index.row())->enableObjectDragging();
+		sceneList->at(index.row())->disableTrigger();
+	}
+}
+
+void SceneListModel::setSceneToStitchMode()
+{
+	for (int i = 0; i < sceneList->count(); i++)
+	{
+		sceneList->at(i)->disableObjectDragging();
+		sceneList->at(i)->enableTrigger();
+		sceneList->at(i)->disconnectObject();
+		sceneList->at(i)->disconnect();
+	}
 }

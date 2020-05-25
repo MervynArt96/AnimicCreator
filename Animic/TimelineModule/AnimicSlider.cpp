@@ -36,7 +36,6 @@ void AnimicSlider::onInsertVideo(qint64 length)
 		if (length > this->maximum())
 		{
 			this->setMaximum(length);
-			//this->setValue(QtMAth.qCeil((current/this->maximum()); //to retain current position
 		}
 		QMetaObject::invokeMethod(currentScene, "pauseAll", Qt::DirectConnection);
 	}

@@ -11,6 +11,11 @@ TwoWayTriggerProperties::~TwoWayTriggerProperties()
 
 }
 
+void TwoWayTriggerProperties::onChangeScene()
+{
+	
+}
+
 void TwoWayTriggerProperties::onChangeName(QString str)
 {
 	nameEdit->setText(str);
@@ -42,14 +47,14 @@ void TwoWayTriggerProperties::onChangeUrl(QUrl url)
 {
 	urlEdit->setText(url.toString());
 	if (trigger != nullptr)
-		trigger->setUrl(url);
+		trigger->setUrl(&url);
 }
 
 void TwoWayTriggerProperties::onChangeUrl(QString str)
 {
 	urlEdit->setText(str);
 	if (trigger != nullptr)
-		trigger->setUrl(QUrl(str));
+		trigger->setUrl(&QUrl(str));
 }
 
 

@@ -21,6 +21,9 @@ public:
 	bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 	void appendRow();
 	void appendRow(AnimicScene*);
+
+	void setSceneToEditMode(QModelIndexList*);
+	void setSceneToStitchMode();
 	
 	QModelIndex sibling(int row, int column, const QModelIndex& idx) const override;
 

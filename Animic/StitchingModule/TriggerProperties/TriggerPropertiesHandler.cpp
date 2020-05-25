@@ -3,7 +3,10 @@
 
 TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent) : QWidget(parent)
 {
-
+	TWTriggerProperties = new TwoWayTriggerProperties(this);
+	TMTriggerProperties = new TimedMashTriggerProperties(this);
+	OWTriggerProperties = new OneWayTriggerProperties(this);
+		
 }
 
 TriggerPropertiesHandler::~TriggerPropertiesHandler()
@@ -14,7 +17,7 @@ TriggerPropertiesHandler::~TriggerPropertiesHandler()
 void TriggerPropertiesHandler::onSceneChanged(AnimicScene* sc)
 {
 	disconnect();
-	connect(sc, &QGraphicsScene::focusItemChanged, this, &onFocusChanged);
+	connect(sc, &QGraphicsScene::focusItemChanged, this, &TriggerPropertiesHandler::onFocusChanged);
 }
 
 void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason)

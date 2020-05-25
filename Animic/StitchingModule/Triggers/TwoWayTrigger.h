@@ -4,9 +4,8 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>;
 #include <CanvasModule/AnimicScene.h>
-#include "StitchingModule/Triggers/BaseTrigger.h"
 
-class TwoWayTrigger : public QGraphicsVideoItem, public BaseTrigger
+class TwoWayTrigger : public QGraphicsVideoItem
 {
 	Q_OBJECT
 
@@ -76,9 +75,10 @@ private:
 	bool activeTrigger = false;
 
 signals:
-
+	
 	void sendDefaultScene(AnimicScene*);
 	void sendAltScene(AnimicScene*);
+	
 
 public slots:
 

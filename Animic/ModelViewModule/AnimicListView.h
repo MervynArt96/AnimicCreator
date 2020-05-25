@@ -14,7 +14,6 @@ public:
 	~AnimicListView();
 
 	void setListMode(bool);
-	void mousePressEvent(QMouseEvent* event) override;
 
 private:
 
@@ -22,8 +21,10 @@ private:
 
 signals:
 	
-	void openNewSceneTab();
-	void switchScene();
+	void openNewSceneTab(AnimicScene*, QModelIndex);
+	void switchScene(AnimicScene*, QModelIndex);
+
+	void deleteScene(AnimicScene*);
 
 public slots:
 
@@ -32,5 +33,4 @@ public slots:
 
 	void onRenameScene();
 	void onDeleteScene();
-
 };

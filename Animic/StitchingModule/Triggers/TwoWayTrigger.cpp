@@ -35,12 +35,12 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
     {
         if (event->key() == Qt::Key_E)
         {
-            emit sendDefaultScene(sceneDefault);
+            //emit sendDefaultScene(sceneDefault);
             activeTrigger = false;
         }
         else if (event->key() == Qt::Key_Q)
         {
-            emit sendAltScene(sceneAlt);
+            //emit sendAltScene(sceneAlt);
             activeTrigger = false;
         }
     }
@@ -49,16 +49,6 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
 void TwoWayTrigger::setActiveTrigger(bool x)
 {
     activeTrigger = x;
-}
-
-void TwoWayTrigger::sendDefaultScene(AnimicScene* sc)
-{
-
-}
-
-void TwoWayTrigger::sendAltScene(AnimicScene* sc)
-{
-
 }
 
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
@@ -80,6 +70,7 @@ AnimicScene* TwoWayTrigger::getAltScene()
 {
     return sceneAlt;
 }
+
 
 QString TwoWayTrigger::getName()
 {

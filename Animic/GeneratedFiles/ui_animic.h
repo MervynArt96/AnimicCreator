@@ -66,7 +66,11 @@ public:
     QSplitter *MainRightSplitter;
     QTabWidget *PropertiesTab;
     QWidget *propTab;
+    QVBoxLayout *verticalLayout_3;
+    QWidget *propHolder;
     QWidget *layerTab;
+    QVBoxLayout *verticalLayout;
+    QWidget *layerHolder;
     QTabWidget *ManagementTab;
     QWidget *AssetTab;
     QHBoxLayout *horizontalLayout_4;
@@ -85,9 +89,9 @@ public:
     QWidget *sceneListHolder;
     QWidget *widget;
     QHBoxLayout *horizontalLayout_7;
-    QPushButton *pushButton;
+    QPushButton *newSceneButton;
     QSpacerItem *horizontalSpacer_4;
-    QPushButton *pushButton_2;
+    QPushButton *removeSceneButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -253,9 +257,29 @@ public:
         PropertiesTab->setTabsClosable(false);
         propTab = new QWidget();
         propTab->setObjectName(QString::fromUtf8("propTab"));
+        verticalLayout_3 = new QVBoxLayout(propTab);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        propHolder = new QWidget(propTab);
+        propHolder->setObjectName(QString::fromUtf8("propHolder"));
+
+        verticalLayout_3->addWidget(propHolder);
+
         PropertiesTab->addTab(propTab, QString());
         layerTab = new QWidget();
         layerTab->setObjectName(QString::fromUtf8("layerTab"));
+        verticalLayout = new QVBoxLayout(layerTab);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        layerHolder = new QWidget(layerTab);
+        layerHolder->setObjectName(QString::fromUtf8("layerHolder"));
+
+        verticalLayout->addWidget(layerHolder);
+
         PropertiesTab->addTab(layerTab, QString());
         MainRightSplitter->addWidget(PropertiesTab);
         ManagementTab = new QTabWidget(MainRightSplitter);
@@ -269,6 +293,7 @@ public:
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         splitter = new QSplitter(AssetTab);
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setMinimumSize(QSize(300, 0));
@@ -344,19 +369,19 @@ public:
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        pushButton = new QPushButton(widget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        newSceneButton = new QPushButton(widget);
+        newSceneButton->setObjectName(QString::fromUtf8("newSceneButton"));
 
-        horizontalLayout_7->addWidget(pushButton);
+        horizontalLayout_7->addWidget(newSceneButton);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_7->addItem(horizontalSpacer_4);
 
-        pushButton_2 = new QPushButton(widget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        removeSceneButton = new QPushButton(widget);
+        removeSceneButton->setObjectName(QString::fromUtf8("removeSceneButton"));
 
-        horizontalLayout_7->addWidget(pushButton_2);
+        horizontalLayout_7->addWidget(removeSceneButton);
 
 
         verticalLayout_2->addWidget(widget);
@@ -419,7 +444,7 @@ public:
         retranslateUi(AnimicClass);
 
         PropertiesTab->setCurrentIndex(0);
-        ManagementTab->setCurrentIndex(0);
+        ManagementTab->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(AnimicClass);
@@ -454,8 +479,8 @@ public:
         btnImportDir->setText(QCoreApplication::translate("AnimicClass", "Import Directory", nullptr));
         btnDeleteAsset->setText(QCoreApplication::translate("AnimicClass", "Delete", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(AssetTab), QCoreApplication::translate("AnimicClass", "Assets", nullptr));
-        pushButton->setText(QCoreApplication::translate("AnimicClass", "PushButton", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("AnimicClass", "PushButton", nullptr));
+        newSceneButton->setText(QCoreApplication::translate("AnimicClass", "New Scene", nullptr));
+        removeSceneButton->setText(QCoreApplication::translate("AnimicClass", "Remove", nullptr));
         ManagementTab->setTabText(ManagementTab->indexOf(sceneManagementTab), QCoreApplication::translate("AnimicClass", "Scene", nullptr));
         menuFile->setTitle(QCoreApplication::translate("AnimicClass", "File", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("AnimicClass", "Edit", nullptr));

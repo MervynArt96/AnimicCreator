@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PropertiesModule/VideoProperties.h"
+#include "CanvasModule/AnimicScene.h"
 #include <PropertiesModule/SceneProperties.h>
 
 class PropertiesHandler : public QWidget

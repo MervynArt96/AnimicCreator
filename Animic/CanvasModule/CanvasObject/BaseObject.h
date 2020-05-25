@@ -7,7 +7,6 @@
 #include "CanvasModule/CanvasObject/RectHandle.h"
 #include <QPainter>
 #include <QGraphicsItem>
-#include "CanvasModule/AnimicScene.h"
 #include <QSettings>
 #include <QVariant>
 

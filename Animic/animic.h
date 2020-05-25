@@ -44,25 +44,27 @@ private:
 	void setupListModel();
 	void setupProperties();
 
-	int sceneTabCount = 1;	//global var, for object naming, might not need
+	int currentTab = 0;
 
 	ProjectHandler* projectHandler;			
 	AssetHandler* assetHandler;
 	QFileDialog* fileDialog;
 	StitchingDialog* stitchDialog;
+
 	PropertiesHandler* propHandler;
 	LayerList* layerList;
 
 	AnimicSlider* mainSlider;
+	AnimicSlider* stitchSlider;
 
 	AnimicListView* mainList = new AnimicListView();
-	AnimicListView* stitchList = new AnimicListView();
 	SceneListModel* sceneModel = new SceneListModel();
 	SceneListDelegate* mainDelegate = new SceneListDelegate(this);
-	SceneListDelegate* stitchDelegate = new SceneListDelegate(this);
 
 	AnimicView* graphicsView;		//to skip new project
 	AnimicScene* scene;
+
+	QGraphicsScene* dummy;
 
 signals:
 
@@ -72,10 +74,19 @@ public slots:
 	void on_btnImportAsset_clicked();
 	void on_btnImportDir_clicked();
 	void on_btnDeleteAsset_clicked();
+	void on_stitchButton_clicked();
+
 	void on_actionNewScene_triggered();
+	void on_newSceneButton_clicked();
+	void on_removeSceneButton_clicked();
 
 	void closeTab(int);
 	void setCurrentScene(int);
+	void onDeleteScene(AnimicScene*);
+
+	void openNewTab(AnimicScene*);
+
+	void resetTabOnCloseDialog();
 
 	void debug();
 	

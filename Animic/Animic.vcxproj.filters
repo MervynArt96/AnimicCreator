@@ -75,12 +75,6 @@
     <ClCompile Include="CanvasModule\AnimicView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StitchingModule\StitchingScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StitchingModule\StitchingListWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TimelineModule\AnimicSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -197,12 +191,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="CanvasModule\AnimicView.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="StitchingModule\StitchingScene.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="StitchingModule\StitchingListWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TimelineModule\AnimicSlider.h">
