@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CanvasModule/CanvasObject/VideoObject.h"
-#include "AssetHandlerModule/AssetHandler.h"
 #include "AssetHandlerModule/TriggerAssetHandler.h"
+#include "AssetHandlerModule/AssetHandler.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
@@ -52,13 +52,14 @@ private:
 	QMediaPlayer* temp = nullptr;	//temp holder for video object/ trigger media player
 	QMediaPlayer* max = nullptr;
 
-	int triggerToBeInserted = -1; // null = -1, TW = 0, TM = 1, OW = 2
+	int triggerToBeInserted = 0; // null = -1, TW = 0, TM = 1, OW = 2
 
 	bool checkForTrigger();
 
 	/*QMediaPlaylist* bgmLoopList = nullptr;
 	QMediaPlayer* bgmLoopPlayer = nullptr;
 	*/
+
 signals:
 
 	void objectInserted(qint64);
@@ -89,4 +90,6 @@ public slots:
 	void enableTrigger();
 	void disableTrigger();
 	void activateTrigger();
+
+	void switchTriggerType(int);
 };

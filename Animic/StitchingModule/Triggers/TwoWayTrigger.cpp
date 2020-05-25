@@ -6,6 +6,7 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
     if (QFile::exists(filePath->path()))
     {
         playList = new QMediaPlaylist();
+        playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
         player = new QMediaPlayer();
         player->setPlaylist(playList);
         videoPath = filePath;
@@ -21,7 +22,6 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
     {
         qDebug() << "File Not Found";
     }
-
 }
 
 TwoWayTrigger::~TwoWayTrigger()
@@ -35,12 +35,12 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
     {
         if (event->key() == Qt::Key_E)
         {
-            //emit sendDefaultScene(sceneDefault);
+            emit sendDefaultScene(sceneDefault);
             activeTrigger = false;
         }
         else if (event->key() == Qt::Key_Q)
         {
-            //emit sendAltScene(sceneAlt);
+            emit sendAltScene(sceneAlt);
             activeTrigger = false;
         }
     }
@@ -93,7 +93,6 @@ void TwoWayTrigger::setUrl(QUrl* str)
     playList->addMedia(*str);
     videoPath = str;
 }
-
 
 QMediaPlaylist* TwoWayTrigger::getPlayList()
 {

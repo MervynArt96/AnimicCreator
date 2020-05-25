@@ -14,6 +14,10 @@ public:
 	TriggerPropertiesHandler(QWidget *parent);
 	~TriggerPropertiesHandler();
 
+	TwoWayTriggerProperties* getTWTriggerProperties();
+	TimedMashTriggerProperties* getTMTriggerProperties();
+	OneWayTriggerProperties* getOWTriggerProperties();
+
 private:
 
 	TwoWayTriggerProperties* TWTriggerProperties;

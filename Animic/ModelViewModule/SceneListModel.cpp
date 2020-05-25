@@ -105,12 +105,12 @@ QList<AnimicScene*>* SceneListModel::getList()
 	return sceneList;
 }
 
-void SceneListModel::setSceneToEditMode(QModelIndexList* list)
+void SceneListModel::setSceneToEditMode()
 {
-	for (QModelIndex index : *list)
+	for (int i = 0; i < sceneList->count(); i++)
 	{
-		sceneList->at(index.row())->enableObjectDragging();
-		sceneList->at(index.row())->disableTrigger();
+		sceneList->at(i)->enableObjectDragging();
+		sceneList->at(i)->disableTrigger();
 	}
 }
 

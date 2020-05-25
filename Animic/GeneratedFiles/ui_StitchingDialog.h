@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPushButton>
@@ -31,13 +32,25 @@ public:
     QSplitter *splitter_3;
     QSplitter *splitter;
     QWidget *listHolder;
+    QWidget *triggerAssetColumn;
+    QVBoxLayout *verticalLayout_5;
     QWidget *triggerAssetHolder;
+    QWidget *widget;
+    QGridLayout *gridLayout;
+    QPushButton *st_RemoveButton;
+    QPushButton *st_ImportButton;
+    QSpacerItem *horizontalSpacer_3;
+    QGroupBox *radioGroup;
+    QVBoxLayout *verticalLayout_4;
+    QRadioButton *twRadio;
+    QRadioButton *tmRadio;
+    QRadioButton *owRadio;
+    QWidget *triggerPropertiesHolder;
     QSplitter *splitter_2;
     QWidget *graphicsViewHolder;
     QWidget *holder;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
-    QWidget *st_SliderHolder;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *st_PauseButton;
@@ -45,16 +58,7 @@ public:
     QPushButton *st_StopButton;
     QSpacerItem *horizontalSpacer;
     QPushButton *previewButton;
-    QWidget *triggerSetting;
-    QHBoxLayout *horizontalLayout_2;
-    QWidget *widget_2;
-    QHBoxLayout *horizontalLayout_3;
-    QGroupBox *groupBox;
-    QVBoxLayout *verticalLayout_4;
-    QRadioButton *TW_RadioButton;
-    QRadioButton *TM_RadioButton;
-    QRadioButton *OW_RadioButton;
-    QWidget *triggerPropertiesHolder;
+    QWidget *st_SliderHolder;
 
     void setupUi(QDialog *StitchingDialog)
     {
@@ -67,23 +71,96 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         splitter_4 = new QSplitter(StitchingDialog);
         splitter_4->setObjectName(QString::fromUtf8("splitter_4"));
-        splitter_4->setOrientation(Qt::Vertical);
+        splitter_4->setLineWidth(0);
+        splitter_4->setMidLineWidth(1);
+        splitter_4->setOrientation(Qt::Horizontal);
         splitter_3 = new QSplitter(splitter_4);
         splitter_3->setObjectName(QString::fromUtf8("splitter_3"));
-        splitter_3->setOrientation(Qt::Horizontal);
+        splitter_3->setLineWidth(0);
+        splitter_3->setMidLineWidth(1);
+        splitter_3->setOrientation(Qt::Vertical);
         splitter = new QSplitter(splitter_3);
         splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setLineWidth(0);
+        splitter->setMidLineWidth(0);
         splitter->setOrientation(Qt::Horizontal);
         listHolder = new QWidget(splitter);
         listHolder->setObjectName(QString::fromUtf8("listHolder"));
-        listHolder->setMinimumSize(QSize(250, 0));
+        listHolder->setMinimumSize(QSize(250, 350));
         splitter->addWidget(listHolder);
-        triggerAssetHolder = new QWidget(splitter);
+        triggerAssetColumn = new QWidget(splitter);
+        triggerAssetColumn->setObjectName(QString::fromUtf8("triggerAssetColumn"));
+        triggerAssetColumn->setMinimumSize(QSize(250, 0));
+        verticalLayout_5 = new QVBoxLayout(triggerAssetColumn);
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        triggerAssetHolder = new QWidget(triggerAssetColumn);
         triggerAssetHolder->setObjectName(QString::fromUtf8("triggerAssetHolder"));
-        triggerAssetHolder->setMinimumSize(QSize(250, 0));
-        splitter->addWidget(triggerAssetHolder);
+
+        verticalLayout_5->addWidget(triggerAssetHolder);
+
+        widget = new QWidget(triggerAssetColumn);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setMaximumSize(QSize(16777215, 50));
+        gridLayout = new QGridLayout(widget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        st_RemoveButton = new QPushButton(widget);
+        st_RemoveButton->setObjectName(QString::fromUtf8("st_RemoveButton"));
+
+        gridLayout->addWidget(st_RemoveButton, 0, 2, 1, 1);
+
+        st_ImportButton = new QPushButton(widget);
+        st_ImportButton->setObjectName(QString::fromUtf8("st_ImportButton"));
+
+        gridLayout->addWidget(st_ImportButton, 0, 0, 1, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer_3, 0, 1, 1, 1);
+
+
+        verticalLayout_5->addWidget(widget);
+
+        radioGroup = new QGroupBox(triggerAssetColumn);
+        radioGroup->setObjectName(QString::fromUtf8("radioGroup"));
+        radioGroup->setMaximumSize(QSize(16777215, 150));
+        verticalLayout_4 = new QVBoxLayout(radioGroup);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setContentsMargins(11, 0, 0, 11);
+        twRadio = new QRadioButton(radioGroup);
+        twRadio->setObjectName(QString::fromUtf8("twRadio"));
+        twRadio->setChecked(true);
+
+        verticalLayout_4->addWidget(twRadio);
+
+        tmRadio = new QRadioButton(radioGroup);
+        tmRadio->setObjectName(QString::fromUtf8("tmRadio"));
+
+        verticalLayout_4->addWidget(tmRadio);
+
+        owRadio = new QRadioButton(radioGroup);
+        owRadio->setObjectName(QString::fromUtf8("owRadio"));
+
+        verticalLayout_4->addWidget(owRadio);
+
+
+        verticalLayout_5->addWidget(radioGroup);
+
+        splitter->addWidget(triggerAssetColumn);
         splitter_3->addWidget(splitter);
-        splitter_2 = new QSplitter(splitter_3);
+        triggerPropertiesHolder = new QWidget(splitter_3);
+        triggerPropertiesHolder->setObjectName(QString::fromUtf8("triggerPropertiesHolder"));
+        triggerPropertiesHolder->setMinimumSize(QSize(0, 200));
+        triggerPropertiesHolder->setMaximumSize(QSize(16777215, 200));
+        splitter_3->addWidget(triggerPropertiesHolder);
+        splitter_4->addWidget(splitter_3);
+        splitter_2 = new QSplitter(splitter_4);
         splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
         splitter_2->setOrientation(Qt::Vertical);
         graphicsViewHolder = new QWidget(splitter_2);
@@ -106,11 +183,6 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        st_SliderHolder = new QWidget(holder);
-        st_SliderHolder->setObjectName(QString::fromUtf8("st_SliderHolder"));
-
-        verticalLayout_2->addWidget(st_SliderHolder);
-
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -148,58 +220,14 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
+        st_SliderHolder = new QWidget(holder);
+        st_SliderHolder->setObjectName(QString::fromUtf8("st_SliderHolder"));
+        st_SliderHolder->setMinimumSize(QSize(0, 30));
+
+        verticalLayout_3->addWidget(st_SliderHolder);
+
         splitter_2->addWidget(holder);
-        splitter_3->addWidget(splitter_2);
-        splitter_4->addWidget(splitter_3);
-        triggerSetting = new QWidget(splitter_4);
-        triggerSetting->setObjectName(QString::fromUtf8("triggerSetting"));
-        triggerSetting->setMinimumSize(QSize(0, 200));
-        triggerSetting->setMaximumSize(QSize(16777215, 200));
-        horizontalLayout_2 = new QHBoxLayout(triggerSetting);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        widget_2 = new QWidget(triggerSetting);
-        widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        widget_2->setMaximumSize(QSize(150, 16777215));
-        horizontalLayout_3 = new QHBoxLayout(widget_2);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        groupBox = new QGroupBox(widget_2);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        verticalLayout_4 = new QVBoxLayout(groupBox);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        TW_RadioButton = new QRadioButton(groupBox);
-        TW_RadioButton->setObjectName(QString::fromUtf8("TW_RadioButton"));
-
-        verticalLayout_4->addWidget(TW_RadioButton);
-
-        TM_RadioButton = new QRadioButton(groupBox);
-        TM_RadioButton->setObjectName(QString::fromUtf8("TM_RadioButton"));
-
-        verticalLayout_4->addWidget(TM_RadioButton);
-
-        OW_RadioButton = new QRadioButton(groupBox);
-        OW_RadioButton->setObjectName(QString::fromUtf8("OW_RadioButton"));
-
-        verticalLayout_4->addWidget(OW_RadioButton);
-
-
-        horizontalLayout_3->addWidget(groupBox);
-
-
-        horizontalLayout_2->addWidget(widget_2);
-
-        triggerPropertiesHolder = new QWidget(triggerSetting);
-        triggerPropertiesHolder->setObjectName(QString::fromUtf8("triggerPropertiesHolder"));
-
-        horizontalLayout_2->addWidget(triggerPropertiesHolder);
-
-        splitter_4->addWidget(triggerSetting);
+        splitter_4->addWidget(splitter_2);
 
         verticalLayout->addWidget(splitter_4);
 
@@ -212,14 +240,16 @@ public:
     void retranslateUi(QDialog *StitchingDialog)
     {
         StitchingDialog->setWindowTitle(QCoreApplication::translate("StitchingDialog", "Stitch Scene", nullptr));
+        st_RemoveButton->setText(QCoreApplication::translate("StitchingDialog", "Remove", nullptr));
+        st_ImportButton->setText(QCoreApplication::translate("StitchingDialog", "Import", nullptr));
+        radioGroup->setTitle(QCoreApplication::translate("StitchingDialog", "Trigger Type", nullptr));
+        twRadio->setText(QCoreApplication::translate("StitchingDialog", "Two Way Trigger", nullptr));
+        tmRadio->setText(QCoreApplication::translate("StitchingDialog", "Timed Mash Trigger", nullptr));
+        owRadio->setText(QCoreApplication::translate("StitchingDialog", "One Way Trigger", nullptr));
         st_PauseButton->setText(QCoreApplication::translate("StitchingDialog", "Pause", nullptr));
         st_PlayButton->setText(QCoreApplication::translate("StitchingDialog", "Play", nullptr));
         st_StopButton->setText(QCoreApplication::translate("StitchingDialog", "Stop", nullptr));
         previewButton->setText(QCoreApplication::translate("StitchingDialog", "Preview", nullptr));
-        groupBox->setTitle(QCoreApplication::translate("StitchingDialog", "Trigger list", nullptr));
-        TW_RadioButton->setText(QCoreApplication::translate("StitchingDialog", "Two Way", nullptr));
-        TM_RadioButton->setText(QCoreApplication::translate("StitchingDialog", "Timed Mash", nullptr));
-        OW_RadioButton->setText(QCoreApplication::translate("StitchingDialog", "One Way", nullptr));
     } // retranslateUi
 
 };

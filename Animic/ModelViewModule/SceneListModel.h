@@ -22,7 +22,7 @@ public:
 	void appendRow();
 	void appendRow(AnimicScene*);
 
-	void setSceneToEditMode(QModelIndexList*);
+	void setSceneToEditMode();
 	void setSceneToStitchMode();
 	
 	QModelIndex sibling(int row, int column, const QModelIndex& idx) const override;

@@ -3,7 +3,39 @@
 
 TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent): QWidget(parent)
 {
-	
+	posXEdit = new QLineEdit();
+	posYEdit = new QLineEdit();
+
+	scaleEdit = new QLineEdit();
+	urlEdit = new DroppableLineEdit();
+
+	sceneDefaultLabel = new QLabel("Default Scene: ");
+	sceneAltLabel = new QLabel("Alternate Scene: ");
+
+	QComboBox* sceneDefaultComboBox = new QComboBox();
+	QComboBox* sceneAltComboBox = new QComboBox();
+
+	posXLabel = new QLabel("Position X: ");
+	posYLabel = new QLabel("Position Y: ");
+
+	urlLabel = new QLabel("URL: ");
+	scaleLabel = new QLabel("Scale: ");
+
+	loopToggle = new QCheckBox("Toggle Loop", nullptr);
+
+	//set double invalidator for each line edit
+
+	QGridLayout* layout = new QGridLayout();
+
+	layout->addWidget(posXLabel, 0, 0); layout->addWidget(posXEdit, 0 ,1);
+	layout->addWidget(posYLabel, 1, 0); layout->addWidget(posYEdit, 1, 1);
+	layout->addWidget(urlLabel, 2, 0); layout->addWidget(urlEdit, 2, 1);
+	layout->addWidget(sceneDefaultLabel, 3, 0); layout->addWidget(sceneDefaultComboBox, 3, 1);
+	layout->addWidget(sceneAltLabel, 4, 0); layout->addWidget(sceneAltComboBox, 4, 1);
+	layout->addWidget(loopToggle, 5, 0);
+
+	this->setLayout(layout);
+	//scale
 }
 
 TwoWayTriggerProperties::~TwoWayTriggerProperties()
@@ -11,16 +43,26 @@ TwoWayTriggerProperties::~TwoWayTriggerProperties()
 
 }
 
-void TwoWayTriggerProperties::onChangeScene()
+void TwoWayTriggerProperties::onChangeScene(AnimicScene* sc)
 {
-	
+	trigger = qgraphicsitem_cast<TwoWayTrigger*>(sc->getTrigger());
+	if (trigger != nullptr)
+	{
+		//get trigger properties
+		//connect trigger to line edits
+		//connect line edits change signal to trigger slots
+		//connect radio group to scene
+	}
 }
 
-void TwoWayTriggerProperties::onChangeName(QString str)
+QComboBox* TwoWayTriggerProperties::getSceneDefaultComboBox()
 {
-	nameEdit->setText(str);
-	if (trigger != nullptr)
-		trigger->setName(str);
+	return sceneDefaultComboBox;
+}
+
+QComboBox* TwoWayTriggerProperties::getSceneAltComboBox()
+{
+	return sceneAltComboBox;
 }
 
 void TwoWayTriggerProperties::onChangePosX(qreal val)
@@ -87,7 +129,6 @@ void TwoWayTriggerProperties::connectTrigger()
 {
 	if (trigger != nullptr)
 	{
-		connect(nameEdit, &QLineEdit::textChanged, trigger, &TwoWayTrigger::setName);
 		//connect(posXEdit, textChanged, trigger, changePosX)
 
 		//connect(urlEdit, textChanged, trigger, changeUrl)

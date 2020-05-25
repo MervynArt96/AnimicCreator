@@ -55,7 +55,6 @@ private:
 	LayerList* layerList;
 
 	AnimicSlider* mainSlider;
-	AnimicSlider* stitchSlider;
 
 	AnimicListView* mainList = new AnimicListView();
 	SceneListModel* sceneModel = new SceneListModel();

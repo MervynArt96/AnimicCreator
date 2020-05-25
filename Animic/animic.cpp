@@ -116,8 +116,6 @@ void Animic::resetTabOnCloseDialog()
 		for (int j = 0; j < sceneModel->getList()->count(); j++)
 		{
 			QString name = sceneModel->getList()->at(j)->getName();
-			qDebug() << "Name: " << name;
-			qDebug() << "Tab: " << ui.SceneWindow->tabText(i);
 
 			if (ui.SceneWindow->tabText(i) == name)
 			{
@@ -128,6 +126,21 @@ void Animic::resetTabOnCloseDialog()
 					view->setScene(sceneModel->getList()->at(j));
 				}
 			}
+		}
+	}
+
+	AnimicView* view = ui.SceneWindow->currentWidget()->findChild<AnimicView*>();
+
+	if (view != nullptr)
+	{
+		AnimicScene* sc = qobject_cast<AnimicScene*>(view->scene());
+		if (sc != nullptr)
+		{
+			connect(ui.playButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
+			connect(ui.pauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseAll);
+			connect(ui.stopButton, &QPushButton::clicked, sc, &AnimicScene::stopAll);
+			connect(mainSlider, SIGNAL(valueChanged(int)), scene, SLOT(setVideoFrameTime(int)));
+			connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
 		}
 	}
 }
@@ -172,10 +185,11 @@ void Animic::setCurrentScene(int index)
 				connect(mainSlider, SIGNAL(valueChanged(int)), scene, SLOT(setVideoFrameTime(int)));
 				connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
 
-				//connect layer list
 				//update properties window, maybe need to clear only
 				//connect scene to properties window
 					//model edit name to label set text
+
+				//connect layer list
 			}
 		}
 	}
@@ -220,7 +234,7 @@ void Animic::closeTab(int index)
 
 void Animic::on_stitchButton_clicked()
 {
-	for (int i = 0; i < ui.SceneWindow->count(); i++)
+	for (int i = 0; i < ui.SceneWindow->count(); i++)							//prevent app freeze
 	{
 		AnimicView* view = ui.SceneWindow->widget(i)->findChild<AnimicView*>();
 
@@ -230,9 +244,9 @@ void Animic::on_stitchButton_clicked()
 			
 		}
 	}
-
+	qDebug() << "Launching Dialog";
+	sceneModel->setSceneToStitchMode();
 	stitchDialog->openDialog();
-	//sceneModel->setSceneToStitchMode();
 }
 
 void Animic::on_actionNewScene_triggered()

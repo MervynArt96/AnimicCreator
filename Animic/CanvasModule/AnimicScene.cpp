@@ -51,51 +51,6 @@ VideoObject* AnimicScene::selectedItem()
 	return nullptr;
 }
 
-/*
-TwoWayTrigger* selectedTWTrigger()
-{
-	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
-	for (QGraphicsItem* item : itemList)
-	{
-		TwoWayTrigger* obj = qgraphicsitem_cast<TwoWayTrigger*>(item);
-		if (obj != nullptr)
-		{
-			return obj;
-		}
-	}
-	return nullptr;
-
-}
-
-TimedMashTrigger* selectedTMTrigger()
-{
-	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
-	for (QGraphicsItem* item : itemList)
-	{
-		TimedMashTrigger* obj = qgraphicsitem_cast<TimedMashTrigger*>(item);
-		if (obj != nullptr)
-		{
-			return obj;
-		}
-	}
-	return nullptr;
-}
-
-OneWayTrigger* selectedOWTrigger()
-{
-	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
-	for (QGraphicsItem* item : itemList)
-	{
-		OneWayTrigger* obj = qgraphicsitem_cast<OneWayTrigger*>(item);
-		if (obj != nullptr)
-		{
-			return obj;
-		}
-	}
-	return nullptr;
-}
-*/
-
 QString AnimicScene::mimeType()
 {
 	return QString("text/uri-list");
@@ -136,7 +91,7 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 	else if (dynamic_cast<TriggerAssetHandler*>(event->source()))
 	{
 		qDebug() << "Dropping from trigger asset";
-		if (triggerToBeInserted == 0)					//button toggle for different trigger type
+		if (triggerToBeInserted == 0)					
 		{
 			for (QUrl url : mimedata->urls())
 			{
@@ -145,10 +100,10 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 				this->addItem(trigger);
 
 				//temp = trigger->getPlayer();
-				connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
+				connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onTriggerLoaded(qint64)));
 
 				pauseAll();
-				triggerToBeInserted = -1;
+				//triggerToBeInserted = -1;
 			}
 		}
 		else if (triggerToBeInserted == 1)
@@ -161,7 +116,7 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
 
 			pauseAll();
-			triggerToBeInserted = -1;
+			//triggerToBeInserted = -1;
 		}
 		else if (triggerToBeInserted == 2)
 		{
@@ -173,7 +128,7 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
 
 			pauseAll();
-			triggerToBeInserted = -1;
+			//triggerToBeInserted = -1;
 		}
 	}
 	
@@ -253,6 +208,7 @@ void AnimicScene::stopAll()
 
 void AnimicScene::disableObjectDragging()
 {
+	qDebug() << "Disabling Object Dragging";
 	QList<QGraphicsItem*> allItems = items();
 
 	for(QGraphicsItem * item : allItems)
@@ -396,6 +352,7 @@ QGraphicsItem* AnimicScene::getTrigger()
 			return OWTrigger;
 		}
 	}
+	return nullptr;
 }
 
 void AnimicScene::enableTrigger()
@@ -449,16 +406,17 @@ void AnimicScene::activateTrigger()
 			TWTrigger->setActiveTrigger(true);
 
 			//play trigger
-			if (TWTrigger->getDefaultScene() == nullptr && TWTrigger->getAltScene() == nullptr)
+			if (TWTrigger->getDefaultScene() == nullptr)
 			{
 				connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::lastScene);
+			}
+			else connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::nextScene);
+
+			if (TWTrigger->getAltScene() == nullptr)
+			{
 				connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::lastScene);
 			}
-			else
-			{
-				connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::nextScene);
-				connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::nextScene);
-			}
+			else connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::nextScene);
 
 			return;
 		}
@@ -483,4 +441,10 @@ void AnimicScene::playThrough()
 	playAll();
 	if(max != nullptr)
 		connect(max, &QMediaPlayer::mediaStatusChanged, this, &AnimicScene::activateTrigger);
+}
+
+void AnimicScene::switchTriggerType(int i)
+{
+	qDebug() << "Trigger Type: " << triggerToBeInserted;
+	triggerToBeInserted = i;
 }

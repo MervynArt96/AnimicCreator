@@ -6,12 +6,30 @@ TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent) : QWidget(pa
 	TWTriggerProperties = new TwoWayTriggerProperties(this);
 	TMTriggerProperties = new TimedMashTriggerProperties(this);
 	OWTriggerProperties = new OneWayTriggerProperties(this);
-		
+
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(TWTriggerProperties);
+	this->setLayout(layout);
 }
 
 TriggerPropertiesHandler::~TriggerPropertiesHandler()
 {
 
+}
+
+TwoWayTriggerProperties* TriggerPropertiesHandler::getTWTriggerProperties()
+{
+	return TWTriggerProperties;
+}
+
+TimedMashTriggerProperties* TriggerPropertiesHandler::getTMTriggerProperties()
+{
+	return TMTriggerProperties;
+}
+
+OneWayTriggerProperties* TriggerPropertiesHandler::getOWTriggerProperties()
+{
+	return OWTriggerProperties;
 }
 
 void TriggerPropertiesHandler::onSceneChanged(AnimicScene* sc)
@@ -44,5 +62,4 @@ void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* newFocusItem, QGrap
 
 		return;
 	}
-
 }

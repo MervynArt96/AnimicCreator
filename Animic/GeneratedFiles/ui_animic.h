@@ -444,7 +444,7 @@ public:
         retranslateUi(AnimicClass);
 
         PropertiesTab->setCurrentIndex(0);
-        ManagementTab->setCurrentIndex(1);
+        ManagementTab->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(AnimicClass);

@@ -14,24 +14,23 @@ public:
 	TwoWayTriggerProperties(QWidget*);
 	~TwoWayTriggerProperties();
 
+	QComboBox* getSceneDefaultComboBox();
+	QComboBox* getSceneAltComboBox();
+
 	void connectTrigger(TwoWayTrigger*);
 	void connectTrigger();
 
 private:
 
-	AnimicView* view;
+	//AnimicView* view;
 
 	TwoWayTrigger* trigger;
-
-	QLineEdit* nameEdit;
 
 	QLineEdit* posXEdit;
 	QLineEdit* posYEdit;
 
 	QLineEdit* scaleEdit;
 	DroppableLineEdit* urlEdit;
-
-	QLabel* nameLabel;
 
 	QLabel* sceneDefaultLabel;
 	QLabel* sceneAltLabel;
@@ -51,8 +50,7 @@ signals:
 
 public slots:
 
-	void onChangeScene();
-	void onChangeName(QString);
+	void onChangeScene(AnimicScene*);
 	void onChangePosX(qreal);
 	void onChangePosY(qreal);
 	void onChangeScale(qreal);
@@ -61,5 +59,5 @@ public slots:
 
 	void onToggleLoop();
 
-	void TwoWayTriggerProperties::onChangeTrigger(TwoWayTrigger*);
+	void onChangeTrigger(TwoWayTrigger*);
 };
