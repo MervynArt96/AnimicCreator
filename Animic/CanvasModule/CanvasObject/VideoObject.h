@@ -2,9 +2,7 @@
 #include <QGraphicsVideoItem>
 #include "CanvasModule/CanvasObject/BaseObject.h"
 #include <QMediaPlayer>
-#include <QFile>
 #include <QPixmap>
-#include <QGraphicsItem>
 
 class VideoObject : public QGraphicsVideoItem, public BaseObject
 {
@@ -18,7 +16,7 @@ public:
 	QString getVideoPath();
 	QMediaPlayer* getPlayer();
 
-	QRectF boundingRect();
+	//QRectF boundingRect();
 	
 	void setPixmap(QPixmap*);
 	void playMedia();
@@ -72,8 +70,8 @@ public slots:
 	void disableRect();
 	void enableRect();
 
-	//void onPosXChanged(); void onPosYChanged();
-	//scale change
-	void onUrlChanged(QString);
+	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
+	void onScaleChanged(const QString&);
+	void onUrlChanged(const QString&);
 
 };

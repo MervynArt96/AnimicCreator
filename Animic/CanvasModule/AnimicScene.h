@@ -68,6 +68,8 @@ signals:
 	void nextScene(AnimicScene*);
 	void lastScene();
 
+	void triggerInserted();
+
 public slots:
 
 	void playAll();
@@ -90,6 +92,10 @@ public slots:
 	void enableTrigger();
 	void disableTrigger();
 	void activateTrigger();
+
+	void playTrigger();
+	void pauseTrigger();
+	void stopTrigger();
 
 	void switchTriggerType(int);
 };

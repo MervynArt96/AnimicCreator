@@ -30,24 +30,34 @@ void StitchingDialog::reject()
 
 void StitchingDialog::openDialog()
 {
-	view->setScene(dummy);
+	//view->setScene(dummy);
 	this->move(200, 50);
 	this->exec();
 }
 
 void StitchingDialog::onSwitchScene(AnimicScene* sc)
 {
-	//changedSceneList->append(index);
-	view->setScene(sc);
+	view->setScene(sc); 
+
 	if (sc->getMaxPlayer() != nullptr)
 		slider->setMaximum(sc->getMaxPlayer()->duration());
 
+	if (ui.twRadio->isChecked())
+	{
+		sc->switchTriggerType(0);
+	}
+	else if (ui.tmRadio->isChecked())
+	{
+		sc->switchTriggerType(1);
+	}
+	else if (ui.owRadio->isChecked())
+	{
+		sc->switchTriggerType(2);
+	}
+
 	connect(this, &StitchingDialog::changedTrigger, sc, &AnimicScene::switchTriggerType);
 	connect(slider, &AnimicSlider::valueChanged, sc, &AnimicScene::setVideoFrameTime);
-
-	//find trigger
-		//if not null connect to play pause stop button
-		//dont connect to slider
+	connect(sc, &AnimicScene::triggerInserted, this, &StitchingDialog::onTriggerInserted);
 }
 
 void StitchingDialog::setupTriggerScene()
@@ -73,8 +83,6 @@ void StitchingDialog::setupListModel()
 
 	listLayout->addWidget(sceneList);
 	ui.listHolder->setLayout(listLayout);
-
-	changedSceneList = new QModelIndexList();
 
 	connect(sceneList, &AnimicListView::switchScene, this, &StitchingDialog::onSwitchScene);
 }
@@ -127,54 +135,6 @@ void StitchingDialog::connectSignalSlot()
 	connect(ui.owRadio, &QRadioButton::toggled, this, &StitchingDialog::onRadioToggle);
 }
 
-void StitchingDialog::on_st_PauseButton_clicked()
-{
-	if (view->scene() != nullptr)
-	{
-		AnimicScene* sc = qobject_cast<AnimicScene*>(view->scene());
-		if (sc != nullptr)
-		{
-			//find trigger
-			//if trigger != nullptr
-			{
-				//do stuff here
-			}
-		}
-	}
-}
-
-void StitchingDialog::on_st_PlayButton_clicked()
-{
-	if (view->scene() != nullptr)
-	{
-		AnimicScene* sc = qobject_cast<AnimicScene*>(view->scene());
-		if (sc != nullptr)
-		{
-			//find trigger
-			//if trigger != nullptr
-			{
-				//do stuff here
-			}
-		}
-	}
-}
-
-void StitchingDialog::on_st_StopButton_clicked()
-{
-	if (view->scene() != nullptr)
-	{
-		AnimicScene* sc = qobject_cast<AnimicScene*>(view->scene());
-		if (sc != nullptr)
-		{
-			//find trigger
-			//if trigger != nullptr
-			{
-				//do stuff here
-			}
-		}
-	}
-}
-
 void StitchingDialog::on_previewButton_clicked()
 {
 	view->setScene(dummy);
@@ -211,3 +171,9 @@ void StitchingDialog::onRadioToggle(bool checked)
 	}
 }
 
+void StitchingDialog::onTriggerInserted()
+{
+	connect(ui.st_PlayButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::playTrigger);
+	connect(ui.st_PauseButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::pauseTrigger);
+	connect(ui.st_StopButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::stopTrigger);
+}

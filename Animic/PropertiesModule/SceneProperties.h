@@ -8,6 +8,7 @@ class SceneProperties : public QWidget
 	Q_OBJECT
 
 public:
+
 	SceneProperties(QWidget *parent);
 	SceneProperties();
 	~SceneProperties();
@@ -16,16 +17,11 @@ public:
 
 private:
 
-	QLabel* nameLabel = new QLabel(QString("Scene: "));
-	QLabel* nameText = new QLabel(QString(""));
+	QLabel* nameLabel = new QLabel(QString("Scene 1"));
 
-	QLabel* bgmLabel = new QLabel(QString("BGM: "));
-	QLabel* bgmName = new QLabel(QString(""));
-	QLabel* bgmUrl = new QLabel(QString(""));
-
-	/*QLabel* bgmLoopLabel = new QLabel("Loop BGM: ");
-	QLabel* bgmLoopName = new QLabel("");
-	QLabel* bgmLoopUrl = new QLabel("");*/
+	//QLabel* bgmLabel = new QLabel(QString("BGM: "));
+	//QLabel* bgmName = new QLabel(QString("Testing"));
+	//QLabel* bgmUrl = new QLabel(QString("Test Url"));
 
 public slots:
 

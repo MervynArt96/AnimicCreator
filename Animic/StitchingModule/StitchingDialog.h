@@ -35,7 +35,6 @@ private:
 	AnimicView* view;
 	AnimicListView* sceneList;
 	SceneListDelegate* stitchDelegate;
-	QModelIndexList* changedSceneList;
 
 	QGraphicsScene* dummy;
 	TriggerAssetHandler* triggerAsset;
@@ -49,22 +48,19 @@ private:
 
 signals:
 
-	void resetSceneList(QModelIndexList*);
 	void closingDialog();
-
 	void changedTrigger(int);
 
 public slots:
 
-	void on_st_PauseButton_clicked();
-	void on_st_PlayButton_clicked();
-	void on_st_StopButton_clicked();
 	void on_previewButton_clicked();
 	void on_st_ImportButton_clicked();
 	void on_st_RemoveButton_clicked();
 
 	void openDialog();
 	void onSwitchScene(AnimicScene*);
+
+	void onTriggerInserted();
 
 	void onRadioToggle(bool);
 };

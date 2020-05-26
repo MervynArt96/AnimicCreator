@@ -3,6 +3,7 @@
 #include <QGraphicsVideoItem>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>;
+#include "CanvasModule/CanvasObject/RectHandle.h"
 #include <CanvasModule/AnimicScene.h>
 
 class TwoWayTrigger : public QGraphicsVideoItem
@@ -81,9 +82,6 @@ signals:
 	
 
 public slots:
-
-	void onFocused();
-	void onFocusExit();
 
 	void disableRect();
 	void enableRect();

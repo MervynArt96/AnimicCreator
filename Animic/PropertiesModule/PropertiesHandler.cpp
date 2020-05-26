@@ -3,13 +3,18 @@
 
 PropertiesHandler::PropertiesHandler()
 {
-	sceneProperties = new SceneProperties(this);
-	videoProperties = new VideoProperties(this);
+	sceneProperties = new SceneProperties(nullptr);
+	videoProperties = new VideoProperties(nullptr);
 	QGridLayout* baseLayout = new QGridLayout();
-	setLayout(baseLayout);
+
+	baseLayout->setMargin(0);
 
 	baseLayout->addWidget(sceneProperties, 0, 0);
 	baseLayout->addWidget(videoProperties, 1, 0);
+
+	setLayout(baseLayout);
+
+	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
 }
 
 PropertiesHandler::~PropertiesHandler()
@@ -27,17 +32,16 @@ SceneProperties* PropertiesHandler::getScenePropertiesWidget()
 	return sceneProperties;
 }
 
-void PropertiesHandler::onSceneChanged(AnimicScene*)
+void PropertiesHandler::onSceneChanged(AnimicScene* sc)
 {
-	disconnect();
-	//connect back signal slots;
-}
+	disconnect(sceneProperties);
+	disconnect(videoProperties);
 
-void PropertiesHandler::onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason)
-{
-	VideoObject* obj = qgraphicsitem_cast<VideoObject*>(newFocusItem);	//this is assuming one type of supported object for now, to be expanded in future work
-	if ( obj != nullptr)
-	{
-		//connect slots to this obj
-	}
+	connect(this, &PropertiesHandler::sceneChanged, sceneProperties, &SceneProperties::onChangeScene);			//reconnect default connections
+	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
+
+	connect(sc, &AnimicScene::focusItemChanged, this, &PropertiesHandler::objectFocusChanged);
+	
+
+	emit sceneChanged(sc);
 }

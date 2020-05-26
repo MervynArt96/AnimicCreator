@@ -6,7 +6,7 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)
 {
 	if (QFile::exists(filePath->path()))
 	{
-		videoPath = filePath;
+		videoPath = new QUrl(filePath->path());
 		player = new QMediaPlayer();
         this->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
         this->setAcceptHoverEvents(true);
@@ -69,13 +69,12 @@ QString VideoObject::getName()
     return name;
 }
 
-
+/*
 QRectF VideoObject::boundingRect() 
 {
 
-    return QRectF(0, 0, 200, 200);
 }
-
+*/
 
 void VideoObject::setPixmap(QPixmap* pixmap) //might not need
 {
@@ -229,7 +228,6 @@ void VideoObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-
     QGraphicsVideoItem::paint(painter, option, widget);
 
     painter->setRenderHint(QPainter::Antialiasing, true);
@@ -295,7 +293,24 @@ void VideoObject::enableRect()
     showRect = true;
 }
 
-void VideoObject::onUrlChanged(QString str)
+
+void VideoObject::onPosXChanged(const QString& str)
+{
+    this->setX(str.toDouble());
+}
+
+void VideoObject::onPosYChanged(const QString& str)
+{
+    this->setY(str.toDouble());
+}
+
+void VideoObject::onScaleChanged(const QString& str)
+{
+    this->setScale(str.toDouble());
+}
+
+
+void VideoObject::onUrlChanged(const QString& str)
 {
     qint64 pos = player->position();
     player->setMedia(QUrl(str));

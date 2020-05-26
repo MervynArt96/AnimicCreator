@@ -7,6 +7,8 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
     {
         playList = new QMediaPlaylist();
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+        playList->addMedia(*filePath);
+        playList->setCurrentIndex(1);
         player = new QMediaPlayer();
         player->setPlaylist(playList);
         videoPath = filePath;
@@ -48,8 +50,10 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
 
 void TwoWayTrigger::setActiveTrigger(bool x)
 {
+    this->setFocus();
     activeTrigger = x;
 }
+
 
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
 {
@@ -70,7 +74,6 @@ AnimicScene* TwoWayTrigger::getAltScene()
 {
     return sceneAlt;
 }
-
 
 QString TwoWayTrigger::getName()
 {
@@ -300,16 +303,6 @@ void TwoWayTrigger::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
         //painter->drawPoint(this->origin);
     }
     scene()->update();
-}
-
-void TwoWayTrigger::onFocused()
-{
-    //connect to trigger properties
-}
-
-void TwoWayTrigger::onFocusExit()
-{
-
 }
 
 void TwoWayTrigger::disableRect()

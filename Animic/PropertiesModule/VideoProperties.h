@@ -14,52 +14,45 @@ public:
 	VideoProperties(QWidget *parent);
 	~VideoProperties();
 
-	void connectComponent();
-
 private:
 
-	VideoObject* obj = nullptr;
+	VideoObject* object;
 
 	qreal posX = 0;	qreal posY = 0;
-	qreal scaleX = 1;	qreal scaleY = 1;
+	qreal scaleX = 1;
 
 	QString url = "-";
 	QString name = "-";
 
-	qreal volume = 100; //in percent
-	qreal playbackSpeed = 1;
-
-	QLabel* nameLabel = new QLabel(QString("Name: "));
-	QLabel* nameText = new QLabel("");
+	QLabel* nameLabel = new QLabel(QString("Video Object"));
 
 	QLabel* posXLabel = new QLabel(QString("Position X: "));
 	QLabel* posYLabel = new QLabel(QString("Position Y: "));
-	QLabel* scaleXLabel = new QLabel(QString("Scale X: "));
-	QLabel* scaleYLabel = new QLabel(QString("Scale Y: "));
-	QLabel* urlLabel = new QLabel(QString("File Url: "));
+	QLabel* scaleLabel = new QLabel(QString("Scale: "));
+	QLabel* urlLabel = new QLabel(QString("Url: "));
 
 	QLineEdit* posXEdit = new QLineEdit();
 	QLineEdit* posYEdit = new QLineEdit();
-	QLineEdit* scaleXEdit = new QLineEdit();
-	QLineEdit* scaleYEdit = new QLineEdit();
+	QLineEdit* scaleEdit = new QLineEdit();
 	DroppableLineEdit* urlEdit = new DroppableLineEdit();
 
-	QCheckBox* muteSwitch = new QCheckBox("Mute");
+	QCheckBox* muteToggle = new QCheckBox("Mute Video");
 
 signals:
 
 	//to change every attribute
-	void changePos();
+	void changePosX();
+	void changePosY();
 	void changeScale();
 	void changeUrl();
-
 
 public slots:
 
 	//on every attribute change
-	void onFocusChanged(QGraphicsItem*);
+	void onFocusChanged(QGraphicsItem*, QGraphicsItem* , Qt::FocusReason);
 
-	void onSizeXChanged();	void onSizeYChanged();
-	void onScaleXChanged();	void onScaleYChanged();
+	void onPositionXChanged();	
+	void onPositionYChanged();
+	void onScaleChanged();
 	
 };

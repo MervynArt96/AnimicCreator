@@ -252,7 +252,7 @@ public:
         sizePolicy5.setVerticalStretch(0);
         sizePolicy5.setHeightForWidth(PropertiesTab->sizePolicy().hasHeightForWidth());
         PropertiesTab->setSizePolicy(sizePolicy5);
-        PropertiesTab->setMinimumSize(QSize(100, 200));
+        PropertiesTab->setMinimumSize(QSize(100, 300));
         PropertiesTab->setMaximumSize(QSize(16777215, 400));
         PropertiesTab->setTabsClosable(false);
         propTab = new QWidget();
@@ -313,7 +313,7 @@ public:
         horizontalLayout->setSpacing(7);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout->setContentsMargins(11, 0, 11, 0);
         btnImportAsset = new QPushButton(layoutWidget);
         btnImportAsset->setObjectName(QString::fromUtf8("btnImportAsset"));
         btnImportAsset->setMinimumSize(QSize(0, 25));

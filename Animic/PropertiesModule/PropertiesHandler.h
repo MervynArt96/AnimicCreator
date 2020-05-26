@@ -21,10 +21,13 @@ private:
 	SceneProperties* sceneProperties;
 	VideoProperties* videoProperties;
 
-public slots:
+signals:
 
-	void onSceneChanged(AnimicScene*);
-	void onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+	void objectFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+	void sceneChanged(AnimicScene*);
+
+public slots:
 	
+	void onSceneChanged(AnimicScene*);
 };
 

@@ -18,6 +18,7 @@ void Animic::init()
 	setupStitchingModule();
 	setupListModel();
 	setupTimeline();
+	setupProperties();
 
 	connectSignalSlots();
 }
@@ -80,7 +81,8 @@ void Animic::setupProperties()
 	layout->addWidget(propHandler);
 	ui.propHolder->setLayout(layout);
 
-	connect(scene, &QGraphicsScene::focusItemChanged, propHandler, &PropertiesHandler::onFocusChanged);
+	connect(scene, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
+	connect(mainList, &AnimicListView::openNewSceneTab, propHandler, &PropertiesHandler::onSceneChanged);
 }
 
 void Animic::setupStitchingModule()
@@ -104,13 +106,11 @@ void Animic::setupListModel()
 
 	connect(mainList, &AnimicListView::openNewSceneTab, this, &Animic::openNewTab);
 	connect(mainList, &AnimicListView::deleteScene, this, &Animic::onDeleteScene);
-	connect(stitchDialog, &StitchingDialog::resetSceneList, sceneModel, &SceneListModel::setSceneToEditMode);
 	connect(stitchDialog, &StitchingDialog::closingDialog, this, &Animic::resetTabOnCloseDialog);
 }
 
 void Animic::resetTabOnCloseDialog()
 {
-	qDebug() << "Reseting Tab";
 	for (int i = 0; i < ui.SceneWindow->count(); i++)
 	{
 		for (int j = 0; j < sceneModel->getList()->count(); j++)
@@ -244,7 +244,7 @@ void Animic::on_stitchButton_clicked()
 			
 		}
 	}
-	qDebug() << "Launching Dialog";
+
 	sceneModel->setSceneToStitchMode();
 	stitchDialog->openDialog();
 }
