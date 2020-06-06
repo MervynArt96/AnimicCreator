@@ -129,7 +129,6 @@
   <ItemGroup>
     <ClCompile Include="animic.cpp" />
     <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.cpp" />
-    <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackView.cpp" />
     <ClCompile Include="StitchingModule\TriggerProperties\OneWayTriggerProperties.cpp" />
     <ClCompile Include="StitchingModule\TriggerProperties\TimedMashTriggerProperties.cpp" />
     <ClCompile Include="StitchingModule\Triggers\OneWayTrigger.cpp" />
@@ -213,10 +212,6 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;.\PropertiesModule;.\StitchingModule\Triggers;.\StitchingModule\TriggerProperties;.\ModelViewModule;.\LayerModule</IncludePath>
     </QtMoc>
     <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.h">
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;.\PropertiesModule;.\StitchingModule\Triggers;.\StitchingModule\TriggerProperties;.\ModelViewModule;.\LayerModule</IncludePath>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;.\PropertiesModule;.\StitchingModule\Triggers;.\StitchingModule\TriggerProperties;.\ModelViewModule;.\LayerModule</IncludePath>
-    </QtMoc>
-    <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackView.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;.\PropertiesModule;.\StitchingModule\Triggers;.\StitchingModule\TriggerProperties;.\ModelViewModule;.\LayerModule</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickWidgets;$(QTDIR)\include\QtQuickControls2;.\StitchingModule;.\PropertiesModule;.\StitchingModule\Triggers;.\StitchingModule\TriggerProperties;.\ModelViewModule;.\LayerModule</IncludePath>
     </QtMoc>

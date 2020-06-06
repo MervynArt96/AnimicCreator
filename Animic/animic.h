@@ -63,8 +63,6 @@ private:
 	AnimicView* graphicsView;		//to skip new project
 	AnimicScene* scene;
 
-	QGraphicsScene* dummy;
-
 signals:
 
 

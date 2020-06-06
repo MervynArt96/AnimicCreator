@@ -10,6 +10,7 @@
 #include <ModelViewModule\SceneListDelegate.h>
 #include <StitchingModule\TriggerProperties\TriggerPropertiesHandler.h>
 #include <TimelineModule\AnimicSlider.h>
+#include <PreviewerModule\PreviewDialog.h>
 
 class StitchingDialog : public QDialog
 {
@@ -36,7 +37,6 @@ private:
 	AnimicListView* sceneList;
 	SceneListDelegate* stitchDelegate;
 
-	QGraphicsScene* dummy;
 	TriggerAssetHandler* triggerAsset;
 	TriggerPropertiesHandler* triggerProperties;
 	
@@ -45,6 +45,8 @@ private:
 	QRadioButton* twRadio = new QRadioButton();
 	QRadioButton* tmRadio = new QRadioButton();
 	QRadioButton* owRadio = new QRadioButton();
+
+	PreviewDialog* previewDialog;
 
 signals:
 

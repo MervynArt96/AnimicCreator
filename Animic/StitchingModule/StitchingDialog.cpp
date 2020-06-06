@@ -13,6 +13,8 @@ StitchingDialog::StitchingDialog(SceneListModel* model)
 	setupTimeline();
 
 	connectSignalSlot();
+
+	previewDialog = new PreviewDialog();
 }
 
 StitchingDialog::~StitchingDialog()
@@ -22,7 +24,7 @@ StitchingDialog::~StitchingDialog()
 
 void StitchingDialog::reject()
 {
-	view->setScene(dummy);
+	view->setScene(nullptr);
 	qobject_cast<SceneListModel*>(sceneList->model())->setSceneToEditMode();
 	emit closingDialog();
 	QDialog::reject();
@@ -30,7 +32,6 @@ void StitchingDialog::reject()
 
 void StitchingDialog::openDialog()
 {
-	//view->setScene(dummy);
 	this->move(200, 50);
 	this->exec();
 }
@@ -66,8 +67,8 @@ void StitchingDialog::setupTriggerScene()
 	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	view->setAcceptDrops(true);
 
-	dummy = new QGraphicsScene();
-	view->setScene(dummy);
+	//dummy = new QGraphicsScene();
+	view->setScene(nullptr);
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(view);
@@ -137,8 +138,8 @@ void StitchingDialog::connectSignalSlot()
 
 void StitchingDialog::on_previewButton_clicked()
 {
-	view->setScene(dummy);
-	//open previewer here
+	view->setScene(nullptr);
+	previewDialog->openDialog(*qobject_cast<SceneListModel*>(sceneList->model())->getList());
 }
 
 void StitchingDialog::on_st_ImportButton_clicked()

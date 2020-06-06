@@ -269,7 +269,7 @@ void TwoWayTrigger::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     {
         if (this->showRect)
         {
-            QPen pen(QColor::fromRgb(80, 80, 250));
+            QPen pen(QColor::fromRgb(250, 80, 80));
             painter->setPen(pen);
             painter->drawRect(boundingRect());
 

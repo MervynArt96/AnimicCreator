@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QListWidget>
+#include <CanvasModule\AnimicScene.h>
 
 class LayerList : public QListWidget
 {
@@ -19,6 +20,6 @@ signals:
 public slots:
 
 	void onObjectInserted();
-
+	void onChangeScene(AnimicScene* sc);
 
 };

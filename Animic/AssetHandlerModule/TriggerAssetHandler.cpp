@@ -3,7 +3,10 @@
 
 TriggerAssetHandler::TriggerAssetHandler(QObject *parent)
 {
-
+	setHeaderLabels({ "Name" , "Path" });
+	setDragEnabled(true);
+	viewport()->setAcceptDrops(true);
+	setDropIndicatorShown(true);
 }
 
 TriggerAssetHandler::~TriggerAssetHandler()

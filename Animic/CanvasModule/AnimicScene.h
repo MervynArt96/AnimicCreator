@@ -12,7 +12,6 @@ class AnimicScene : public QGraphicsScene
 
 public:
 
-	AnimicScene(QListWidget*);
 	AnimicScene();
 	~AnimicScene();
 
@@ -39,18 +38,16 @@ protected:
 	void dropEvent(QGraphicsSceneDragDropEvent* event);
 	void dragMoveEvent(QGraphicsSceneDragDropEvent* event);
 
-	qint64 maxDuration = 0;
-
 private:
 
 	QString name = "Scene ";
-	QListWidget* sceneList;
 
 	QMediaPlaylist* bgmList = nullptr;
 	QMediaPlayer* bgmPlayer = nullptr;
 
 	QMediaPlayer* temp = nullptr;	//temp holder for video object/ trigger media player
 	QMediaPlayer* max = nullptr;
+	qint64 maxDuration = 0;
 
 	int triggerToBeInserted = 0; // null = -1, TW = 0, TM = 1, OW = 2
 
@@ -92,6 +89,7 @@ public slots:
 	void enableTrigger();
 	void disableTrigger();
 	void activateTrigger();
+	void deactivateTrigger();
 
 	void playTrigger();
 	void pauseTrigger();

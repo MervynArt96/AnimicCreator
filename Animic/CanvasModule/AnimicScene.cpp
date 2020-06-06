@@ -4,15 +4,6 @@
 #include <StitchingModule/Triggers/TimedMashTrigger.h>
 #include <StitchingModule/Triggers/OneWayTrigger.h>
 
-
-AnimicScene::AnimicScene(QListWidget* list)
-{
-	sceneList = list;
-	bgmList = new QMediaPlaylist();
-	bgmPlayer = new QMediaPlayer();
-	bgmPlayer->setPlaylist(bgmList);
-}
-
 AnimicScene::AnimicScene()
 {
 	bgmList = new QMediaPlaylist();
@@ -505,7 +496,9 @@ void AnimicScene::activateTrigger()
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->setVisible(true);
-			TWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
+			TWTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
+			TWTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable, false);
 			TWTrigger->setActiveTrigger(true);
 
 			
@@ -539,6 +532,42 @@ void AnimicScene::activateTrigger()
 		}
 	}
 }
+
+void AnimicScene::deactivateTrigger()
+{
+	QList<QGraphicsItem*> allItems = items();
+
+	for (QGraphicsItem* item : allItems)
+	{
+		TwoWayTrigger* TWTrigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
+		TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
+		OneWayTrigger* OWTrigger = qgraphicsitem_cast<OneWayTrigger*>(item);
+
+		if (TWTrigger != nullptr)
+		{
+			TWTrigger->setActiveTrigger(false);
+			TWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::lastScene);
+			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::nextScene);
+
+			return;
+		}
+		else if (TMTrigger != nullptr)
+		{
+			TMTrigger->setVisible(true);
+			TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			//TMTrigger->setActiveTrigger(false);
+			return;
+		}
+		else if (OWTrigger != nullptr)
+		{
+			OWTrigger->setVisible(true);
+			OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			//OWTrigger->setActiveTrigger(false);
+		}
+	}
+}
+
 
 void AnimicScene::playThrough()
 {

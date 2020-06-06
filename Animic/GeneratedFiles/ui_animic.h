@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -48,7 +47,6 @@ public:
     QHBoxLayout *horizontalLayout_6;
     QHBoxLayout *horizontalLayout_2;
     QSplitter *splitter_3;
-    QGroupBox *ToolBox;
     QSplitter *splitter_4;
     QSplitter *MainSplitter;
     QSplitter *splitter_2;
@@ -152,17 +150,6 @@ public:
         splitter_3->setObjectName(QString::fromUtf8("splitter_3"));
         splitter_3->setOrientation(Qt::Horizontal);
         splitter_3->setChildrenCollapsible(false);
-        ToolBox = new QGroupBox(splitter_3);
-        ToolBox->setObjectName(QString::fromUtf8("ToolBox"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(ToolBox->sizePolicy().hasHeightForWidth());
-        ToolBox->setSizePolicy(sizePolicy1);
-        ToolBox->setMinimumSize(QSize(50, 0));
-        ToolBox->setMaximumSize(QSize(100, 16777215));
-        ToolBox->setAlignment(Qt::AlignCenter);
-        splitter_3->addWidget(ToolBox);
         splitter_4 = new QSplitter(splitter_3);
         splitter_4->setObjectName(QString::fromUtf8("splitter_4"));
         splitter_4->setOrientation(Qt::Horizontal);
@@ -181,20 +168,20 @@ public:
         SceneWindow->setTabsClosable(true);
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(tab->sizePolicy().hasHeightForWidth());
-        tab->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(tab->sizePolicy().hasHeightForWidth());
+        tab->setSizePolicy(sizePolicy1);
         SceneWindow->addTab(tab, QString());
         splitter_2->addWidget(SceneWindow);
         PlaybackButtonHolder = new QWidget(splitter_2);
         PlaybackButtonHolder->setObjectName(QString::fromUtf8("PlaybackButtonHolder"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(PlaybackButtonHolder->sizePolicy().hasHeightForWidth());
-        PlaybackButtonHolder->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(PlaybackButtonHolder->sizePolicy().hasHeightForWidth());
+        PlaybackButtonHolder->setSizePolicy(sizePolicy2);
         PlaybackButtonHolder->setMinimumSize(QSize(0, 50));
         PlaybackButtonHolder->setMaximumSize(QSize(16777215, 50));
         horizontalLayout_8 = new QHBoxLayout(PlaybackButtonHolder);
@@ -233,11 +220,11 @@ public:
         MainSplitter->addWidget(splitter_2);
         SliderHolder = new QWidget(MainSplitter);
         SliderHolder->setObjectName(QString::fromUtf8("SliderHolder"));
-        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(30);
-        sizePolicy4.setHeightForWidth(SliderHolder->sizePolicy().hasHeightForWidth());
-        SliderHolder->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(30);
+        sizePolicy3.setHeightForWidth(SliderHolder->sizePolicy().hasHeightForWidth());
+        SliderHolder->setSizePolicy(sizePolicy3);
         SliderHolder->setMaximumSize(QSize(16777215, 50));
         MainSplitter->addWidget(SliderHolder);
         splitter_4->addWidget(MainSplitter);
@@ -247,11 +234,11 @@ public:
         MainRightSplitter->setChildrenCollapsible(false);
         PropertiesTab = new QTabWidget(MainRightSplitter);
         PropertiesTab->setObjectName(QString::fromUtf8("PropertiesTab"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(PropertiesTab->sizePolicy().hasHeightForWidth());
-        PropertiesTab->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(PropertiesTab->sizePolicy().hasHeightForWidth());
+        PropertiesTab->setSizePolicy(sizePolicy4);
         PropertiesTab->setMinimumSize(QSize(100, 300));
         PropertiesTab->setMaximumSize(QSize(16777215, 400));
         PropertiesTab->setTabsClosable(false);
@@ -284,8 +271,8 @@ public:
         MainRightSplitter->addWidget(PropertiesTab);
         ManagementTab = new QTabWidget(MainRightSplitter);
         ManagementTab->setObjectName(QString::fromUtf8("ManagementTab"));
-        sizePolicy2.setHeightForWidth(ManagementTab->sizePolicy().hasHeightForWidth());
-        ManagementTab->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(ManagementTab->sizePolicy().hasHeightForWidth());
+        ManagementTab->setSizePolicy(sizePolicy1);
         ManagementTab->setMinimumSize(QSize(0, 200));
         AssetTab = new QWidget();
         AssetTab->setObjectName(QString::fromUtf8("AssetTab"));
@@ -332,11 +319,11 @@ public:
 
         btnDeleteAsset = new QPushButton(layoutWidget);
         btnDeleteAsset->setObjectName(QString::fromUtf8("btnDeleteAsset"));
-        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(btnDeleteAsset->sizePolicy().hasHeightForWidth());
-        btnDeleteAsset->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(btnDeleteAsset->sizePolicy().hasHeightForWidth());
+        btnDeleteAsset->setSizePolicy(sizePolicy5);
         btnDeleteAsset->setMinimumSize(QSize(0, 25));
 
         horizontalLayout->addWidget(btnDeleteAsset);
@@ -403,11 +390,11 @@ public:
         menuBar = new QMenuBar(AnimicClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1252, 26));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(menuBar->sizePolicy().hasHeightForWidth());
-        menuBar->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(menuBar->sizePolicy().hasHeightForWidth());
+        menuBar->setSizePolicy(sizePolicy6);
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -419,8 +406,8 @@ public:
         AnimicClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(AnimicClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        sizePolicy5.setHeightForWidth(statusBar->sizePolicy().hasHeightForWidth());
-        statusBar->setSizePolicy(sizePolicy5);
+        sizePolicy4.setHeightForWidth(statusBar->sizePolicy().hasHeightForWidth());
+        statusBar->setSizePolicy(sizePolicy4);
         AnimicClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
@@ -467,7 +454,6 @@ public:
         actionCloseScene->setText(QCoreApplication::translate("AnimicClass", "Close Scene", nullptr));
         actionCloseProject->setText(QCoreApplication::translate("AnimicClass", "Close Project", nullptr));
         actionAbout->setText(QCoreApplication::translate("AnimicClass", "About", nullptr));
-        ToolBox->setTitle(QCoreApplication::translate("AnimicClass", "Tool Box", nullptr));
         SceneWindow->setTabText(SceneWindow->indexOf(tab), QCoreApplication::translate("AnimicClass", "Scene 1", nullptr));
         stopButton->setText(QCoreApplication::translate("AnimicClass", "Stop", nullptr));
         playButton->setText(QCoreApplication::translate("AnimicClass", "Play", nullptr));

@@ -31,7 +31,6 @@ void Animic::setupScene()	//set up graphics scene and canvas
 	layout->addWidget(graphicsView);
 	ui.tab->setLayout(layout);
 	scene = new AnimicScene();
-	dummy = new QGraphicsScene();
 	scene->setName("Scene 1");
 	graphicsView->setSceneRect(QRectF(QPointF(0, 0), QPointF(800,600)));
 	graphicsView->setScene(scene);
@@ -240,7 +239,7 @@ void Animic::on_stitchButton_clicked()
 
 		if (view != nullptr)
 		{
-			view->setScene(dummy);
+			view->setScene(nullptr);
 			
 		}
 	}

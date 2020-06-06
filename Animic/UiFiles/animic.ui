@@ -37,32 +37,6 @@
         <property name="childrenCollapsible">
          <bool>false</bool>
         </property>
-        <widget class="QGroupBox" name="ToolBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Tool Box</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
         <widget class="QSplitter" name="splitter_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>

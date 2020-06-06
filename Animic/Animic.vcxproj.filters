@@ -135,9 +135,6 @@
     <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -248,9 +245,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
