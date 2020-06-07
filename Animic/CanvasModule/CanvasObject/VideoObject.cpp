@@ -7,15 +7,18 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)
 	if (QFile::exists(filePath->path()))
 	{
 		videoPath = new QUrl(filePath->path());
+        loopPath = new QUrl();
+        playList = new QMediaPlaylist();
 		player = new QMediaPlayer();
+        player->setPlaylist(playList);
         this->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
         this->setAcceptHoverEvents(true);
-		player->setMedia(QUrl::fromLocalFile(filePath->path()));
+        playList->addMedia(QUrl::fromLocalFile(filePath->path()));
 		player->setVideoOutput(this);
         player->play();
 		//pixmapFrame = new QPixmap();
         this->currentHandle = nullptr;   
-        qDebug() << player->error();
+        qDebug() << loopPath->path();
 	}
     else
     {
@@ -40,7 +43,7 @@ QMediaPlayer* VideoObject::getPlayer()
 
 void VideoObject::playMedia()
 {
-    //if(!player->NoMedia)
+    qDebug() << player->error();
     player->play();
 }
 
@@ -106,7 +109,7 @@ void VideoObject::mousePressEvent(QGraphicsSceneMouseEvent* event)
     else if (event->button() == Qt::RightButton)
     {
         qDebug() << "Right Click";
-        //open context menu here
+        
     
     }
     QGraphicsVideoItem::mousePressEvent(event);
@@ -306,13 +309,51 @@ void VideoObject::onPosYChanged(const QString& str)
 
 void VideoObject::onScaleChanged(const QString& str)
 {
-    this->setScale(str.toDouble());
+    if(str.toDouble() != 0 && str.toDouble())
+        this->setScale(str.toDouble());
 }
 
 
 void VideoObject::onUrlChanged(const QString& str)
 {
     qint64 pos = player->position();
-    player->setMedia(QUrl(str));
+    videoPath->clear();
+    videoPath->setPath(str);
+    playList->clear();
+    playList->addMedia(QUrl::fromLocalFile(str));
+    //delete player;
+    //player = new QMediaPlayer();
+    //this->setMediaObject(player);
+    player->setPlaylist(playList);
     player->setPosition(pos);
+}
+
+void VideoObject::onLoopPathChanged(const QString& str)
+{
+    loopPath->setPath(str);
+}
+
+void VideoObject::addLoop()
+{
+    if(loopPath->path() != "")
+        playList->addMedia(*loopPath);
+}
+
+void VideoObject::switchPlayMode(int index)
+{
+    if (index == 0)
+    {
+        playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    }
+    else     
+        playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+}
+
+void VideoObject::removeLoop()
+{
+    if (playList->mediaCount() > 1)
+    {
+        playList->removeMedia(1);
+    }
+    playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 }

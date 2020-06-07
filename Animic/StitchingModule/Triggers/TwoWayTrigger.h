@@ -21,7 +21,7 @@ public:
 	QString getName();
 	void setName(QString);
 
-	QUrl* getUrl();
+	QString getUrl();
 	void setUrl(QUrl*);
 
 	QMediaPlayer* getPlayer();
@@ -79,7 +79,6 @@ signals:
 	
 	void sendDefaultScene(AnimicScene*);
 	void sendAltScene(AnimicScene*);
-	
 
 public slots:
 
@@ -88,7 +87,9 @@ public slots:
 	
 	void toggleLoop();
 
-	void onUrlChanged();
+	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
+	void onScaleChanged(const QString&);
+	void onUrlChanged(const QString&);
 
 	void setDefaultScene(AnimicScene* sc);
 	void setAltScene(AnimicScene* sc);

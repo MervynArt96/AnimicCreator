@@ -4,6 +4,7 @@
 #include <PropertiesModule/DroppableLineEdit.h>
 #include <StitchingModule/Triggers/TwoWayTrigger.h>
 #include <CanvasModule/AnimicView.h>
+#include <ModelViewModule\AnimicListView.h>
 
 class TwoWayTriggerProperties : public QWidget
 {
@@ -11,20 +12,19 @@ class TwoWayTriggerProperties : public QWidget
 
 public:
 
-	TwoWayTriggerProperties(QWidget*);
+	TwoWayTriggerProperties(QWidget*, AnimicListView*);
 	~TwoWayTriggerProperties();
 
 	QComboBox* getSceneDefaultComboBox();
 	QComboBox* getSceneAltComboBox();
 
-	void connectTrigger(TwoWayTrigger*);
-	void connectTrigger();
+	QLabel* getLabel();
 
 private:
 
-	//AnimicView* view;
-
 	TwoWayTrigger* trigger;
+
+	AnimicListView* list;
 
 	QLineEdit* posXEdit;
 	QLineEdit* posYEdit;
@@ -35,8 +35,8 @@ private:
 	QLabel* sceneDefaultLabel;
 	QLabel* sceneAltLabel;
 
-	QComboBox* sceneDefaultComboBox;
-	QComboBox* sceneAltComboBox;
+	QComboBox* sceneDefaultComboBox = new QComboBox();
+	QComboBox* sceneAltComboBox = new QComboBox();
 
 	QLabel* posXLabel;
 	QLabel* posYLabel;
@@ -44,20 +44,24 @@ private:
 	QLabel* urlLabel;
 	QLabel* scaleLabel;
 
-	QCheckBox* loopToggle;
+	QCheckBox* muteToggle;
 
 signals:
+	void returnDefaultScene(AnimicScene*);
+	void returnAltScene(AnimicScene*);
 
 public slots:
 
-	void onChangeScene(AnimicScene*);
-	void onChangePosX(qreal);
-	void onChangePosY(qreal);
-	void onChangeScale(qreal);
-	void onChangeUrl(QUrl);
-	void onChangeUrl(QString str);
+	void onChangePosX();
+	void onChangePosY();
+	void onChangeScale();
 
 	void onToggleLoop();
 
+	void onFocusChanged(QGraphicsItem* , QGraphicsItem*, Qt::FocusReason);
 	void onChangeTrigger(TwoWayTrigger*);
+	void disconnectTrigger();
+
+	void getDefaultScene(int);
+	void getAltScene(int);
 };

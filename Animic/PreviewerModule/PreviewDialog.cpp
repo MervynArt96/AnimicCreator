@@ -19,9 +19,16 @@ PreviewDialog::~PreviewDialog()
 
 }
 
-void PreviewDialog::reject()
+void PreviewDialog::closeDialog()
 {
+	for (int i = 0; i < engine->getList().count(); i++)
+	{
+		engine->getList().at(i)->deactivateTrigger();
+		engine->getList().at(i)->stopAll();
+	}
+
 	view->setScene(nullptr);
+	emit closeDialogSignal();
 	QDialog::reject();
 }
 
@@ -37,10 +44,6 @@ void PreviewDialog::keyPressEvent(QKeyEvent* e)
 {
 	if (e->key() == Qt::Key::Key_Escape)
 	{
-		for (int i = 0; i < engine->getList().count(); i++)
-		{
-			engine->getList().at(i)->deactivateTrigger();
-		}
-		reject();
+		closeDialog();
 	}
 }

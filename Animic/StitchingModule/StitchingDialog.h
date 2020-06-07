@@ -63,6 +63,6 @@ public slots:
 	void onSwitchScene(AnimicScene*);
 
 	void onTriggerInserted();
-
+	void onClosePreviewDialog();
 	void onRadioToggle(bool);
 };

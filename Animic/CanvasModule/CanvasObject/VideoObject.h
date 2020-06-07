@@ -2,6 +2,7 @@
 #include <QGraphicsVideoItem>
 #include "CanvasModule/CanvasObject/BaseObject.h"
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QPixmap>
 
 class VideoObject : public QGraphicsVideoItem, public BaseObject
@@ -44,6 +45,7 @@ protected:
 private:
 
 	QUrl* videoPath;
+	QUrl* loopPath;
 	QMediaPlayer* player = nullptr;
 	QMediaPlaylist* playList = nullptr;
 	QPixmap* pixmapFrame = nullptr;
@@ -73,5 +75,9 @@ public slots:
 	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
 	void onScaleChanged(const QString&);
 	void onUrlChanged(const QString&);
+	void onLoopPathChanged(const QString& str);
 
+	void addLoop();
+	void removeLoop();
+	void switchPlayMode(int index);
 };

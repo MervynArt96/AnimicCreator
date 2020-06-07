@@ -1,19 +1,22 @@
 #include "stdafx.h"
 #include "TwoWayTriggerProperties.h"
 
-TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent): QWidget(parent)
+TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView* view): QWidget(parent)
 {
+	trigger = nullptr;
+	list = view;
+
 	posXEdit = new QLineEdit();
 	posYEdit = new QLineEdit();
 
 	scaleEdit = new QLineEdit();
 	urlEdit = new DroppableLineEdit();
 
-	sceneDefaultLabel = new QLabel("Default Scene: ");
-	sceneAltLabel = new QLabel("Alternate Scene: ");
+	sceneDefaultLabel = new QLabel("Default Scene ");
+	sceneAltLabel = new QLabel("Alternate Scene ");
 
-	QComboBox* sceneDefaultComboBox = new QComboBox();
-	QComboBox* sceneAltComboBox = new QComboBox();
+	sceneDefaultComboBox->setInsertPolicy(QComboBox::InsertAtCurrent);
+	sceneAltComboBox->setInsertPolicy(QComboBox::InsertAtCurrent);
 
 	posXLabel = new QLabel("Position X: ");
 	posYLabel = new QLabel("Position Y: ");
@@ -21,7 +24,7 @@ TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent): QWidget(paren
 	urlLabel = new QLabel("URL: ");
 	scaleLabel = new QLabel("Scale: ");
 
-	loopToggle = new QCheckBox("Toggle Loop", nullptr);
+	muteToggle = new QCheckBox("Mute Toggle", nullptr);
 
 	//set double invalidator for each line edit
 
@@ -32,7 +35,7 @@ TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent): QWidget(paren
 	layout->addWidget(urlLabel, 2, 0); layout->addWidget(urlEdit, 2, 1);
 	layout->addWidget(sceneDefaultLabel, 3, 0); layout->addWidget(sceneDefaultComboBox, 3, 1);
 	layout->addWidget(sceneAltLabel, 4, 0); layout->addWidget(sceneAltComboBox, 4, 1);
-	layout->addWidget(loopToggle, 5, 0);
+	layout->addWidget(muteToggle, 5, 0);
 
 	this->setLayout(layout);
 	//scale
@@ -43,17 +46,11 @@ TwoWayTriggerProperties::~TwoWayTriggerProperties()
 
 }
 
-void TwoWayTriggerProperties::onChangeScene(AnimicScene* sc)
+QLabel* TwoWayTriggerProperties::getLabel()
 {
-	trigger = qgraphicsitem_cast<TwoWayTrigger*>(sc->getTrigger());
-	if (trigger != nullptr)
-	{
-		//get trigger properties
-		//connect trigger to line edits
-		//connect line edits change signal to trigger slots
-		//connect radio group to scene
-	}
+	return sceneAltLabel;
 }
+
 
 QComboBox* TwoWayTriggerProperties::getSceneDefaultComboBox()
 {
@@ -65,45 +62,10 @@ QComboBox* TwoWayTriggerProperties::getSceneAltComboBox()
 	return sceneAltComboBox;
 }
 
-void TwoWayTriggerProperties::onChangePosX(qreal val)
-{
-	posXEdit->setText(QString::number(val));
-	if (trigger != nullptr)
-		trigger->setX(val);
-}
-
-void TwoWayTriggerProperties::onChangePosY(qreal val)
-{
-	posYEdit->setText(QString::number(val));
-	if (trigger != nullptr)
-		trigger->setY(val);
-}
-
-void TwoWayTriggerProperties::onChangeScale(qreal val)
-{
-	scaleEdit->setText(QString::number(val));
-	// TBD
-}
-
-void TwoWayTriggerProperties::onChangeUrl(QUrl url)
-{
-	urlEdit->setText(url.toString());
-	if (trigger != nullptr)
-		trigger->setUrl(&url);
-}
-
-void TwoWayTriggerProperties::onChangeUrl(QString str)
-{
-	urlEdit->setText(str);
-	if (trigger != nullptr)
-		trigger->setUrl(&QUrl(str));
-}
-
-
 void TwoWayTriggerProperties::onChangeTrigger(TwoWayTrigger* tr)
 {
 	trigger = tr;
-	connectTrigger();
+	//connect trigger?
 }
 
 void TwoWayTriggerProperties::onToggleLoop()
@@ -112,29 +74,81 @@ void TwoWayTriggerProperties::onToggleLoop()
 		trigger->toggleLoop();
 }
 
-
-void TwoWayTriggerProperties::connectTrigger(TwoWayTrigger* tr)
+void TwoWayTriggerProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
 {
-	//connect(nameEdit, &QLineEdit::textChanged, trigger, change name);
-	//connect(posXEdit, textChanged, trigger, changePosX)
+	disconnectTrigger();
+	if (target != nullptr)
+	{
+		TwoWayTrigger* tr = qgraphicsitem_cast<TwoWayTrigger*>(target);
+		if (tr != nullptr)
+		{
+			this->trigger = tr;
+			posXEdit->setText(QString::number(tr->scenePos().x()));
+			posYEdit->setText(QString::number(tr->scenePos().y()));
+			scaleEdit->setText(QString::number(tr->scale()));
 
-	//connect(urlEdit, textChanged, trigger, changeUrl)
+			urlEdit->setText(tr->getUrl());
+			muteToggle->setChecked(tr->getPlayer()->isMuted());
 
-	//connect trigger, position change, this, onchangePos
-	//connect trigger, scale change, this, onscaleChange
-	//connect 
+			connect(tr, &TwoWayTrigger::xChanged, this, &TwoWayTriggerProperties::onChangePosX);	//object change Line Edit
+			connect(tr, &TwoWayTrigger::yChanged, this, &TwoWayTriggerProperties::onChangePosY);
+			connect(tr, &TwoWayTrigger::scaleChanged, this, &TwoWayTriggerProperties::onChangeScale);
+
+			connect(posXEdit, &QLineEdit::textEdited, tr, &TwoWayTrigger::onPosXChanged);		//Line Edit change Object
+			connect(posYEdit, &QLineEdit::textEdited, tr, &TwoWayTrigger::onPosYChanged);
+			connect(scaleEdit, &QLineEdit::textEdited, tr, &TwoWayTrigger::onScaleChanged);
+			connect(urlEdit, &QLineEdit::textChanged, tr, &TwoWayTrigger::onUrlChanged);
+			 
+			connect(sceneDefaultComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TwoWayTriggerProperties::getDefaultScene);
+			connect(sceneAltComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TwoWayTriggerProperties::getAltScene);
+
+			connect(this, &TwoWayTriggerProperties::returnDefaultScene, tr, &TwoWayTrigger::setDefaultScene);
+			connect(this, &TwoWayTriggerProperties::returnAltScene, tr, &TwoWayTrigger::setAltScene);
+		}
+	}
 }
 
-void TwoWayTriggerProperties::connectTrigger()
+void TwoWayTriggerProperties::disconnectTrigger()
+{
+	disconnect(posXEdit);
+	disconnect(posYEdit);
+	disconnect(scaleEdit);
+	disconnect(sceneAltComboBox);
+	disconnect(sceneDefaultComboBox);
+	disconnect(urlEdit);
+	disconnect(this, &TwoWayTriggerProperties::returnDefaultScene, nullptr, nullptr);
+	disconnect(this, &TwoWayTriggerProperties::returnAltScene, nullptr, nullptr);
+}
+
+
+void TwoWayTriggerProperties::onChangePosX()
 {
 	if (trigger != nullptr)
-	{
-		//connect(posXEdit, textChanged, trigger, changePosX)
+		posXEdit->setText(QString::number(trigger->x()));
+}
 
-		//connect(urlEdit, textChanged, trigger, changeUrl)
+void TwoWayTriggerProperties::onChangePosY()
+{
+	if (trigger != nullptr)
+		posYEdit->setText(QString::number(trigger->y()));
+}
 
-		//connect trigger, position change, this, onchangePos
-		//connect trigger, scale change, this, onscaleChange
-		connect(loopToggle, &QCheckBox::stateChanged, trigger, &TwoWayTrigger::toggleLoop);
-	}
+void TwoWayTriggerProperties::onChangeScale()
+{
+	if(trigger != nullptr)
+		scaleEdit->setText(QString::number(trigger->scale()));
+}
+
+void TwoWayTriggerProperties::getDefaultScene(int i)
+{
+	if (i <= 0)
+		return;
+	emit returnDefaultScene(qobject_cast<SceneListModel*>(list->model())->getList()->at(i-1));
+}
+
+void TwoWayTriggerProperties::getAltScene(int i)
+{
+	if (i <= 0)
+		return;
+	emit returnDefaultScene(qobject_cast<SceneListModel*>(list->model())->getList()->at(i-1));
 }

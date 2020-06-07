@@ -48,6 +48,7 @@ void Animic::connectSignalSlots()
 
 	connect(ui.SceneWindow, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 	connect(ui.SceneWindow, SIGNAL(currentChanged(int)), this, SLOT(setCurrentScene(int)));
+	//connect(ui.SceneWindow, &QTabWidget::currentChanged, propHandler->getVideoPropertiesWidget(), &VideoProperties::onSwitchScene);
 
 }
 
@@ -101,7 +102,7 @@ void Animic::setupListModel()
 	mainList->setListMode(true);
 	mainList->setItemDelegate(mainDelegate);
 
-	sceneModel->appendRow(scene);	//demo
+	sceneModel->appendRow(scene);
 
 	connect(mainList, &AnimicListView::openNewSceneTab, this, &Animic::openNewTab);
 	connect(mainList, &AnimicListView::deleteScene, this, &Animic::onDeleteScene);
@@ -118,7 +119,7 @@ void Animic::resetTabOnCloseDialog()
 
 			if (ui.SceneWindow->tabText(i) == name)
 			{
-				AnimicView* view = ui.SceneWindow->widget(currentTab)->findChild<AnimicView*>();
+				AnimicView* view = ui.SceneWindow->currentWidget()->findChild<AnimicView*>();
 
 				if (view != nullptr)
 				{
@@ -156,33 +157,41 @@ void Animic::setCurrentScene(int index)
 
 			if (sc != nullptr)
 			{
+				sc->clearFocus();
 				sc->disconnectObject();
 				sc->disconnect();
+				ui.playButton->disconnect(sc);
+				ui.pauseButton->disconnect(sc);
+				ui.stopButton->disconnect(sc);
+				mainSlider->disconnect(sc);
+				propHandler->getVideoPropertiesWidget()->disconnect(sc);
 			}
 		}
 	}
 
-	//clear layer list
-
+	//propHandler->getVideoPropertiesWidget()->clearProperties();
 	if (index >= 0)
 	{
 		currentTab = index;
 		AnimicView* view = ui.SceneWindow->currentWidget()->findChild<AnimicView*>();
-
 		if (view != nullptr)
 		{
-			AnimicScene* sc = dynamic_cast<AnimicScene*>(view->scene());
-
-			if (sc != nullptr)
+			AnimicScene* scc = dynamic_cast<AnimicScene*>(view->scene());
+			if (scc != nullptr)
 			{
-				if(sc->getMaxPlayer() != nullptr)
-					mainSlider->setMaximum(sc->getMaxPlayer()->duration());
+				if (scc->getMaxPlayer() != nullptr)
+				{
+					mainSlider->setMaximum(scc->getMaxPlayer()->duration());
+				}
 
-				connect(ui.playButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
-				connect(ui.pauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseAll);
-				connect(ui.stopButton, &QPushButton::clicked, sc, &AnimicScene::stopAll);
-				connect(mainSlider, SIGNAL(valueChanged(int)), scene, SLOT(setVideoFrameTime(int)));
-				connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
+				connect(ui.playButton, &QPushButton::clicked, scc, &AnimicScene::playAll);
+				connect(ui.pauseButton, &QPushButton::clicked, scc, &AnimicScene::pauseAll);
+				connect(ui.stopButton, &QPushButton::clicked, scc, &AnimicScene::stopAll);
+				connect(mainSlider, SIGNAL(valueChanged(int)), scc, SLOT(setVideoFrameTime(int)));
+				connect(scc, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
+				connect(scc, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
+
+				//sc->update();
 
 				//update properties window, maybe need to clear only
 				//connect scene to properties window
@@ -240,7 +249,6 @@ void Animic::on_stitchButton_clicked()
 		if (view != nullptr)
 		{
 			view->setScene(nullptr);
-			
 		}
 	}
 
@@ -269,6 +277,7 @@ void Animic::on_actionNewScene_triggered()
 	view->setScene(sc);
 	view->setAcceptDrops(true);
 	view->show();
+	setCurrentScene(ui.SceneWindow->currentIndex());
 }
 
 void Animic::on_newSceneButton_clicked()
@@ -276,13 +285,6 @@ void Animic::on_newSceneButton_clicked()
 	QWidget* widget = new QWidget(ui.SceneWindow);
 
 	AnimicScene* sc = new AnimicScene();
-
-	sceneModel->appendRow(sc);
-	int num = sceneModel->getList()->count();
-	sc->setName(QString("Scene " + QString::number(num)));
-
-	ui.SceneWindow->addTab(widget, sc->getName());
-
 	AnimicView* view = new AnimicView(widget);
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(view);
@@ -292,6 +294,28 @@ void Animic::on_newSceneButton_clicked()
 	view->setScene(sc);
 	view->setAcceptDrops(true);
 	view->show();
+
+	sceneModel->appendRow(sc);
+	int num = sceneModel->getList()->count();
+	sc->setName(QString("Scene " + QString::number(num)));
+
+	ui.SceneWindow->addTab(widget, sc->getName());
+}
+
+
+void Animic::openNewTab(AnimicScene* sc)
+{
+	QWidget* widget = new QWidget(ui.SceneWindow);
+	AnimicView* view = new AnimicView(widget);
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(view);
+	widget->setLayout(layout);
+
+	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
+	view->setScene(sc);
+	view->setAcceptDrops(true);
+	view->show();
+	ui.SceneWindow->addTab(widget, sc->getName());
 }
 
 void Animic::on_removeSceneButton_clicked()
@@ -302,25 +326,7 @@ void Animic::on_removeSceneButton_clicked()
 		QMetaObject::invokeMethod(mainList, "onDeleteScene");
 	}
 }
-
 #pragma endregion
-
-void Animic::openNewTab(AnimicScene* sc)
-{
-	QWidget* widget = new QWidget(ui.SceneWindow);
-
-	ui.SceneWindow->addTab(widget, sc->getName());
-
-	AnimicView* view = new AnimicView(widget);
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addWidget(view);
-	widget->setLayout(layout);
-
-	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
-	view->setScene(sc);
-	view->setAcceptDrops(true);
-	view->show();
-}
 
 void Animic::onDeleteScene(AnimicScene* sc)
 {

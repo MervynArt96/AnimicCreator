@@ -147,6 +147,7 @@ void AnimicScene::playAll()
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
 		{
+			qDebug() << "Playing";
 			videoObj->playMedia();
 			found = true;
 			if(videoObj->getPlayer()->duration() >= maxDuration)
@@ -199,7 +200,6 @@ void AnimicScene::stopAll()
 
 void AnimicScene::disableObjectDragging()
 {
-	qDebug() << "Disabling Object Dragging";
 	QList<QGraphicsItem*> allItems = items();
 
 	for(QGraphicsItem * item : allItems)
@@ -546,6 +546,7 @@ void AnimicScene::deactivateTrigger()
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->setActiveTrigger(false);
+			TWTrigger->stopMedia();
 			TWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
 			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::lastScene);
 			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::nextScene);
@@ -578,6 +579,16 @@ void AnimicScene::playThrough()
 
 void AnimicScene::switchTriggerType(int i)
 {
-	qDebug() << "Trigger Type: " << triggerToBeInserted;
 	triggerToBeInserted = i;
 }
+
+bool AnimicScene::isEntry()
+{
+	return entryScene;
+}
+void AnimicScene::setEntry(bool x)
+{
+	entryScene = x;
+}
+
+

@@ -15,6 +15,8 @@ StitchingDialog::StitchingDialog(SceneListModel* model)
 	connectSignalSlot();
 
 	previewDialog = new PreviewDialog();
+	connect(previewDialog, &PreviewDialog::closeDialogSignal, this, &StitchingDialog::onClosePreviewDialog);
+	//connect(sceneList, &AnimicListView::returnSceneToTrigger, )
 }
 
 StitchingDialog::~StitchingDialog()
@@ -24,6 +26,11 @@ StitchingDialog::~StitchingDialog()
 
 void StitchingDialog::reject()
 {
+	triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->clear();
+	triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->clear();
+
+	//do same stuff to TM and OW properties;
+
 	view->setScene(nullptr);
 	qobject_cast<SceneListModel*>(sceneList->model())->setSceneToEditMode();
 	emit closingDialog();
@@ -32,6 +39,25 @@ void StitchingDialog::reject()
 
 void StitchingDialog::openDialog()
 {
+	QList<AnimicScene*>* list = qobject_cast<SceneListModel*>(sceneList->model())->getList();
+
+	for (int i = 0; i < list->count() + 1; i++)
+	{
+		if (i == 0)
+		{
+			triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, QString("Empty"));
+			triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->insertItem(i, QString("Empty"));
+
+			//do same stuff to TM and OW properties;
+
+			continue;
+		}
+
+		triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i,list->at(i-1)->getName());
+		triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->insertItem(i, list->at(i-1)->getName());
+
+		//do same stuff to TM and OW properties;
+	}
 	this->move(200, 50);
 	this->exec();
 }
@@ -56,9 +82,15 @@ void StitchingDialog::onSwitchScene(AnimicScene* sc)
 		sc->switchTriggerType(2);
 	}
 
+	//get trigger here 
+	//check trigger type
+	//connect to respective panels
+
+
 	connect(this, &StitchingDialog::changedTrigger, sc, &AnimicScene::switchTriggerType);
 	connect(slider, &AnimicSlider::valueChanged, sc, &AnimicScene::setVideoFrameTime);
 	connect(sc, &AnimicScene::triggerInserted, this, &StitchingDialog::onTriggerInserted);
+	connect(sc, &AnimicScene::focusItemChanged, triggerProperties, &TriggerPropertiesHandler::onFocusChanged);
 }
 
 void StitchingDialog::setupTriggerScene()
@@ -66,8 +98,6 @@ void StitchingDialog::setupTriggerScene()
 	view = new AnimicView(ui.graphicsViewHolder);
 	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	view->setAcceptDrops(true);
-
-	//dummy = new QGraphicsScene();
 	view->setScene(nullptr);
 
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -99,23 +129,13 @@ void StitchingDialog::setupTriggerAssetList()
 
 void StitchingDialog::setupTriggerProperties()
 {
-	triggerProperties = new TriggerPropertiesHandler(ui.triggerPropertiesHolder);
+	triggerProperties = new TriggerPropertiesHandler(ui.triggerPropertiesHolder, sceneList);
 	QVBoxLayout* prop_layout = new QVBoxLayout();
 
 	prop_layout->addWidget(triggerProperties);
 	ui.triggerPropertiesHolder->setLayout(prop_layout);
 
 	SceneListModel* model = qobject_cast<SceneListModel*>(sceneList->model());
-
-	for (int i = 0; i < model->getList()->count(); i++)
-	{
-		triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->addItem(model->getList()->at(i)->getName());
-		triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->addItem(model->getList()->at(i)->getName());
-
-		//add same stuff to TM and OW properties;
-
-	}
-
 }
 
 void StitchingDialog::setupTimeline()
@@ -177,4 +197,9 @@ void StitchingDialog::onTriggerInserted()
 	connect(ui.st_PlayButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::playTrigger);
 	connect(ui.st_PauseButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::pauseTrigger);
 	connect(ui.st_StopButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::stopTrigger);
+}
+
+void StitchingDialog::onClosePreviewDialog()
+{
+	//set previous scene back ?
 }

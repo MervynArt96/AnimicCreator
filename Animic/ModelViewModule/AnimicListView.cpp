@@ -36,17 +36,20 @@ void AnimicListView::onDoubleClicked(const QModelIndex& index)
 
 void AnimicListView::showContextMenu(const QPoint& pos)
 {
-	QMenu contextMenu(tr("Context menu"), this);
+	if (mode)
+	{
+		QMenu contextMenu(tr("Context menu"), this);
 
-	QAction renameAction("Rename Scene", this);
-	connect(&renameAction, SIGNAL(triggered()), this, SLOT(onRenameScene()));
-	contextMenu.addAction(&renameAction);
+		QAction renameAction("Rename Scene", this);
+		connect(&renameAction, SIGNAL(triggered()), this, SLOT(onRenameScene()));
+		contextMenu.addAction(&renameAction);
 
-	QAction deleteAction("Delete Scene", this);
-	connect(&deleteAction, SIGNAL(triggered()), this, SLOT(onDeleteScene()));
-	contextMenu.addAction(&deleteAction);
+		QAction deleteAction("Delete Scene", this);
+		connect(&deleteAction, SIGNAL(triggered()), this, SLOT(onDeleteScene()));
+		contextMenu.addAction(&deleteAction);
 
-	contextMenu.exec(mapToGlobal(pos));
+		contextMenu.exec(mapToGlobal(pos));
+	}
 }
 
 
@@ -68,4 +71,10 @@ void AnimicListView::onDeleteScene()
 	{
 		emit deleteScene(qvariant_cast<AnimicScene*>(currentIndex().data(Qt::BackgroundRole)));
 	}
+}
+
+
+void AnimicListView::getScene(int i)
+{
+	emit returnSceneToTrigger(qobject_cast<SceneListModel*>(this->model())->getList()->at(i));
 }

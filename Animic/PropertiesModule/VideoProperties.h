@@ -16,7 +16,9 @@ public:
 
 private:
 
-	VideoObject* object;
+	VideoObject* newItem = nullptr;
+	VideoObject* oldObject = nullptr;
+
 
 	qreal posX = 0;	qreal posY = 0;
 	qreal scaleX = 1;
@@ -54,5 +56,7 @@ public slots:
 	void onPositionXChanged();	
 	void onPositionYChanged();
 	void onScaleChanged();
-	
+	void clearProperties();
+	void onSwitchScene();
+	void disconnectWidgets();
 };

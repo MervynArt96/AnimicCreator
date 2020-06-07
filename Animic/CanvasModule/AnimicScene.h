@@ -22,9 +22,8 @@ public:
 	QMediaPlayer* getMaxPlayer();
 
 	VideoObject* selectedItem();
-	//TwoWayTrigger* selectedTWTrigger();
-	//TimedMashTrigger* selectedTMTrigger();
-	//OneWayTrigger* selectedOWTrigger();
+	bool isEntry();
+	void setEntry(bool);
 
 	void playThrough();
 
@@ -51,6 +50,7 @@ private:
 
 	int triggerToBeInserted = 0; // null = -1, TW = 0, TM = 1, OW = 2
 
+	bool entryScene = false;
 	bool checkForTrigger();
 
 	/*QMediaPlaylist* bgmLoopList = nullptr;

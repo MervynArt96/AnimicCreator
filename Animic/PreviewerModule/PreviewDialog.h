@@ -13,7 +13,6 @@ public:
 	PreviewDialog(QWidget *parent = Q_NULLPTR);
 	~PreviewDialog();
 
-	void reject() override;
 	void keyPressEvent(QKeyEvent* e) override;
 
 private:
@@ -22,8 +21,12 @@ private:
 	AnimicView* view;
 	PlaybackEngineCore* engine;
 
+signals:
+	void closeDialogSignal();
+
 public slots:
 
 	void openDialog(QList<AnimicScene*>);
+	void closeDialog();
 
 };

@@ -2,12 +2,13 @@
 
 #include <QWidget>
 #include "StitchingModule/Triggers/TimedMashTrigger.h"
+#include <ModelViewModule\AnimicListView.h>
 
 class TimedMashTriggerProperties : public QWidget
 {
 	Q_OBJECT
 
 public:
-	TimedMashTriggerProperties(QWidget *parent);
+	TimedMashTriggerProperties(QWidget*, AnimicListView*);
 	~TimedMashTriggerProperties();
 };

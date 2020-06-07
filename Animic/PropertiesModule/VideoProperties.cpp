@@ -21,30 +21,35 @@ VideoProperties::~VideoProperties()
 
 }
 
+void VideoProperties::onSwitchScene()
+{
+	disconnectWidgets();
+}
+
 void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
 {
-	qDebug() << target;
-	qDebug() << oldItem;
-
-	if (target != oldItem) 
+	if (target != nullptr) 
 	{
 		VideoObject* old = qgraphicsitem_cast<VideoObject*>(oldItem);
-
 		if (old != nullptr)
 		{
-			old->disconnect(posXEdit, nullptr, old, nullptr);		//this on -> cant change object pos from line edit, if off, object will disappear
-			old->disconnect(posYEdit, nullptr, old, nullptr);
-			old->disconnect(scaleEdit, nullptr, old, nullptr);	//this on -> cant change object pos from line edit, if off -> will scale all object
-			//old->disconnect(old, nullptr, posXEdit, nullptr);
-			//old->disconnect(old, nullptr, posYEdit, nullptr);
-			//old->disconnect(old, nullptr, scaleEdit, nullptr);
+			qDebug() << "disconnecting old";
+			oldObject = old;
+			disconnect(posXEdit, nullptr, old, nullptr);
+			disconnect(posYEdit, nullptr, old, nullptr);
+			disconnect(scaleEdit, nullptr, old, nullptr);
+			disconnect(urlEdit, nullptr, old, nullptr);
 		}
 
+		//clearProperties();
+
+		//disconnectWidgets();
+
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(target);
-		this->object = obj;
 
 		if (obj != nullptr)
 		{
+			this->newItem = obj;
 			posXEdit->setText(QString::number(obj->scenePos().x()));
 			posYEdit->setText(QString::number(obj->scenePos().y()));
 			scaleEdit->setText(QString::number(obj->scale()));
@@ -52,32 +57,50 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			urlEdit->setText(obj->getVideoPath());
 			muteToggle->setChecked(obj->getPlayer()->isMuted());
 
-			qDebug() << "Setting Connection on Focus Change";
 			connect(obj, &VideoObject::xChanged, this, &VideoProperties::onPositionXChanged);	//object change Line Edit
 			connect(obj, &VideoObject::yChanged, this, &VideoProperties::onPositionYChanged);
 			connect(obj, &VideoObject::scaleChanged, this, &VideoProperties::onScaleChanged);
 
-			connect(posXEdit, &QLineEdit::textChanged, obj, &VideoObject::onPosXChanged, Qt::UniqueConnection);		//Line Edit change Object
-			connect(posYEdit, &QLineEdit::textChanged, obj, &VideoObject::onPosYChanged, Qt::UniqueConnection);
-			connect(scaleEdit, &QLineEdit::textChanged, obj, &VideoObject::onScaleChanged, Qt::UniqueConnection);
+			//connect(posXEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosXChanged);		//Line Edit change Object
+			//connect(posYEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosYChanged);		//reliability issue
+			//connect(scaleEdit, &QLineEdit::textEdited, obj, &VideoObject::onScaleChanged);
+			//connect(urlEdit, &QLineEdit::textChanged, obj, &VideoObject::onUrlChanged );
 		}
 	}
 }
 
 void VideoProperties::onPositionXChanged()
 {
-	if(object != nullptr)
-		posXEdit->setText(QString::number(object->scenePos().x()));
+	if(newItem != nullptr)
+		posXEdit->setText(QString::number(newItem->scenePos().x()));
 }
 
 void VideoProperties::onPositionYChanged()
 {
-	if (object != nullptr)
-		posYEdit->setText(QString::number(object->scenePos().y()));
+	if (newItem != nullptr)
+		posYEdit->setText(QString::number(newItem->scenePos().y()));
 }
 
 void VideoProperties::onScaleChanged() 
 {
-	if (object != nullptr)
-		scaleEdit->setText(QString::number(object->scale()));
+	if (newItem != nullptr)
+		scaleEdit->setText(QString::number(newItem->scale()));
+}
+
+void VideoProperties::clearProperties()
+{
+	qDebug() << "Clear";
+	posXEdit->setText(0);
+	posYEdit->setText(0);
+	scaleEdit->setText(0);
+	urlEdit->setText("");
+	muteToggle->setChecked(false);
+}
+
+void VideoProperties::disconnectWidgets()
+{
+	posXEdit->disconnect();
+	posYEdit->disconnect();
+	scaleEdit->disconnect();
+	urlEdit->disconnect();
 }

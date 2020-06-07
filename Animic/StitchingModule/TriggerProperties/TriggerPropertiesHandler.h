@@ -11,7 +11,7 @@ class TriggerPropertiesHandler : public QWidget
 
 public:
 
-	TriggerPropertiesHandler(QWidget *parent);
+	TriggerPropertiesHandler(QWidget*, AnimicListView*);
 	~TriggerPropertiesHandler();
 
 	TwoWayTriggerProperties* getTWTriggerProperties();
@@ -24,8 +24,15 @@ private:
 	TimedMashTriggerProperties* TMTriggerProperties;
 	OneWayTriggerProperties* OWTriggerProperties;
 
+signals:
+	
+	void TWTriggerFocused(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+	void TMTriggerFocused(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+	void OWTriggerFocused(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+
 public slots:
 
 	void onSceneChanged(AnimicScene*);
 	void onFocusChanged(QGraphicsItem* newFocusItem, QGraphicsItem* oldFocusItem, Qt::FocusReason reason);
+	//void onReturnDefaultScene(AnimicScene*);
 };

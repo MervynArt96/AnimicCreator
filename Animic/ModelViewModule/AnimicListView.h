@@ -26,6 +26,8 @@ signals:
 
 	void deleteScene(AnimicScene*);
 
+	void returnSceneToTrigger(AnimicScene*);
+
 public slots:
 
 	void onDoubleClicked(const QModelIndex&);
@@ -33,4 +35,6 @@ public slots:
 
 	void onRenameScene();
 	void onDeleteScene();
+
+	void getScene(int);
 };

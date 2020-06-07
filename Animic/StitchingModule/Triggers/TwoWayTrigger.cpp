@@ -11,7 +11,7 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
         playList->setCurrentIndex(1);
         player = new QMediaPlayer();
         player->setPlaylist(playList);
-        videoPath = filePath;
+        videoPath = new QUrl(filePath->path());
         this->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
         this->setAcceptHoverEvents(true);
         player->setVideoOutput(this);
@@ -58,11 +58,13 @@ void TwoWayTrigger::setActiveTrigger(bool x)
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
 {
     sceneDefault = sc;
+    qDebug() << sceneDefault->getName();
 }
 
 void TwoWayTrigger::setAltScene(AnimicScene* sc)
 {
     sceneAlt = sc;
+    qDebug() << sceneAlt->getName();
 }
 
 AnimicScene* TwoWayTrigger::getDefaultScene()
@@ -85,9 +87,9 @@ void TwoWayTrigger::setName(QString str)
     this->name = str;
 }
 
-QUrl* TwoWayTrigger::getUrl()
+QString TwoWayTrigger::getUrl()
 {
-    return videoPath;
+    return videoPath->path();
 }
 
 void TwoWayTrigger::setUrl(QUrl* str)
@@ -322,10 +324,35 @@ void TwoWayTrigger::toggleLoop()
     else playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 }
 
-void TwoWayTrigger::onUrlChanged()
+void TwoWayTrigger::onPosXChanged(const QString& str)
 {
-    playList->removeMedia(playList->currentIndex());
+    this->setX(str.toDouble());
+}
 
+void TwoWayTrigger::onPosYChanged(const QString& str)
+{
+    this->setY(str.toDouble());
+}
+
+void TwoWayTrigger::onScaleChanged(const QString& str)
+{
+    if (str.toDouble() != 0 && str.toDouble())
+        this->setScale(str.toDouble());
+}
+
+
+void TwoWayTrigger::onUrlChanged(const QString& str)
+{
+    qint64 pos = player->position();
+    videoPath->clear();
+    videoPath->setPath(str);
+    playList->clear();
+    playList->addMedia(QUrl::fromLocalFile(str));
+    delete player;
+    player = new QMediaPlayer();
+    this->setMediaObject(player);
+    player->setPlaylist(playList);
+    player->setPosition(pos);
 }
 
 void TwoWayTrigger::transformHandle()

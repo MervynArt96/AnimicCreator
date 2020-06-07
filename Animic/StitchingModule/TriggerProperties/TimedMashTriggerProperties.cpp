@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TimedMashTriggerProperties.h"
 
-TimedMashTriggerProperties::TimedMashTriggerProperties(QWidget *parent)
+TimedMashTriggerProperties::TimedMashTriggerProperties(QWidget *parent, AnimicListView* list)
 	: QWidget(parent)
 {
 }
