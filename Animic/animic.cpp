@@ -158,6 +158,7 @@ void Animic::setCurrentScene(int index)
 			if (sc != nullptr)
 			{
 				sc->clearFocus();
+				sc->clearSelection();
 				sc->disconnectObject();
 				sc->disconnect();
 				ui.playButton->disconnect(sc);

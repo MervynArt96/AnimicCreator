@@ -40,10 +40,13 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			disconnect(scaleEdit, nullptr, old, nullptr);
 			disconnect(urlEdit, nullptr, old, nullptr);
 		}
-
-		//clearProperties();
-
-		//disconnectWidgets();
+		if (newItem != nullptr)	//might need more testing
+		{
+			disconnect(posXEdit, nullptr, newItem, nullptr);
+			disconnect(posYEdit, nullptr, newItem, nullptr);
+			disconnect(scaleEdit, nullptr, newItem, nullptr);
+			disconnect(urlEdit, nullptr, newItem, nullptr);
+		}
 
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(target);
 
@@ -61,10 +64,10 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			connect(obj, &VideoObject::yChanged, this, &VideoProperties::onPositionYChanged);
 			connect(obj, &VideoObject::scaleChanged, this, &VideoProperties::onScaleChanged);
 
-			//connect(posXEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosXChanged);		//Line Edit change Object
-			//connect(posYEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosYChanged);		//reliability issue
-			//connect(scaleEdit, &QLineEdit::textEdited, obj, &VideoObject::onScaleChanged);
-			//connect(urlEdit, &QLineEdit::textChanged, obj, &VideoObject::onUrlChanged );
+			connect(posXEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosXChanged);		//Line Edit change Object
+			connect(posYEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosYChanged);		
+			connect(scaleEdit, &QLineEdit::textEdited, obj, &VideoObject::onScaleChanged);
+			connect(urlEdit, &QLineEdit::textChanged, obj, &VideoObject::onUrlChanged );
 		}
 	}
 }
