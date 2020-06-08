@@ -13,7 +13,7 @@ public:
 	PreviewDialog(QWidget *parent = Q_NULLPTR);
 	~PreviewDialog();
 
-	void keyPressEvent(QKeyEvent* e) override;
+	//void keyPressEvent(QKeyEvent* e) override;
 
 private:
 	Ui::PreviewDialog ui;
@@ -22,11 +22,16 @@ private:
 	PlaybackEngineCore* engine;
 
 signals:
+
 	void closeDialogSignal();
 
 public slots:
 
 	void openDialog(QList<AnimicScene*>);
 	void closeDialog();
+
+	void onTerminatePreview();
+
+	void onPlayNextScene(AnimicScene*);
 
 };

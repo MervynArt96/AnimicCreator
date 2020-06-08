@@ -33,6 +33,8 @@ TwoWayTrigger::~TwoWayTrigger()
 
 void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
 {
+    QGraphicsItem::keyPressEvent(event);
+    qDebug() << "Trigger Key: " << event->key();
     if (activeTrigger)
     {
         if (event->key() == Qt::Key_E)
@@ -267,7 +269,7 @@ void TwoWayTrigger::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
     painter->setRenderHint(QPainter::Antialiasing, true);
 
-    if (this->isSelected())
+    if (this->isSelected() && !activeTrigger)
     {
         if (this->showRect)
         {

@@ -16,6 +16,7 @@ public:
 
 	QString getVideoPath();
 	QMediaPlayer* getPlayer();
+	QMediaPlaylist* getPlayList();
 
 	//QRectF boundingRect();
 	

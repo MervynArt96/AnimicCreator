@@ -26,18 +26,6 @@ void AnimicView::setAnimicScene(AnimicScene* sc)
 void AnimicView::keyPressEvent(QKeyEvent* event)
 {
     QGraphicsView::keyPressEvent(event);
-
-    if (event->key() == Qt::Key_Q || event->key() == Qt::Key_E)
-    {
-        AnimicScene* sc = dynamic_cast<AnimicScene*>(this->scene());
-        QGraphicsItem* item = sc->getTrigger();
-
-        if (item != nullptr)
-        {
-           
-        }
-    }
-
     if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
     {
         setDragMode(QGraphicsView::ScrollHandDrag);

@@ -19,6 +19,8 @@ public:
 	QList<AnimicScene*> getList();
 	void playback();
 
+	AnimicScene* findEntryScene();
+
 private:
 
 	QList<AnimicScene*> sceneList;
@@ -28,10 +30,12 @@ private:
 signals:
 
 	void playNextScene(AnimicScene*);
+	void terminatePreview();
 
 public slots:
 
 	void onNextScene(AnimicScene*);
+	void onTerminate();
 
 };
 

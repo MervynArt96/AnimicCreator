@@ -40,6 +40,11 @@ QMediaPlayer* VideoObject::getPlayer()
 	return player;
 }
 
+QMediaPlaylist* VideoObject::getPlayList()
+{
+    return playList;
+}
+
 void VideoObject::playMedia()
 {
     qDebug() << player->error();
@@ -334,8 +339,11 @@ void VideoObject::onLoopPathChanged(const QString& str)
 
 void VideoObject::addLoop()
 {
-    if(loopPath->path() != "")
+    if (loopPath->path() != "") 
+    {
         playList->addMedia(*loopPath);
+        playList->setCurrentIndex(1);
+    }
 }
 
 void VideoObject::switchPlayMode(int index)
@@ -344,7 +352,7 @@ void VideoObject::switchPlayMode(int index)
     {
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
     }
-    else     
+    else if(index == 1)
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
 }
 
@@ -353,6 +361,7 @@ void VideoObject::removeLoop()
     if (playList->mediaCount() > 1)
     {
         playList->removeMedia(1);
+        playList->setCurrentIndex(0);
     }
     playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 }

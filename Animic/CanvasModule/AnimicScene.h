@@ -26,6 +26,11 @@ public:
 	void setEntry(bool);
 
 	void playThrough();
+	bool getPlaybackMode();
+	void setPlaybackMode(bool);
+
+	void engageLoopVideo();
+	void disengageLoopingVideo();
 
 protected:
 
@@ -41,7 +46,7 @@ private:
 
 	QString name = "Scene ";
 
-	QMediaPlaylist* bgmList = nullptr;
+	QMediaPlaylist* bgmList = nullptr;	//not used for now
 	QMediaPlayer* bgmPlayer = nullptr;
 
 	QMediaPlayer* temp = nullptr;	//temp holder for video object/ trigger media player
@@ -50,12 +55,9 @@ private:
 
 	int triggerToBeInserted = 0; // null = -1, TW = 0, TM = 1, OW = 2
 
-	bool entryScene = false;
+	bool entryScene = true;
+	bool playbackMode = false;
 	bool checkForTrigger();
-
-	/*QMediaPlaylist* bgmLoopList = nullptr;
-	QMediaPlayer* bgmLoopPlayer = nullptr;
-	*/
 
 signals:
 
@@ -84,11 +86,9 @@ public slots:
 	void onVideoLoaded(qint64);
 	void onTriggerLoaded(qint64);
 
-	void onEndOfMedia();
-
 	void enableTrigger();
 	void disableTrigger();
-	void activateTrigger();
+	void activateTrigger(QMediaPlayer::MediaStatus);
 	void deactivateTrigger();
 
 	void playTrigger();
@@ -96,4 +96,8 @@ public slots:
 	void stopTrigger();
 
 	void switchTriggerType(int);
+	void resetScene();
+
+	void onNextScene(AnimicScene*);
+	void onLastScene();
 };

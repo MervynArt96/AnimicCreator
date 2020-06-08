@@ -34,14 +34,45 @@ QList<AnimicScene*> PlaybackEngineCore::getList()
 
 void PlaybackEngineCore::playback()
 {
-	//event loop?
-	for (AnimicScene* scene : sceneList)
+	AnimicScene* entry = findEntryScene();
+	if (entry != nullptr)
 	{
+		emit playNextScene(entry);
+	}
+	/*
+	QEventLoop* loop;
+
+	connect(this, &PlaybackEngineCore::terminatePreview, loop, &QEventLoop::quit);
+	qDebug() << "Above For Loop";
+	for (AnimicScene* sc : sceneList)
+	{
+		qDebug() << "For Loop";
 		//connect(scene, &AnimicScene::nextScene, this, &onNextScene);
 	}
+
+	loop->exec();
+	*/
 }
 
 void PlaybackEngineCore::onNextScene(AnimicScene* sc)
 {
 	emit playNextScene(sc);
+}
+
+AnimicScene* PlaybackEngineCore::findEntryScene()
+{
+	for (int i = 0; i < sceneList.count(); i++)
+	{
+		if (sceneList.at(i)->isEntry())
+		{
+			return sceneList.at(i);
+		}
+	}
+
+	return nullptr;
+}
+
+void PlaybackEngineCore::onTerminate()
+{
+	emit terminatePreview();
 }
