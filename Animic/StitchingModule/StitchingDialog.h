@@ -20,6 +20,7 @@ public:
 	StitchingDialog(SceneListModel*);
 	~StitchingDialog();
 
+	void closeEvent(QCloseEvent* e) override;
 	void reject() override;
 
 private:
@@ -63,6 +64,5 @@ public slots:
 	void onSwitchScene(AnimicScene*);
 
 	void onTriggerInserted();
-	void onClosePreviewDialog();
 	void onRadioToggle(bool);
 };

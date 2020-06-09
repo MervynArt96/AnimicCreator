@@ -12,11 +12,7 @@ public:
 	AnimicSlider(QWidget *parent);
 	~AnimicSlider();
 
-	void setScene(AnimicScene* scene);
-
 private:
-
-	AnimicScene* currentScene;
 
 signals:
 
@@ -24,8 +20,7 @@ public slots:
 
 	void onChangeTab();
 	void onInsertVideo(qint64);
-	void onRemoveVideo(qint64, qint64);
-	void onRemoveScene();
+	void onRemoveVideo(qint64);
 
 	void onPlay();
 	void onPause();

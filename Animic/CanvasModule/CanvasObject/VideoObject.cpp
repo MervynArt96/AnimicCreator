@@ -1,23 +1,41 @@
 #include "stdafx.h"
 #include "VideoObject.h"
-
+#include <CanvasModule\AnimicScene.h>
 
 VideoObject::VideoObject(QObject* parent, QUrl* filePath)
 {
+    videoPath = new QUrl();
+    loopPath = new QUrl();
+    playList = new QMediaPlaylist();
+    player = new QMediaPlayer();
+    loopBuffer = new QBuffer();
+    mainBuffer = new QBuffer();
+
 	if (QFile::exists(filePath->path()))
 	{
-		videoPath = new QUrl(filePath->path());
-        loopPath = new QUrl();
-        playList = new QMediaPlaylist();
-		player = new QMediaPlayer();
+        videoPath->setUrl(filePath->path());
         player->setPlaylist(playList);
         this->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
         this->setAcceptHoverEvents(true);
-        playList->addMedia(QUrl::fromLocalFile(filePath->path()));
 		player->setVideoOutput(this);
         player->play();
-		//pixmapFrame = new QPixmap();
+        player->pause();
         this->currentHandle = nullptr;   
+
+        QFile file(filePath->path());
+        file.open(QIODevice::ReadOnly);
+        QByteArray* ba = new QByteArray();
+        ba->append(file.readAll());
+        mainBuffer->setBuffer(ba);
+        mainBuffer->open(QIODevice::ReadOnly);  //keep a copy of the media
+        mainBuffer->reset();
+
+        player->setMedia(QMediaContent(), mainBuffer);
+        connect(player, &QMediaPlayer::mediaStatusChanged, this, [=]()
+            {
+                //qDebug() << "Media Status:" << player->mediaStatus();
+            });
+        file.close();
 	}
     else
     {
@@ -27,12 +45,32 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)
 
 VideoObject::~VideoObject()
 {
-	delete player;
+    qDebug() << "Freeing Memory";
+    delete player;
+    delete mainBuffer;
+    delete loopBuffer;
+    delete playList;
+    delete videoPath;
+    delete loopPath;
 }
+
+void VideoObject::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu menu;
+    QAction* removeAction = menu.addAction("Remove Item");
+    connect(removeAction, &QAction::triggered, qobject_cast<AnimicScene*>(scene()), &AnimicScene::onDeleteItem);
+    QAction* selectedAction = menu.exec(event->screenPos());
+}
+
 
 QString VideoObject::getVideoPath()
 {
 	return videoPath->path();
+}
+
+QString VideoObject::getLoopPath()
+{
+    return loopPath->path();
 }
 
 QMediaPlayer* VideoObject::getPlayer()
@@ -47,7 +85,7 @@ QMediaPlaylist* VideoObject::getPlayList()
 
 void VideoObject::playMedia()
 {
-    qDebug() << player->error();
+    qDebug() << player->mediaStatus();
     player->play();
 }
 
@@ -83,12 +121,6 @@ QRectF VideoObject::boundingRect()
 }
 */
 
-void VideoObject::setPixmap(QPixmap* pixmap) //might not need
-{
-	this->pixmapFrame = pixmap;
-}
-
-
 void VideoObject::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (!init)
@@ -112,7 +144,7 @@ void VideoObject::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	}
     else if (event->button() == Qt::RightButton)
     {
-        qDebug() << "Right Click";
+        
         
     
     }
@@ -320,29 +352,57 @@ void VideoObject::onScaleChanged(const QString& str)
 
 void VideoObject::onUrlChanged(const QString& str)
 {
-    qint64 pos = player->position();
-    videoPath->clear();
-    videoPath->setPath(str);
-    playList->clear();
-    playList->addMedia(QUrl::fromLocalFile(str));
-    //delete player;
-    //player = new QMediaPlayer();
-    //this->setMediaObject(player);
-    player->setPlaylist(playList);
-    player->setPosition(pos);
+    if (QFile::exists(str))
+    {
+        qint64 pos = player->position();
+        videoPath->clear();
+        videoPath->setPath(str);
+        //playList->clear();
+        //playList->addMedia(QUrl::fromLocalFile(str));
+        //delete player;
+        //player = new QMediaPlayer();
+        //this->setMediaObject(player);
+
+        QFile file(str);
+        file.open(QIODevice::ReadOnly);
+        QByteArray* ba = new QByteArray();
+        ba->append(file.readAll());
+
+        mainBuffer->setBuffer(ba);
+        mainBuffer->open(QIODevice::ReadOnly);  //keep a copy of the media
+        mainBuffer->reset();
+        player->setPosition(pos);
+        player->setMedia(QMediaContent(), mainBuffer);
+    }
 }
 
 void VideoObject::onLoopPathChanged(const QString& str)
 {
-    loopPath->setPath(str);
+    if (QFile::exists(str)) 
+    {
+        loopPath->setPath(str);
+        QFile file(str);
+        file.open(QIODevice::ReadOnly);
+        QByteArray* ba = new QByteArray();
+        ba->append(file.readAll());
+
+        loopBuffer->setBuffer(ba);
+        loopBuffer->open(QIODevice::ReadOnly);  //keep a copy of the media
+        loopBuffer->reset();
+    }
 }
 
 void VideoObject::addLoop()
 {
     if (loopPath->path() != "") 
     {
-        playList->addMedia(*loopPath);
-        playList->setCurrentIndex(1);
+        switchPlayMode(1);
+        player->setMedia(QMediaContent(), loopBuffer);
+        player->play();
+    }
+    else
+    {
+        qDebug() << "No loop video";
     }
 }
 
@@ -352,16 +412,15 @@ void VideoObject::switchPlayMode(int index)
     {
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
     }
-    else if(index == 1)
+    else if (index == 1)
+    {
         playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+    }
 }
 
 void VideoObject::removeLoop()
 {
-    if (playList->mediaCount() > 1)
-    {
-        playList->removeMedia(1);
-        playList->setCurrentIndex(0);
-    }
-    playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    player->setMedia(QMediaContent(), mainBuffer);
+    player->stop();
+    switchPlayMode(0);
 }

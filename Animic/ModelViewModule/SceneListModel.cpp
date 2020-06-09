@@ -109,6 +109,7 @@ void SceneListModel::setSceneToEditMode()
 {
 	for (int i = 0; i < sceneList->count(); i++)
 	{
+		qDebug() << "Switching scene to Edit Mode";
 		sceneList->at(i)->enableObjectDragging();
 		sceneList->at(i)->disableTrigger();
 	}
@@ -118,6 +119,7 @@ void SceneListModel::setSceneToStitchMode()
 {
 	for (int i = 0; i < sceneList->count(); i++)
 	{
+		qDebug() << "Switching scene to Stitching Mode";
 		sceneList->at(i)->disableObjectDragging();
 		sceneList->at(i)->enableTrigger();
 		sceneList->at(i)->disconnectObject();

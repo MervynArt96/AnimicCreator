@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "AnimicView.h"
 
-AnimicView::AnimicView(QWidget* parent): QGraphicsView(parent)
+AnimicView::AnimicView(QWidget* parent, int md): QGraphicsView(parent)
 {
+    mode = md;
     this->viewport()->installEventFilter(this);
     this->setMouseTracking(true);
     setDragMode(QGraphicsView::NoDrag);
@@ -26,14 +27,25 @@ void AnimicView::setAnimicScene(AnimicScene* sc)
 void AnimicView::keyPressEvent(QKeyEvent* event)
 {
     QGraphicsView::keyPressEvent(event);
-    if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
+    if (mode == 0) 
     {
-        setDragMode(QGraphicsView::ScrollHandDrag);
-        AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
-
-        if (scene != nullptr)
+        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
         {
-            scene->disableObjectDragging();
+            setDragMode(QGraphicsView::ScrollHandDrag);
+            AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
+
+            if (scene != nullptr)
+            {
+                scene->disableObjectDragging();
+            }
+        }
+    }
+    else if (mode == 1)
+    {
+        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
+        {
+            qDebug() << "Beginning Playback";
+            emit startPreview();
         }
     }
 }

@@ -15,6 +15,7 @@ PropertiesHandler::PropertiesHandler()
 	setLayout(baseLayout);
 
 	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
+
 }
 
 PropertiesHandler::~PropertiesHandler()

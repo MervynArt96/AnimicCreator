@@ -34,7 +34,7 @@ TwoWayTrigger::~TwoWayTrigger()
 void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
 {
     QGraphicsItem::keyPressEvent(event);
-    qDebug() << "Trigger Key: " << event->key();
+    qDebug() << "Trigger Key Pressed: " << event->text();
     if (activeTrigger)
     {
         if (event->key() == Qt::Key_E)

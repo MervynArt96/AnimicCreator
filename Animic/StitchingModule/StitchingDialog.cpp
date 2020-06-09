@@ -15,8 +15,6 @@ StitchingDialog::StitchingDialog(SceneListModel* model)
 	connectSignalSlot();
 
 	previewDialog = new PreviewDialog();
-	connect(previewDialog, &PreviewDialog::closeDialogSignal, this, &StitchingDialog::onClosePreviewDialog);
-	//connect(sceneList, &AnimicListView::returnSceneToTrigger, )
 }
 
 StitchingDialog::~StitchingDialog()
@@ -95,7 +93,7 @@ void StitchingDialog::onSwitchScene(AnimicScene* sc)
 
 void StitchingDialog::setupTriggerScene()
 {
-	view = new AnimicView(ui.graphicsViewHolder);
+	view = new AnimicView(ui.graphicsViewHolder, 0);
 	view->setSceneRect(QRectF(QPointF(0, 0), QPointF(800, 600)));
 	view->setAcceptDrops(true);
 	view->setScene(nullptr);
@@ -199,7 +197,7 @@ void StitchingDialog::onTriggerInserted()
 	connect(ui.st_StopButton, &QPushButton::clicked, qobject_cast<AnimicScene*>(view->scene()), &AnimicScene::stopTrigger);
 }
 
-void StitchingDialog::onClosePreviewDialog()
+void StitchingDialog::closeEvent(QCloseEvent* e)
 {
-	//set previous scene back ?
+	reject();
 }

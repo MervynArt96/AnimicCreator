@@ -43,6 +43,55 @@ VideoObject* AnimicScene::selectedItem()
 	return nullptr;
 }
 
+void AnimicScene::onDeleteItem()
+{
+	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
+
+	for (int i = 0; i < itemList.size(); i++)
+	{
+		emit deletingVideo();
+		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(itemList.at(i));
+		if(obj != nullptr)
+		{
+			if (max == obj->getPlayer())
+			{
+				max = nullptr;
+				maxDuration = 0;
+			}
+		}
+		removeItem(itemList.at(i));
+		delete(itemList.at(i));
+	}
+	QList<QGraphicsItem*> list = QGraphicsScene::items();
+
+	qint64 tempDuration = 0;
+	bool found = false;
+
+
+	for (int i = 0; i < list.size(); i++)
+	{
+		qDebug() << "Finding New Item";
+		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(list.at(i));
+		if (obj != nullptr)
+		{
+			if (obj->getPlayer()->duration() > tempDuration)
+			{
+				qDebug() << obj;
+				found = true;
+				max = obj->getPlayer();
+				maxDuration = obj->getPlayer()->duration();
+				tempDuration = maxDuration;
+			}
+		}
+	}
+	if (found == true)
+	{
+		qDebug() << "Emitting FoundNew Max";
+		emit foundNewMax(maxDuration);
+	}
+	else emit foundNewMax(0);
+}
+
 QString AnimicScene::mimeType()
 {
 	return QString("text/uri-list");
@@ -92,7 +141,6 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 				emit triggerInserted();
 
 				//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onTriggerLoaded(qint64)));
-				//triggerToBeInserted = -1;
 
 				pauseAll();
 			}
@@ -107,7 +155,6 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
 
 			pauseAll();
-			//triggerToBeInserted = -1;
 		}
 		else if (triggerToBeInserted == 2)
 		{
@@ -119,7 +166,6 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
 
 			pauseAll();
-			//triggerToBeInserted = -1;
 		}
 	}
 	
@@ -463,6 +509,7 @@ void AnimicScene::disableTrigger()
 
 		if (TWTrigger != nullptr)
 		{
+			qDebug() << "Stopping Trigger, removing visibility";
 			TWTrigger->stopMedia();
 			TWTrigger->setVisible(false);
 			TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
@@ -484,20 +531,19 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 {
 	if (status == QMediaPlayer::EndOfMedia) 
 	{
-		qDebug() << "Trigger Activated";
 		playbackMode = true;
 		QList<QGraphicsItem*> allItems = items();
 		engageLoopVideo();
 
 		for (QGraphicsItem* item : allItems)
 		{
-			VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);
 			TwoWayTrigger* TWTrigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
 			TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
 			OneWayTrigger* OWTrigger = qgraphicsitem_cast<OneWayTrigger*>(item);
-
+			qDebug() << "Inside For Loop";
 			if (TWTrigger != nullptr)
 			{
+				qDebug() << "Within TW";
 				TWTrigger->setVisible(true);
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
@@ -521,8 +567,9 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 
 				return;
 			}
-			else if (TMTrigger != nullptr)
+			/*else if (TMTrigger != nullptr)
 			{
+				qDebug() << "Within TM";
 				TMTrigger->setVisible(true);
 				TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
 				//TMTrigger->setActiveTrigger(true);
@@ -534,6 +581,7 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 			}
 			else if (OWTrigger != nullptr)
 			{
+				qDebug() << "Within OW";
 				OWTrigger->setVisible(true);
 				OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
 				//OWTrigger->setActiveTrigger(true);
@@ -542,7 +590,9 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 
 				return;
 			}
+			*/
 		}
+		qDebug() << "No Trigger Found, Terminating Scene";
 		onLastScene();	//if can't find a single trigger, terminate early.
 	}
 }
@@ -560,6 +610,7 @@ void AnimicScene::deactivateTrigger()
 
 		if (TWTrigger != nullptr)
 		{
+			TWTrigger->setVisible(true);
 			TWTrigger->setActiveTrigger(false);
 			TWTrigger->stopMedia();
 			TWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
@@ -656,7 +707,7 @@ void AnimicScene::onNextScene(AnimicScene* sc)
 			//OWTrigger->setActiveTrigger(false);
 		}
 	}
-	disconnect(this);
+	disconnectMax();
 	emit nextScene(sc);
 }
 
@@ -666,7 +717,7 @@ void AnimicScene::onLastScene()
 	stopAll();
 	disengageLoopingVideo();
 	deactivateTrigger();
-	disconnect(this);
+	disconnectMax();
 	emit lastScene();
 }
 
@@ -689,7 +740,6 @@ void AnimicScene::engageLoopVideo()
 		if (obj != nullptr)
 		{
 			obj->addLoop();
-			obj->switchPlayMode(1);
 		}
 	}
 }
@@ -697,15 +747,19 @@ void AnimicScene::engageLoopVideo()
 void AnimicScene::disengageLoopingVideo()
 {
 	QList<QGraphicsItem*> allItems = items();
-
+	qDebug() << "Inside Disengage Loop";
 	for (QGraphicsItem* item : allItems)
 	{
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);
 		if (obj != nullptr)
 		{
+			qDebug() << "Removing Loop";
 			obj->removeLoop();
-			obj->switchPlayMode(0);
 		}
 	}
 }
 
+void AnimicScene::disconnectMax()
+{
+	disconnect(max, nullptr, this, nullptr);
+}

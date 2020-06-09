@@ -14,6 +14,9 @@ public:
 	VideoProperties(QWidget *parent);
 	~VideoProperties();
 
+	void resetItem();
+
+
 private:
 
 	VideoObject* newItem = nullptr;
@@ -32,11 +35,13 @@ private:
 	QLabel* posYLabel = new QLabel(QString("Position Y: "));
 	QLabel* scaleLabel = new QLabel(QString("Scale: "));
 	QLabel* urlLabel = new QLabel(QString("Url: "));
+	QLabel* loopLabel = new QLabel(QString("Looping Video:"));
 
 	QLineEdit* posXEdit = new QLineEdit();
 	QLineEdit* posYEdit = new QLineEdit();
 	QLineEdit* scaleEdit = new QLineEdit();
 	DroppableLineEdit* urlEdit = new DroppableLineEdit();
+	DroppableLineEdit* loopEdit = new DroppableLineEdit();
 
 	QCheckBox* muteToggle = new QCheckBox("Mute Video");
 

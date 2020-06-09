@@ -3,7 +3,6 @@
 #include "CanvasModule/CanvasObject/BaseObject.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
-#include <QPixmap>
 
 class VideoObject : public QGraphicsVideoItem, public BaseObject
 {
@@ -15,12 +14,14 @@ public:
 	~VideoObject();
 
 	QString getVideoPath();
+	QString getLoopPath();
+
 	QMediaPlayer* getPlayer();
 	QMediaPlaylist* getPlayList();
 
+	void VideoObject::contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+
 	//QRectF boundingRect();
-	
-	void setPixmap(QPixmap*);
 	void playMedia();
 	void pauseMedia();
 	void stopMedia();
@@ -47,17 +48,18 @@ private:
 
 	QUrl* videoPath;
 	QUrl* loopPath;
+	QBuffer* loopBuffer;
+	QBuffer* mainBuffer;
 	QMediaPlayer* player = nullptr;
 	QMediaPlaylist* playList = nullptr;
-	QPixmap* pixmapFrame = nullptr;
 
 	QString name = "Video Layer";
 
 	QPointF mousePos;
 	bool init = false;
 
-	qreal oriSizeX;
-	qreal oriSizeY;
+	//qreal oriSizeX = 0;
+	//qreal oriSizeY = 0;
 
 	bool showRect = true;
 

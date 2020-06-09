@@ -18,10 +18,7 @@ public:
 private:
 
 	QLabel* nameLabel = new QLabel(QString("Scene 1"));
-
-	//QLabel* bgmLabel = new QLabel(QString("BGM: "));
-	//QLabel* bgmName = new QLabel(QString("Testing"));
-	//QLabel* bgmUrl = new QLabel(QString("Test Url"));
+	QCheckBox* entryToggle = new QCheckBox("Entry Scene");
 
 public slots:
 

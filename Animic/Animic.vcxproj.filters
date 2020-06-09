@@ -117,9 +117,6 @@
     <ClCompile Include="AssetHandlerModule\TriggerAssetHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StitchingModule\Triggers\BaseTrigger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StitchingModule\Triggers\OneWayTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProjectManagementModule\ProjectHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StitchingModule\Triggers\BaseTrigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerModule\LayerListItem.h">

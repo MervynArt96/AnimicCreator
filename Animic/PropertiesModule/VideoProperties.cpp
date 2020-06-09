@@ -11,7 +11,8 @@ VideoProperties::VideoProperties(QWidget *parent): QWidget(parent)
 	baseLayout->addWidget(posYLabel, 2, 0); baseLayout->addWidget(posYEdit, 2, 1);
 	baseLayout->addWidget(scaleLabel, 3, 0); baseLayout->addWidget(scaleEdit, 3, 1);
 	baseLayout->addWidget(urlLabel, 4, 0); baseLayout->addWidget(urlEdit, 4, 1);
-	baseLayout->addWidget(muteToggle, 5, 0);
+	baseLayout->addWidget(loopLabel, 5, 0); baseLayout->addWidget(loopEdit, 5, 1);
+	baseLayout->addWidget(muteToggle, 6, 0);
 
 	setLayout(baseLayout);
 }
@@ -26,6 +27,12 @@ void VideoProperties::onSwitchScene()
 	disconnectWidgets();
 }
 
+void VideoProperties::resetItem()
+{
+	newItem = nullptr;
+	clearProperties();
+}
+
 void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
 {
 	if (target != nullptr) 
@@ -33,12 +40,12 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 		VideoObject* old = qgraphicsitem_cast<VideoObject*>(oldItem);
 		if (old != nullptr)
 		{
-			qDebug() << "disconnecting old";
 			oldObject = old;
 			disconnect(posXEdit, nullptr, old, nullptr);
 			disconnect(posYEdit, nullptr, old, nullptr);
 			disconnect(scaleEdit, nullptr, old, nullptr);
 			disconnect(urlEdit, nullptr, old, nullptr);
+			disconnect(loopEdit, nullptr, old, nullptr);
 		}
 		if (newItem != nullptr)	//might need more testing
 		{
@@ -46,6 +53,7 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			disconnect(posYEdit, nullptr, newItem, nullptr);
 			disconnect(scaleEdit, nullptr, newItem, nullptr);
 			disconnect(urlEdit, nullptr, newItem, nullptr);
+			disconnect(loopEdit, nullptr, newItem, nullptr);
 		}
 
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(target);
@@ -58,6 +66,7 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			scaleEdit->setText(QString::number(obj->scale()));
 
 			urlEdit->setText(obj->getVideoPath());
+			loopEdit->setText(obj->getLoopPath());
 			muteToggle->setChecked(obj->getPlayer()->isMuted());
 
 			connect(obj, &VideoObject::xChanged, this, &VideoProperties::onPositionXChanged);	//object change Line Edit
@@ -68,6 +77,7 @@ void VideoProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldIt
 			connect(posYEdit, &QLineEdit::textEdited, obj, &VideoObject::onPosYChanged);		
 			connect(scaleEdit, &QLineEdit::textEdited, obj, &VideoObject::onScaleChanged);
 			connect(urlEdit, &QLineEdit::textChanged, obj, &VideoObject::onUrlChanged );
+			connect(loopEdit, &QLineEdit::textChanged, obj, &VideoObject::onLoopPathChanged);
 		}
 	}
 }
@@ -92,11 +102,11 @@ void VideoProperties::onScaleChanged()
 
 void VideoProperties::clearProperties()
 {
-	qDebug() << "Clear";
 	posXEdit->setText(0);
 	posYEdit->setText(0);
 	scaleEdit->setText(0);
 	urlEdit->setText("");
+	loopEdit->setText("");
 	muteToggle->setChecked(false);
 }
 

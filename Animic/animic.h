@@ -86,5 +86,5 @@ public slots:
 	void resetTabOnCloseDialog();
 
 	void debug();
-	
+	void safeRemoveVideo();
 };

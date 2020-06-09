@@ -8,7 +8,7 @@ class AnimicView : public QGraphicsView
 	Q_OBJECT
 
 public:
-	AnimicView(QWidget*);
+	AnimicView(QWidget*, int);
     ~AnimicView();
     void gentle_zoom(double factor);
     void set_modifiers(Qt::KeyboardModifiers modifiers);
@@ -27,11 +27,13 @@ private:
     bool eventFilter(QObject* object, QEvent* event);
     int lowerLimit = 0.5;
     int upperLimit = 0.5;
+    int mode = 0;
 
 signals:
     
     void zoomed();
     void sceneChanged(AnimicScene*);
+    void startPreview();
 
 public slots:
 

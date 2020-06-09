@@ -21,11 +21,12 @@ void Animic::init()
 	setupProperties();
 
 	connectSignalSlots();
+
 }
 
 void Animic::setupScene()	//set up graphics scene and canvas
 {
-	graphicsView = new AnimicView(ui.tab);
+	graphicsView = new AnimicView(ui.tab, 0);
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(graphicsView);
@@ -40,6 +41,7 @@ void Animic::setupScene()	//set up graphics scene and canvas
 	connect(ui.playButton, &QPushButton::clicked, scene, &AnimicScene::playAll);
 	connect(ui.pauseButton, &QPushButton::clicked, scene, &AnimicScene::pauseAll);
 	connect(ui.stopButton, &QPushButton::clicked, scene, &AnimicScene::stopAll);
+	connect(scene, &AnimicScene::deletingVideo, this, &Animic::safeRemoveVideo);
 }
 
 void Animic::connectSignalSlots()
@@ -55,7 +57,6 @@ void Animic::connectSignalSlots()
 void Animic::setupTimeline()
 {
 	mainSlider = new AnimicSlider(ui.SliderHolder);
-	mainSlider->setScene(scene);
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(mainSlider);
@@ -63,6 +64,7 @@ void Animic::setupTimeline()
 
 	connect(mainSlider, SIGNAL(valueChanged(int)), scene, SLOT(setVideoFrameTime(int)));
 	connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
+	connect(scene, &AnimicScene::foundNewMax, mainSlider, &AnimicSlider::onRemoveVideo);
 
 	//connect(scene, SIGNAL(subscribeTimeline(QMediaPlayer*)), mainSlider, SLOT(subscribeVideo(QMediaPlayer*))); //performance issue
 }
@@ -147,6 +149,7 @@ void Animic::resetTabOnCloseDialog()
 
 void Animic::setCurrentScene(int index)
 {
+	qDebug() << "Setting Current Scene";
 	if (currentTab != -1)		//check if the signal comes from deleting a scene or user switch tab
 	{
 		AnimicView* view = ui.SceneWindow->widget(currentTab)->findChild<AnimicView*>();
@@ -182,6 +185,7 @@ void Animic::setCurrentScene(int index)
 			{
 				if (scc->getMaxPlayer() != nullptr)
 				{
+					qDebug() << scc->getMaxPlayer()->duration();
 					mainSlider->setMaximum(scc->getMaxPlayer()->duration());
 				}
 
@@ -191,8 +195,8 @@ void Animic::setCurrentScene(int index)
 				connect(mainSlider, SIGNAL(valueChanged(int)), scc, SLOT(setVideoFrameTime(int)));
 				connect(scc, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
 				connect(scc, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
-
-				//sc->update();
+				connect(scc, &AnimicScene::deletingVideo, this, &Animic::safeRemoveVideo);
+				connect(scc, &AnimicScene::foundNewMax, mainSlider, &AnimicSlider::onRemoveVideo);
 
 				//update properties window, maybe need to clear only
 				//connect scene to properties window
@@ -269,7 +273,7 @@ void Animic::on_actionNewScene_triggered()
 
 	ui.SceneWindow->addTab(widget, sc->getName());
 
-	AnimicView* view = new AnimicView(widget);
+	AnimicView* view = new AnimicView(widget , 0);
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(view);
 	widget->setLayout(layout);
@@ -286,7 +290,7 @@ void Animic::on_newSceneButton_clicked()
 	QWidget* widget = new QWidget(ui.SceneWindow);
 
 	AnimicScene* sc = new AnimicScene();
-	AnimicView* view = new AnimicView(widget);
+	AnimicView* view = new AnimicView(widget, 0);
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(view);
 	widget->setLayout(layout);
@@ -307,7 +311,7 @@ void Animic::on_newSceneButton_clicked()
 void Animic::openNewTab(AnimicScene* sc)
 {
 	QWidget* widget = new QWidget(ui.SceneWindow);
-	AnimicView* view = new AnimicView(widget);
+	AnimicView* view = new AnimicView(widget, 0);
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(view);
 	widget->setLayout(layout);
@@ -321,7 +325,6 @@ void Animic::openNewTab(AnimicScene* sc)
 
 void Animic::on_removeSceneButton_clicked()
 {
-	qDebug() << mainList->currentIndex();
 	if (mainList->currentIndex().row() > -1)
 	{
 		QMetaObject::invokeMethod(mainList, "onDeleteScene");
@@ -333,25 +336,36 @@ void Animic::onDeleteScene(AnimicScene* sc)
 {
 	for (int i = 0; i < ui.SceneWindow->count(); i++)
 	{
+		qDebug() << "Checking Scene";
 		AnimicView* view = ui.SceneWindow->widget(i)->findChild<AnimicView*>();
 
 		if (view != nullptr) 
 		{
-			if (view->scene() == qobject_cast<QGraphicsScene*>(sc))
+			if (view->scene() == qobject_cast<AnimicScene*>(sc))
 			{
-				sc->clear();
-				view->~AnimicView();
+				view->setScene(nullptr);
 				ui.SceneWindow->removeTab(i);
-				currentTab = -1;
 				break;
 			}
 		}
 	}
 	sceneModel->removeRows(mainList->currentIndex().row(), 1, QModelIndex());
-	//clear layer list
+	sc->disconnectObject();
+	sc->disconnect();
+	mainSlider->disconnect();
+	propHandler->getVideoPropertiesWidget()->resetItem();
+	sc->clear();
 }
 
 void Animic::debug()
 {
 
+}
+
+void Animic::safeRemoveVideo()
+{
+	qDebug() << "safe Disconnecting";
+	mainSlider->disconnect();
+	mainSlider->setMaximum(0);
+	propHandler->getVideoPropertiesWidget()->resetItem();
 }

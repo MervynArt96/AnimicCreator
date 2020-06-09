@@ -67,7 +67,9 @@ signals:
 	void nextScene(AnimicScene*);
 	void lastScene();
 
+	void deletingVideo();
 	void triggerInserted();
+	void foundNewMax(qint64);
 
 public slots:
 
@@ -100,4 +102,8 @@ public slots:
 
 	void onNextScene(AnimicScene*);
 	void onLastScene();
+
+	void onDeleteItem();
+	void disconnectMax();
+
 };

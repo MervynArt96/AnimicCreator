@@ -13,6 +13,8 @@ public:
 	PreviewDialog(QWidget *parent = Q_NULLPTR);
 	~PreviewDialog();
 
+	void closeEvent(QCloseEvent* e) override;
+	void showEvent(QShowEvent* e) override;
 	//void keyPressEvent(QKeyEvent* e) override;
 
 private:
@@ -20,6 +22,8 @@ private:
 
 	AnimicView* view;
 	PlaybackEngineCore* engine;
+	QGraphicsScene* endScene;
+	QGraphicsTextItem* endText;
 
 signals:
 
@@ -33,5 +37,5 @@ public slots:
 	void onTerminatePreview();
 
 	void onPlayNextScene(AnimicScene*);
-
+	void onDisableSpace();
 };

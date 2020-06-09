@@ -17,12 +17,12 @@ public:
 	void refreshList(QList<AnimicScene*>);
 	void setList(QList<AnimicScene*>);
 	QList<AnimicScene*> getList();
-	void playback();
 
 	AnimicScene* findEntryScene();
 
 private:
 
+	AnimicScene* entry;
 	QList<AnimicScene*> sceneList;
 	QTimer* timer;
 	QEventLoop* loop;
@@ -31,11 +31,12 @@ signals:
 
 	void playNextScene(AnimicScene*);
 	void terminatePreview();
+	void disableSpace();
 
 public slots:
 
 	void onNextScene(AnimicScene*);
 	void onTerminate();
-
+	void playback();
 };
 
