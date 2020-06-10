@@ -18,6 +18,10 @@ public:
 	TimedMashTriggerProperties* getTMTriggerProperties();
 	OneWayTriggerProperties* getOWTriggerProperties();
 
+	void TriggerPropertiesHandler::activateTwoWayProperties();
+	void TriggerPropertiesHandler::activateTimedMashProperties();
+	void TriggerPropertiesHandler::activateOneWayProperties();
+
 private:
 
 	TwoWayTriggerProperties* TWTriggerProperties;

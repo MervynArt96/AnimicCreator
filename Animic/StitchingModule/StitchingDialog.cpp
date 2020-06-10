@@ -24,10 +24,13 @@ StitchingDialog::~StitchingDialog()
 
 void StitchingDialog::reject()
 {
-	triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->clear();
+	triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->clear();		//reset list just in case if deletion has happened
 	triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->clear();
 
-	//do same stuff to TM and OW properties;
+	triggerProperties->getTMTriggerProperties()->getSceneDefaultComboBox()->clear();		
+	triggerProperties->getTMTriggerProperties()->getSceneAltComboBox()->clear();
+
+	triggerProperties->getOWTriggerProperties()->getSceneDefaultComboBox()->clear();		
 
 	view->setScene(nullptr);
 	qobject_cast<SceneListModel*>(sceneList->model())->setSceneToEditMode();
@@ -46,7 +49,10 @@ void StitchingDialog::openDialog()
 			triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, QString("Empty"));
 			triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->insertItem(i, QString("Empty"));
 
-			//do same stuff to TM and OW properties;
+			triggerProperties->getTMTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, QString("Empty"));
+			triggerProperties->getTMTriggerProperties()->getSceneAltComboBox()->insertItem(i, QString("Empty"));
+
+			triggerProperties->getOWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, QString("Empty"));
 
 			continue;
 		}
@@ -54,7 +60,11 @@ void StitchingDialog::openDialog()
 		triggerProperties->getTWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i,list->at(i-1)->getName());
 		triggerProperties->getTWTriggerProperties()->getSceneAltComboBox()->insertItem(i, list->at(i-1)->getName());
 
-		//do same stuff to TM and OW properties;
+		triggerProperties->getTMTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, list->at(i - 1)->getName());
+		triggerProperties->getTMTriggerProperties()->getSceneAltComboBox()->insertItem(i, list->at(i - 1)->getName());
+
+		triggerProperties->getOWTriggerProperties()->getSceneDefaultComboBox()->insertItem(i, list->at(i - 1)->getName());
+
 	}
 	this->move(200, 50);
 	this->exec();
@@ -62,33 +72,58 @@ void StitchingDialog::openDialog()
 
 void StitchingDialog::onSwitchScene(AnimicScene* sc)
 {
-	view->setScene(sc); 
-
-	if (sc->getMaxPlayer() != nullptr)
-		slider->setMaximum(sc->getMaxPlayer()->duration());
-
-	if (ui.twRadio->isChecked())
+	disconnect(this, &StitchingDialog::changedTrigger, nullptr, nullptr);
+	disconnect(slider, &AnimicSlider::valueChanged, nullptr, nullptr);
+	disconnect(ui.st_PlayButton, &QPushButton::clicked, nullptr, nullptr);
+	disconnect(ui.st_PauseButton, &QPushButton::clicked, nullptr, nullptr);
+	disconnect(ui.st_StopButton, &QPushButton::clicked, nullptr, nullptr);
+	if (sc != nullptr)
 	{
-		sc->switchTriggerType(0);
-	}
-	else if (ui.tmRadio->isChecked())
-	{
-		sc->switchTriggerType(1);
-	}
-	else if (ui.owRadio->isChecked())
-	{
-		sc->switchTriggerType(2);
-	}
+		view->setScene(sc);
+		if (ui.twRadio->isChecked())		//get initial value for radio group
+		{
+			sc->switchTriggerType(0);
+		}
+		else if (ui.tmRadio->isChecked())
+		{
+			sc->switchTriggerType(1);
+		}
+		else if (ui.owRadio->isChecked())
+		{
+			sc->switchTriggerType(2);
+		}
 
-	//get trigger here 
-	//check trigger type
-	//connect to respective panels
+		int type = sc->getTriggerType();
+		if (type == 0)
+		{
+			//connect to respective panels
+			connect(ui.st_PlayButton, &QPushButton::clicked, sc, &AnimicScene::playTrigger);
+			connect(ui.st_PauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseTrigger);
+			connect(ui.st_StopButton, &QPushButton::clicked, sc, &AnimicScene::stopTrigger);
+		}
+		else if (type == 1)
+		{
+			//connect to respective panels
+			connect(ui.st_PlayButton, &QPushButton::clicked, sc, &AnimicScene::playTrigger);
+			connect(ui.st_PauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseTrigger);
+			connect(ui.st_StopButton, &QPushButton::clicked, sc, &AnimicScene::stopTrigger);
+		}
+		else if (type == 2)
+		{
+			//connect to respective panels
+			connect(ui.st_PlayButton, &QPushButton::clicked, sc, &AnimicScene::playTrigger);
+			connect(ui.st_PauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseTrigger);
+			connect(ui.st_StopButton, &QPushButton::clicked, sc, &AnimicScene::stopTrigger);
+		}
 
+		if (sc->getMaxPlayer() != nullptr)
+			slider->setMaximum(sc->getMaxPlayer()->duration());
 
-	connect(this, &StitchingDialog::changedTrigger, sc, &AnimicScene::switchTriggerType);
-	connect(slider, &AnimicSlider::valueChanged, sc, &AnimicScene::setVideoFrameTime);
-	connect(sc, &AnimicScene::triggerInserted, this, &StitchingDialog::onTriggerInserted);
-	connect(sc, &AnimicScene::focusItemChanged, triggerProperties, &TriggerPropertiesHandler::onFocusChanged);
+		connect(this, &StitchingDialog::changedTrigger, sc, &AnimicScene::switchTriggerType);
+		connect(slider, &AnimicSlider::valueChanged, sc, &AnimicScene::setVideoFrameTime);
+		connect(sc, &AnimicScene::triggerInserted, this, &StitchingDialog::onTriggerInserted);
+		connect(sc, &AnimicScene::focusItemChanged, triggerProperties, &TriggerPropertiesHandler::onFocusChanged);
+	}
 }
 
 void StitchingDialog::setupTriggerScene()

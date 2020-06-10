@@ -48,6 +48,8 @@ public:
 	void createHandles();
 	void transformHandle();
 
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+
 private:
 
 	QList<RectHandle*> handleList;
@@ -91,4 +93,6 @@ public slots:
 
 	void setDefaultScene(AnimicScene* sc);
 	void setAltScene(AnimicScene* sc);
+
+	void resetNextScenes(AnimicScene*);
 };

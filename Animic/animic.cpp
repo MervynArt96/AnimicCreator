@@ -32,6 +32,7 @@ void Animic::setupScene()
 	ui.tab->setLayout(layout);
 	scene = new AnimicScene();
 	scene->setName("Scene 1");
+	scene->setEntry(true);
 	graphicsView->setSceneRect(QRectF(QPointF(0, 0), QPointF(800,600)));
 	graphicsView->setScene(scene);
 	graphicsView->setAcceptDrops(true);
@@ -229,6 +230,13 @@ void Animic::onDeleteScene(AnimicScene* sc)
 	propHandler->getVideoPropertiesWidget()->resetItem();
 	propHandler->getScenePropertiesWidget()->onDisconnectScene(sc);
 	sc->clear();
+
+	QList<AnimicScene*> list = *sceneModel->getList();
+
+	for (int i = 0; i < list.size(); i++)
+	{
+		list.at(i)->resetTriggerNextScene(sc);		//remove any pointers towards the deleted scene
+	}
 }
 
 void Animic::safeRemoveVideo()

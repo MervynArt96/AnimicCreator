@@ -18,7 +18,6 @@ TimedMashTrigger::TimedMashTrigger(QObject* parent, QUrl* filePath)
         player->play();
         player->pause();
         this->currentHandle = nullptr;
-        qDebug() << player->error();
     }
     else
     {
@@ -42,6 +41,10 @@ void TimedMashTrigger::keyPressEvent(QKeyEvent* event)
             keyPressCount++;
             if (keyPressCount >= keyMax)
             {
+                qDebug() << "Succeeded";
+                //timer->disconnect();
+                //timer->stop();
+                //qDebug() << timer->isActive();
                 emit sendDefaultScene(sceneDefault);
                 activeTrigger = false;
             }
@@ -57,7 +60,7 @@ void TimedMashTrigger::setActiveTrigger(bool x)
     {
         keyPressCount = 0;
         this->setFocus();
-        QTimer::singleShot(timeLimit, this, [=]()
+        timer->singleShot(timeLimit, this, [=]()       //responsible to keep track of time, go to alternate scene if time is up
             {
                 qDebug() << "Time's Up";
                 emit sendAltScene(sceneAlt);
@@ -85,21 +88,16 @@ void TimedMashTrigger::setKeyMax(int i)
     keyMax = i;
 }
 
-void TimedMashTrigger::onDurationChanged(int time)
-{
-    timeLimit = time;
-}
-
 void TimedMashTrigger::setDefaultScene(AnimicScene* sc)
 {
     sceneDefault = sc;
-    qDebug() << sceneDefault->getName();
+    qDebug() << "Default Scene: " <<sceneDefault->getName();
 }
 
 void TimedMashTrigger::setAltScene(AnimicScene* sc)
 {
     sceneAlt = sc;
-    qDebug() << sceneAlt->getName();
+    qDebug() << "Alt Scene:" << sceneAlt->getName();
 }
 
 AnimicScene* TimedMashTrigger::getDefaultScene()
@@ -352,10 +350,15 @@ void TimedMashTrigger::enableRect()
     showRect = true;
 }
 
-void TimedMashTrigger::onKeyMaxChanged(int i)
+void TimedMashTrigger::onKeyMaxChanged(const QString& i)
 {
-    keyMax = i;
+    keyMax = i.toInt();
     qDebug() << "Key MaX: " << keyMax;
+}
+
+void TimedMashTrigger::onTimeLimitChanged(const QString& time)
+{
+    timeLimit = time.toInt();
 }
 
 void TimedMashTrigger::onPosXChanged(const QString& str)
@@ -392,4 +395,25 @@ void TimedMashTrigger::onUrlChanged(const QString& str)
 void TimedMashTrigger::transformHandle()
 {
 
+}
+
+void TimedMashTrigger::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu menu;
+    QAction* removeAction = menu.addAction("Remove Item");
+    connect(removeAction, &QAction::triggered, qobject_cast<AnimicScene*>(scene()), &AnimicScene::onDeleteTrigger);
+    QAction* selectedAction = menu.exec(event->screenPos());
+}
+
+void TimedMashTrigger::resetNextScenes(AnimicScene* sc)
+{
+    if (sceneDefault == sc)
+    {
+        sceneDefault = nullptr;
+    }
+
+    if (sceneAlt == sc)
+    {
+        sceneAlt = nullptr;
+    }
 }

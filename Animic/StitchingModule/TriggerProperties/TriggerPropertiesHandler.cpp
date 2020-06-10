@@ -9,12 +9,18 @@ TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent, AnimicListVi
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(TWTriggerProperties);
+	layout->addWidget(TMTriggerProperties);
+	layout->addWidget(OWTriggerProperties);
+
+	TMTriggerProperties->setVisible(false);
+	OWTriggerProperties->setVisible(false);
+
 	this->setLayout(layout);
 
 	connect(this, &TriggerPropertiesHandler::TWTriggerFocused, TWTriggerProperties, &TwoWayTriggerProperties::onFocusChanged);
-	//connect(this, &TriggerPropertiesHandler::onReturnDefaultScene, TWTriggerProperties, &TwoWayTriggerProperties::scene)
-	//connect(this, &TriggerPropertiesHandler::TMTriggerFocused, TMTriggerProperties, &TimedMashTriggerProperties::onFocusChanged);
-	//connect(this, &TriggerPropertiesHandler::OWTriggerFocused, OWTriggerProperties, &OneWayTriggerProperties::onFocusChanged);
+	connect(this, &TriggerPropertiesHandler::TMTriggerFocused, TMTriggerProperties, &TimedMashTriggerProperties::onFocusChanged);
+	connect(this, &TriggerPropertiesHandler::OWTriggerFocused, OWTriggerProperties, &OneWayTriggerProperties::onFocusChanged);
+
 }
 
 TriggerPropertiesHandler::~TriggerPropertiesHandler()
@@ -48,23 +54,41 @@ void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* target, QGraphicsIt
 	TwoWayTrigger* TWtrigger = qgraphicsitem_cast<TwoWayTrigger*>(target);
 	OneWayTrigger* OWtrigger = qgraphicsitem_cast<OneWayTrigger*>(target);
 	TimedMashTrigger* TMtrigger = qgraphicsitem_cast<TimedMashTrigger*>(target);
-	qDebug() << TWtrigger;
+
 	if (TWtrigger != nullptr)
 	{
-		qDebug() << "Focused on TWTrigger";
+		activateTwoWayProperties();
 		emit TWTriggerFocused(target, oldItem, reason);
-		return;
 	}
-
-	if (OWtrigger != nullptr)
+	else if (TMtrigger != nullptr)
 	{
-		emit OWTriggerFocused(target, oldItem, reason);
-		return;
-	}
-
-	if (TMtrigger != nullptr)
-	{
+		activateTimedMashProperties();
 		emit TMTriggerFocused(target, oldItem, reason);
-		return;
 	}
+	else if (OWtrigger != nullptr)
+	{
+		activateOneWayProperties();
+		emit OWTriggerFocused(target, oldItem, reason);
+	}
+}
+
+void TriggerPropertiesHandler::activateTwoWayProperties()
+{
+	TWTriggerProperties->setVisible(true);
+	TMTriggerProperties->setVisible(false);
+	OWTriggerProperties->setVisible(false);
+}
+
+void TriggerPropertiesHandler::activateTimedMashProperties()
+{
+	TWTriggerProperties->setVisible(false);
+	TMTriggerProperties->setVisible(true);
+	OWTriggerProperties->setVisible(false);
+}
+
+void TriggerPropertiesHandler::activateOneWayProperties()
+{
+	TWTriggerProperties->setVisible(false);
+	TMTriggerProperties->setVisible(false);
+	OWTriggerProperties->setVisible(true);
 }

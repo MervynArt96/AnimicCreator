@@ -86,11 +86,13 @@ public:
         splitter->setOrientation(Qt::Horizontal);
         listHolder = new QWidget(splitter);
         listHolder->setObjectName(QString::fromUtf8("listHolder"));
-        listHolder->setMinimumSize(QSize(250, 350));
+        listHolder->setMinimumSize(QSize(100, 300));
+        listHolder->setMaximumSize(QSize(150, 16777215));
         splitter->addWidget(listHolder);
         triggerAssetColumn = new QWidget(splitter);
         triggerAssetColumn->setObjectName(QString::fromUtf8("triggerAssetColumn"));
-        triggerAssetColumn->setMinimumSize(QSize(250, 0));
+        triggerAssetColumn->setMinimumSize(QSize(150, 0));
+        triggerAssetColumn->setMaximumSize(QSize(200, 16777215));
         verticalLayout_5 = new QVBoxLayout(triggerAssetColumn);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -98,12 +100,15 @@ public:
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         triggerAssetHolder = new QWidget(triggerAssetColumn);
         triggerAssetHolder->setObjectName(QString::fromUtf8("triggerAssetHolder"));
+        triggerAssetHolder->setMinimumSize(QSize(150, 0));
+        triggerAssetHolder->setMaximumSize(QSize(200, 16777215));
 
         verticalLayout_5->addWidget(triggerAssetHolder);
 
         widget = new QWidget(triggerAssetColumn);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setMaximumSize(QSize(16777215, 50));
+        widget->setMinimumSize(QSize(100, 0));
+        widget->setMaximumSize(QSize(200, 50));
         gridLayout = new QGridLayout(widget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -127,7 +132,8 @@ public:
 
         radioGroup = new QGroupBox(triggerAssetColumn);
         radioGroup->setObjectName(QString::fromUtf8("radioGroup"));
-        radioGroup->setMaximumSize(QSize(16777215, 150));
+        radioGroup->setMinimumSize(QSize(150, 0));
+        radioGroup->setMaximumSize(QSize(200, 150));
         verticalLayout_4 = new QVBoxLayout(radioGroup);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -156,7 +162,7 @@ public:
         splitter_3->addWidget(splitter);
         triggerPropertiesHolder = new QWidget(splitter_3);
         triggerPropertiesHolder->setObjectName(QString::fromUtf8("triggerPropertiesHolder"));
-        triggerPropertiesHolder->setMinimumSize(QSize(0, 200));
+        triggerPropertiesHolder->setMinimumSize(QSize(0, 325));
         triggerPropertiesHolder->setMaximumSize(QSize(16777215, 200));
         splitter_3->addWidget(triggerPropertiesHolder);
         splitter_4->addWidget(splitter_3);

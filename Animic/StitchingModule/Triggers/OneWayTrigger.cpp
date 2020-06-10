@@ -18,6 +18,7 @@ OneWayTrigger::OneWayTrigger(QObject* parent, QUrl* filePath)
         player->play();
         player->pause();
         this->currentHandle = nullptr;
+        connect(this, &OneWayTrigger::resetScene, this, &OneWayTrigger::onDefaultSceneChanged);
         qDebug() << player->error();
     }
     else
@@ -39,20 +40,30 @@ void OneWayTrigger::keyPressEvent(QKeyEvent* event)
     {
         if (event->key() == Qt::Key_E)
         {
+            if(timeLimit > 0) 
+                timer->stop();
             emit sendDefaultScene(sceneDefault);
             activeTrigger = false;
         }
     }
 }
 
+void OneWayTrigger::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu menu;
+    QAction* removeAction = menu.addAction("Remove Item");
+    connect(removeAction, &QAction::triggered, qobject_cast<AnimicScene*>(scene()), &AnimicScene::onDeleteTrigger);
+    QAction* selectedAction = menu.exec(event->screenPos());
+}
+
 void OneWayTrigger::setActiveTrigger(bool x)
 {
     activeTrigger = x;
 
-    if (activeTrigger && timeLimit > 0)     //this will go to next scene automatically after a certain time.
+    if (activeTrigger && timeLimit >= 0)     //this will go to next scene automatically after a certain time.
     {
         this->setFocus();
-        QTimer::singleShot(timeLimit, this, [=]()
+        timer->singleShot(timeLimit, this, [=]()
             {
                 qDebug() << "Transitioning to Next Scene Automatically";
                 emit sendDefaultScene(sceneDefault);
@@ -70,15 +81,15 @@ void OneWayTrigger::setTimeLimit(int i)
     timeLimit = i;
 }
 
-void OneWayTrigger::onDurationChanged(int time)
+void OneWayTrigger::onTimeLimitChanged(const QString& time)
 {
-    timeLimit = time;
+    timeLimit = time.toInt();
 }
 
 void OneWayTrigger::setDefaultScene(AnimicScene* sc)
 {
-    sceneDefault = sc;
-    qDebug() << sceneDefault->getName();
+    if(sc != nullptr)
+        sceneDefault = sc;
 }
 
 AnimicScene* OneWayTrigger::getDefaultScene()
@@ -360,4 +371,18 @@ void OneWayTrigger::onUrlChanged(const QString& str)
 void OneWayTrigger::transformHandle()
 {
 
+}
+
+void OneWayTrigger::resetScene(AnimicScene* sc)
+{
+    if (sceneDefault == sc)
+    {
+        sceneDefault = nullptr;
+        emit sceneReset(sc);
+    }
+}
+
+void OneWayTrigger::onDefaultSceneChanged(AnimicScene* sc)
+{
+    
 }

@@ -38,13 +38,15 @@ public:
 
 	void keyPressEvent(QKeyEvent*) override;
 
-	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      //user input events
+	void mousePressEvent(QGraphicsSceneMouseEvent*) override;      
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 	void hoverMoveEvent(QGraphicsSceneHoverEvent*) override;
 
 	void createHandles();
 	void transformHandle();
+
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
 
 private:
 
@@ -73,22 +75,26 @@ private:
 	bool activeTrigger = false;
 
 	int timeLimit = 3000;
+	QTimer* timer = new QTimer();
 
 signals:
 
 	void sendDefaultScene(AnimicScene*);
+	void sceneReset(AnimicScene*);
 
 public slots:
 
 	void disableRect();
 	void enableRect();
 
-	void onDurationChanged(int);
+	void onTimeLimitChanged(const QString&);
 
 	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
 	void onScaleChanged(const QString&);
 	void onUrlChanged(const QString&);
 
-	void setDefaultScene(AnimicScene* sc);
+	void setDefaultScene(AnimicScene*);
+	void onDefaultSceneChanged(AnimicScene*);
 
+	void resetScene(AnimicScene*);
 };

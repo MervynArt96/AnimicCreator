@@ -21,6 +21,8 @@ public:
 	QGraphicsItem* getTrigger();
 	QMediaPlayer* getMaxPlayer();
 
+	int getTriggerType();
+
 	VideoObject* selectedItem();
 	bool isEntry();
 	void setEntry(bool);
@@ -58,6 +60,8 @@ private:
 	bool entryScene = false;
 	bool playbackMode = false;
 	bool checkForTrigger();
+
+	bool acceptTrigger = true;
 
 signals:
 
@@ -97,6 +101,7 @@ public slots:
 	void playTrigger();
 	void pauseTrigger();
 	void stopTrigger();
+	void resetTriggerNextScene(AnimicScene* );
 
 	void switchTriggerType(int);
 	void resetScene();
@@ -105,6 +110,7 @@ public slots:
 	void onLastScene();
 
 	void onDeleteItem();
+	void onDeleteTrigger();
 	void disconnectMax();
 
 	void onSetEntry(bool);

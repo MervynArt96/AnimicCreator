@@ -353,3 +353,24 @@ void TwoWayTrigger::transformHandle()
 {
 
 }
+
+void TwoWayTrigger::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu menu;
+    QAction* removeAction = menu.addAction("Remove Item");
+    connect(removeAction, &QAction::triggered, qobject_cast<AnimicScene*>(scene()), &AnimicScene::onDeleteTrigger);
+    QAction* selectedAction = menu.exec(event->screenPos());
+}
+
+void TwoWayTrigger::resetNextScenes(AnimicScene* sc)
+{
+    if (sceneDefault == sc)
+    {
+        sceneDefault = nullptr;
+    }
+
+    if (sceneAlt == sc)
+    {
+        sceneAlt = nullptr;
+    }
+}

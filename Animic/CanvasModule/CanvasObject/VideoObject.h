@@ -19,7 +19,7 @@ public:
 	QMediaPlayer* getPlayer();
 	QMediaPlaylist* getPlayList();
 
-	void VideoObject::contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
 
 	//QRectF boundingRect();
 	void playMedia();

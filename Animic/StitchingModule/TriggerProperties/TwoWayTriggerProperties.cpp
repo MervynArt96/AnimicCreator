@@ -30,13 +30,12 @@ TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView
 
 	layout->addWidget(posXLabel, 0, 0); layout->addWidget(posXEdit, 0 ,1);
 	layout->addWidget(posYLabel, 1, 0); layout->addWidget(posYEdit, 1, 1);
-	layout->addWidget(urlLabel, 2, 0); layout->addWidget(urlEdit, 2, 1);
-	layout->addWidget(sceneDefaultLabel, 3, 0); layout->addWidget(sceneDefaultComboBox, 3, 1);
-	layout->addWidget(sceneAltLabel, 4, 0); layout->addWidget(sceneAltComboBox, 4, 1);
-	//layout->addWidget(muteToggle, 5, 0);
+	layout->addWidget(scaleLabel, 2, 0); layout->addWidget(scaleEdit, 2, 1);
+	layout->addWidget(urlLabel, 3, 0); layout->addWidget(urlEdit, 3, 1);
+	layout->addWidget(sceneDefaultLabel, 4, 0); layout->addWidget(sceneDefaultComboBox, 4, 1);
+	layout->addWidget(sceneAltLabel, 5, 0); layout->addWidget(sceneAltComboBox, 5, 1);
 
 	this->setLayout(layout);
-	//scale
 }
 
 TwoWayTriggerProperties::~TwoWayTriggerProperties()
@@ -101,14 +100,17 @@ void TwoWayTriggerProperties::onFocusChanged(QGraphicsItem* target, QGraphicsIte
 
 void TwoWayTriggerProperties::disconnectTrigger()
 {
-	disconnect(posXEdit);
-	disconnect(posYEdit);
-	disconnect(scaleEdit);
-	disconnect(sceneAltComboBox);
-	disconnect(sceneDefaultComboBox);
-	disconnect(urlEdit);
-	disconnect(this, &TwoWayTriggerProperties::returnDefaultScene, nullptr, nullptr);
-	disconnect(this, &TwoWayTriggerProperties::returnAltScene, nullptr, nullptr);
+	if (trigger != nullptr)
+	{
+		disconnect(posXEdit);
+		disconnect(posYEdit);
+		disconnect(scaleEdit);
+		disconnect(sceneAltComboBox);
+		disconnect(sceneDefaultComboBox);
+		disconnect(urlEdit);
+		disconnect(this, &TwoWayTriggerProperties::returnDefaultScene, nullptr, nullptr);
+		disconnect(this, &TwoWayTriggerProperties::returnAltScene, nullptr, nullptr);
+	}
 }
 
 

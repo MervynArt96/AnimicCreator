@@ -26,23 +26,17 @@ private:
 
 	AnimicListView* list;
 
-	QLineEdit* posXEdit;
-	QLineEdit* posYEdit;
-
-	QLineEdit* scaleEdit;
-	DroppableLineEdit* urlEdit;
-
 	QLabel* sceneDefaultLabel;
 	QLabel* sceneAltLabel;
 
 	QComboBox* sceneDefaultComboBox = new QComboBox();
 	QComboBox* sceneAltComboBox = new QComboBox();
 
-	QLabel* posXLabel;
-	QLabel* posYLabel;
+	QLabel* posXLabel; 	QLineEdit* posXEdit;
+	QLabel* posYLabel;	QLineEdit* posYEdit;
 
-	QLabel* urlLabel;
-	QLabel* scaleLabel;
+	QLabel* urlLabel; DroppableLineEdit* urlEdit;
+	QLabel* scaleLabel; QLineEdit* scaleEdit;
 
 signals:
 	void returnDefaultScene(AnimicScene*);

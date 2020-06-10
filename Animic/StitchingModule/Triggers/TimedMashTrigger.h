@@ -6,7 +6,6 @@
 #include "CanvasModule/CanvasObject/RectHandle.h"
 #include <CanvasModule/AnimicScene.h>
 
-
 class TimedMashTrigger : public QGraphicsVideoItem
 {
 	Q_OBJECT
@@ -54,6 +53,8 @@ public:
 	void createHandles();
 	void transformHandle();
 
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+
 private:
 
 	QList<RectHandle*> handleList;
@@ -84,6 +85,7 @@ private:
 	int keyPressCount = 0;
 	int keyMax = 3;
 	int timeLimit = 3000;
+	QTimer* timer = new QTimer();
 
 signals:
 
@@ -95,13 +97,15 @@ public slots:
 	void disableRect();
 	void enableRect();
 
-	void onKeyMaxChanged(int);
-	void onDurationChanged(int);
+	void onKeyMaxChanged(const QString&);
+	void onTimeLimitChanged(const QString&);
 		
 	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
 	void onScaleChanged(const QString&);
 	void onUrlChanged(const QString&);
 
-	void setDefaultScene(AnimicScene* sc);
-	void setAltScene(AnimicScene* sc);
+	void setDefaultScene(AnimicScene*);
+	void setAltScene(AnimicScene*);
+
+	void resetNextScenes(AnimicScene*);
 };

@@ -48,16 +48,28 @@
        <widget class="QWidget" name="listHolder" native="true">
         <property name="minimumSize">
          <size>
-          <width>250</width>
-          <height>350</height>
+          <width>100</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
          </size>
         </property>
        </widget>
        <widget class="QWidget" name="triggerAssetColumn" native="true">
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>150</width>
           <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -74,13 +86,32 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="triggerAssetHolder" native="true"/>
+          <widget class="QWidget" name="triggerAssetHolder" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QWidget" name="widget" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
+             <width>200</width>
              <height>50</height>
             </size>
            </property>
@@ -117,9 +148,15 @@
          </item>
          <item>
           <widget class="QGroupBox" name="radioGroup">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
+             <width>200</width>
              <height>150</height>
             </size>
            </property>
@@ -173,7 +210,7 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>200</height>
+         <height>325</height>
         </size>
        </property>
        <property name="maximumSize">
