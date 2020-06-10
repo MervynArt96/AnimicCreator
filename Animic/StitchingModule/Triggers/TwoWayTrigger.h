@@ -84,8 +84,6 @@ public slots:
 
 	void disableRect();
 	void enableRect();
-	
-	void toggleLoop();
 
 	void onPosXChanged(const QString&); void onPosYChanged(const QString&);
 	void onScaleChanged(const QString&);

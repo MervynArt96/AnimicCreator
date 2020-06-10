@@ -55,7 +55,7 @@ private:
 
 	int triggerToBeInserted = 0; // null = -1, TW = 0, TM = 1, OW = 2
 
-	bool entryScene = true;
+	bool entryScene = false;
 	bool playbackMode = false;
 	bool checkForTrigger();
 
@@ -70,6 +70,7 @@ signals:
 	void deletingVideo();
 	void triggerInserted();
 	void foundNewMax(qint64);
+	void nameChanged(QString);
 
 public slots:
 
@@ -105,5 +106,7 @@ public slots:
 
 	void onDeleteItem();
 	void disconnectMax();
+
+	void onSetEntry(bool);
 
 };

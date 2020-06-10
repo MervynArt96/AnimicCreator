@@ -37,7 +37,6 @@ void AnimicSlider::onRemoveVideo(qint64 targetLength)
 	if (this->maximum() < targetLength)
 	{
 		this->setMaximum(targetLength);
-		qDebug() << "Setting Maximum: " << targetLength;
 	}
 }
 

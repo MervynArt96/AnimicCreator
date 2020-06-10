@@ -65,6 +65,7 @@ private:
 
 signals:
 
+	void sceneChanged(AnimicScene*);
 
 public slots:
 	

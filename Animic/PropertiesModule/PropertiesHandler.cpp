@@ -15,6 +15,7 @@ PropertiesHandler::PropertiesHandler()
 	setLayout(baseLayout);
 
 	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
+	connect(this, &PropertiesHandler::sceneChanged, sceneProperties, &SceneProperties::onChangeScene);
 
 }
 
@@ -31,18 +32,4 @@ VideoProperties* PropertiesHandler::getVideoPropertiesWidget()
 SceneProperties* PropertiesHandler::getScenePropertiesWidget()
 {
 	return sceneProperties;
-}
-
-void PropertiesHandler::onSceneChanged(AnimicScene* sc)
-{
-	disconnect(sceneProperties);
-	disconnect(videoProperties);
-
-	connect(this, &PropertiesHandler::sceneChanged, sceneProperties, &SceneProperties::onChangeScene);			//reconnect default connections
-	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
-
-	connect(sc, &AnimicScene::focusItemChanged, this, &PropertiesHandler::objectFocusChanged);
-	
-
-	emit sceneChanged(sc);
 }

@@ -30,6 +30,7 @@ PreviewDialog::~PreviewDialog()
 
 void PreviewDialog::closeEvent(QCloseEvent* e)
 {
+	disconnect(view, &AnimicView::startPreview, engine, &PlaybackEngineCore::playback);
 	closeDialog();
 }
 
@@ -67,6 +68,7 @@ void PreviewDialog::openDialog(QList<AnimicScene*> scList)
 		engine->getList().at(i)->disableObjectDragging();
 		engine->getList().at(i)->stopAll();
 	}
+	connect(view, &AnimicView::startPreview, engine, &PlaybackEngineCore::playback);
 	view->setScene(nullptr);
 	ui.sceneName->setText("Scene Name");
 	this->move(200, 50);

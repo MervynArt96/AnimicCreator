@@ -18,7 +18,6 @@ TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
         player->play();
         player->pause();
         this->currentHandle = nullptr;
-        qDebug() << player->error();
     }
     else
     {
@@ -52,21 +51,22 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
 
 void TwoWayTrigger::setActiveTrigger(bool x)
 {
-    this->setFocus();
     activeTrigger = x;
+    if (activeTrigger)
+    {
+        this->setFocus();
+    }
 }
 
 
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
 {
     sceneDefault = sc;
-    qDebug() << sceneDefault->getName();
 }
 
 void TwoWayTrigger::setAltScene(AnimicScene* sc)
 {
     sceneAlt = sc;
-    qDebug() << sceneAlt->getName();
 }
 
 AnimicScene* TwoWayTrigger::getDefaultScene()
@@ -113,7 +113,6 @@ QMediaPlayer* TwoWayTrigger::getPlayer()
 
 void TwoWayTrigger::playMedia()
 {
-    //if(!player->NoMedia)
     player->play();
 }
 
@@ -317,13 +316,6 @@ void TwoWayTrigger::disableRect()
 void TwoWayTrigger::enableRect()
 {
     showRect = true;
-}
-
-void TwoWayTrigger::toggleLoop()
-{
-    if(playList->playbackMode() == QMediaPlaylist::CurrentItemOnce)
-        playList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
-    else playList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 }
 
 void TwoWayTrigger::onPosXChanged(const QString& str)

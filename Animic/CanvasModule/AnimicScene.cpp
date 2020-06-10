@@ -25,6 +25,7 @@ QString AnimicScene::getName()
 void AnimicScene::setName(QString k)
 {
 	name = k;
+	emit nameChanged(k);
 }
 
 
@@ -70,7 +71,6 @@ void AnimicScene::onDeleteItem()
 
 	for (int i = 0; i < list.size(); i++)
 	{
-		qDebug() << "Finding New Item";
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(list.at(i));
 		if (obj != nullptr)
 		{
@@ -86,7 +86,6 @@ void AnimicScene::onDeleteItem()
 	}
 	if (found == true)
 	{
-		qDebug() << "Emitting FoundNew Max";
 		emit foundNewMax(maxDuration);
 	}
 	else emit foundNewMax(0);
@@ -131,41 +130,38 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 	}
 	else if (dynamic_cast<TriggerAssetHandler*>(event->source()))
 	{
-		if (triggerToBeInserted == 0)					
+		for (QUrl url : mimedata->urls())
 		{
-			for (QUrl url : mimedata->urls())
+			if (triggerToBeInserted == 0)
 			{
 				TwoWayTrigger* trigger = new TwoWayTrigger(this, &url);
 				trigger->setPos(event->scenePos());
 				this->addItem(trigger);
 				emit triggerInserted();
 
-				//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onTriggerLoaded(qint64)));
+				pauseAll();
+				return;
+			}
+			else if (triggerToBeInserted == 1)
+			{
+				TimedMashTrigger* trigger = new TimedMashTrigger(this, &url);
+				trigger->setPos(event->scenePos());
+				this->addItem(trigger);
+				emit triggerInserted();
 
 				pauseAll();
+				return;
 			}
-		}
-		else if (triggerToBeInserted == 1)
-		{
-			//TimedMashTrigger* trigger = new TimedMashTrigger(this, &url);
-			//trigger->setPos(event->scenePos());
-			//this->addItem(trigger);
+			else if (triggerToBeInserted == 2)
+			{
+				OneWayTrigger* trigger = new OneWayTrigger(this, &url);
+				trigger->setPos(event->scenePos());
+				this->addItem(trigger);
+				emit triggerInserted();
 
-			//temp = trigger->getPlayer();
-			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
-
-			pauseAll();
-		}
-		else if (triggerToBeInserted == 2)
-		{
-			//OneWayTrigger* trigger = new OneWayTrigger(this, &url);
-			//trigger->setPos(event->scenePos());
-			//this->addItem(trigger);
-
-			//temp = trigger->getPlayer();
-			//connect(trigger->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
-
-			pauseAll();
+				pauseAll();
+				return;
+			}
 		}
 	}
 	
@@ -193,7 +189,6 @@ void AnimicScene::playAll()
 		VideoObject* videoObj = qgraphicsitem_cast<VideoObject*>(item);
 		if (videoObj != nullptr)
 		{
-			qDebug() << "Playing";
 			videoObj->playMedia();
 			found = true;
 			if(videoObj->getPlayer()->duration() >= maxDuration)
@@ -328,7 +323,6 @@ void AnimicScene::onVideoLoaded(qint64 length)
 
 void AnimicScene::onTriggerLoaded(qint64 length)
 {
-	qDebug() << "Trigger Loaded";
 	emit triggerInserted();
 	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onTriggerLoaded(qint64))));
 }
@@ -405,11 +399,11 @@ void AnimicScene::playTrigger()
 		}
 		else if (TMTrigger != nullptr)
 		{
-			//TMTrigger->playMedia();
+			TMTrigger->playMedia();
 		}
 		else if (OWTrigger != nullptr)
 		{
-			//OWTrigger->playMedia();
+			OWTrigger->playMedia();
 		}
 	}
 }
@@ -430,11 +424,11 @@ void AnimicScene::pauseTrigger()
 		}
 		else if (TMTrigger != nullptr)
 		{
-			//TMTrigger->pauseMedia();
+			TMTrigger->pauseMedia();
 		}
 		else if (OWTrigger != nullptr)
 		{
-			//OWTrigger->pauseMedia();
+			OWTrigger->pauseMedia();
 		}
 	}
 }
@@ -455,11 +449,11 @@ void AnimicScene::stopTrigger()
 		}
 		else if (TMTrigger != nullptr)
 		{
-			//TMTrigger->stopMedia();
+			TMTrigger->stopMedia();
 		}
 		else if (OWTrigger != nullptr)
 		{
-			//OWTrigger->stopMedia();
+			OWTrigger->stopMedia();
 		}
 	}
 }
@@ -475,10 +469,6 @@ void AnimicScene::enableTrigger()
 		TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
 		OneWayTrigger* OWTrigger = qgraphicsitem_cast<OneWayTrigger*>(item);
 
-		qDebug() << "TWTrigger: " << TWTrigger;
-		//qDebug() << "TMTrigger: " << TMTrigger;
-		//qDebug() << "OWTrigger: " << OWTrigger;
-
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->setVisible(true);
@@ -486,13 +476,13 @@ void AnimicScene::enableTrigger()
 		}
 		else if (TMTrigger != nullptr)
 		{
-			//TMTrigger->setVisible(true);
-			//TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			TMTrigger->setVisible(true);
+			TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
 		}
 		else if (OWTrigger != nullptr)
 		{
-			//OWTrigger->setVisible(true);
-			//OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
+			OWTrigger->setVisible(true);
+			OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
 		}
 	}
 }
@@ -540,16 +530,14 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 			TwoWayTrigger* TWTrigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
 			TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
 			OneWayTrigger* OWTrigger = qgraphicsitem_cast<OneWayTrigger*>(item);
-			qDebug() << "Inside For Loop";
+
 			if (TWTrigger != nullptr)
 			{
-				qDebug() << "Within TW";
 				TWTrigger->setVisible(true);
+				TWTrigger->setActiveTrigger(true);
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
-				TMTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable);
-				TWTrigger->setActiveTrigger(true);
-				TWTrigger->setFocus();
+				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable);
 
 				if (TWTrigger->getDefaultScene() == nullptr)
 				{
@@ -567,37 +555,63 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 
 				return;
 			}
-			/*else if (TMTrigger != nullptr)
+			else if (TMTrigger != nullptr)
 			{
-				qDebug() << "Within TM";
 				TMTrigger->setVisible(true);
-				TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
-				//TMTrigger->setActiveTrigger(true);
+				TMTrigger->setActiveTrigger(true);
+				TMTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
+				TMTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
+				TMTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable);
+				
+				if (TMTrigger->getDefaultScene() == nullptr)
+				{
+					connect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+				}
+				else connect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 
+				if (TMTrigger->getAltScene() == nullptr)
+				{
+					connect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onLastScene);
+				}
+				else connect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onNextScene);
 
-				//TMTrigger->playMedia();
+				TMTrigger->playMedia();
 
 				return;
 			}
+			
 			else if (OWTrigger != nullptr)
 			{
-				qDebug() << "Within OW";
 				OWTrigger->setVisible(true);
-				OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
-				//OWTrigger->setActiveTrigger(true);
+				OWTrigger->setActiveTrigger(true);
+				OWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
+				OWTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
+				OWTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable);
+				
+				if (OWTrigger->getDefaultScene() == nullptr)
+				{
+					connect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+				}
+				else connect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 
-				//OWTrigger->playMedia();
+				OWTrigger->playMedia();
 
 				return;
 			}
-			*/
+							/*
+							else if() More Trigger Type to be Added Here......
+							{
+			
+							}
+			
+							*/
 		}
 		qDebug() << "No Trigger Found, Terminating Scene";
 		onLastScene();	//if can't find a single trigger, terminate early.
 	}
 }
 
-void AnimicScene::deactivateTrigger()
+void AnimicScene::deactivateTrigger()		//going back to stitching dialog
 {
 	playbackMode = false;
 	QList<QGraphicsItem*> allItems = items();
@@ -624,15 +638,25 @@ void AnimicScene::deactivateTrigger()
 		else if (TMTrigger != nullptr)
 		{
 			TMTrigger->setVisible(true);
+			TMTrigger->setActiveTrigger(false);
+			TMTrigger->stopMedia();
 			TMTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
-			//TMTrigger->setActiveTrigger(false);
+			disconnect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onNextScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onLastScene);
+
 			return;
 		}
 		else if (OWTrigger != nullptr)
 		{
+			OWTrigger->stopMedia();
 			OWTrigger->setVisible(true);
+			OWTrigger->setActiveTrigger(false);
 			OWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
-			//OWTrigger->setActiveTrigger(false);
+			disconnect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+			disconnect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
+			
 		}
 	}
 }
@@ -676,7 +700,7 @@ void AnimicScene::setPlaybackMode(bool x)
 }
 
 
-void AnimicScene::onNextScene(AnimicScene* sc)
+void AnimicScene::onNextScene(AnimicScene* sc)		//only used during playback mode
 {
 	stopAll();
 	disengageLoopingVideo();
@@ -691,7 +715,6 @@ void AnimicScene::onNextScene(AnimicScene* sc)
 
 		if (TWTrigger != nullptr)
 		{
-			TWTrigger->setActiveTrigger(false);
 			TWTrigger->stopMedia();
 			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
 			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
@@ -700,11 +723,17 @@ void AnimicScene::onNextScene(AnimicScene* sc)
 		}
 		else if (TMTrigger != nullptr)
 		{
-			//TMTrigger->setActiveTrigger(false);
+			TMTrigger->stopMedia();
+			disconnect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onNextScene);
+			disconnect(TMTrigger, &TimedMashTrigger::sendAltScene, this, &AnimicScene::onLastScene);
 		}
 		else if (OWTrigger != nullptr)
 		{
-			//OWTrigger->setActiveTrigger(false);
+			OWTrigger->stopMedia();
+			disconnect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+			disconnect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 		}
 	}
 	disconnectMax();
@@ -726,8 +755,7 @@ void AnimicScene::resetScene()
 	playbackMode = false;
 	deactivateTrigger();
 	stopAll();
-
-	//emit lastScene();
+	
 }
 
 void AnimicScene::engageLoopVideo()
@@ -762,4 +790,10 @@ void AnimicScene::disengageLoopingVideo()
 void AnimicScene::disconnectMax()
 {
 	disconnect(max, nullptr, this, nullptr);
+}
+
+void AnimicScene::onSetEntry(bool x)
+{
+	qDebug() << "Toggling Scene";
+	entryScene = x;
 }

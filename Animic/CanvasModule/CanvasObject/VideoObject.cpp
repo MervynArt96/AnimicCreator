@@ -31,10 +31,6 @@ VideoObject::VideoObject(QObject* parent, QUrl* filePath)
         mainBuffer->reset();
 
         player->setMedia(QMediaContent(), mainBuffer);
-        connect(player, &QMediaPlayer::mediaStatusChanged, this, [=]()
-            {
-                //qDebug() << "Media Status:" << player->mediaStatus();
-            });
         file.close();
 	}
     else

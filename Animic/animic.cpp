@@ -21,10 +21,9 @@ void Animic::init()
 	setupProperties();
 
 	connectSignalSlots();
-
 }
 
-void Animic::setupScene()	//set up graphics scene and canvas
+void Animic::setupScene()
 {
 	graphicsView = new AnimicView(ui.tab, 0);
 
@@ -50,8 +49,6 @@ void Animic::connectSignalSlots()
 
 	connect(ui.SceneWindow, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 	connect(ui.SceneWindow, SIGNAL(currentChanged(int)), this, SLOT(setCurrentScene(int)));
-	//connect(ui.SceneWindow, &QTabWidget::currentChanged, propHandler->getVideoPropertiesWidget(), &VideoProperties::onSwitchScene);
-
 }
 
 void Animic::setupTimeline()
@@ -66,7 +63,7 @@ void Animic::setupTimeline()
 	connect(scene, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
 	connect(scene, &AnimicScene::foundNewMax, mainSlider, &AnimicSlider::onRemoveVideo);
 
-	//connect(scene, SIGNAL(subscribeTimeline(QMediaPlayer*)), mainSlider, SLOT(subscribeVideo(QMediaPlayer*))); //performance issue
+	//connect(scene, SIGNAL(subscribeTimeline(QMediaPlayer*)), mainSlider, SLOT(subscribeVideo(QMediaPlayer*)));	//This works but comes with performance issue
 }
 
 void Animic::setupAssetHandler()
@@ -84,7 +81,9 @@ void Animic::setupProperties()
 	ui.propHolder->setLayout(layout);
 
 	connect(scene, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
-	connect(mainList, &AnimicListView::openNewSceneTab, propHandler, &PropertiesHandler::onSceneChanged);
+	connect(this, &Animic::sceneChanged, propHandler, &PropertiesHandler::sceneChanged);
+	propHandler->getScenePropertiesWidget()->updateProperties(scene->getName(), scene->isEntry());
+	propHandler->getScenePropertiesWidget()->manualConnect(scene);
 }
 
 void Animic::setupStitchingModule()
@@ -149,7 +148,6 @@ void Animic::resetTabOnCloseDialog()
 
 void Animic::setCurrentScene(int index)
 {
-	qDebug() << "Setting Current Scene";
 	if (currentTab != -1)		//check if the signal comes from deleting a scene or user switch tab
 	{
 		AnimicView* view = ui.SceneWindow->widget(currentTab)->findChild<AnimicView*>();
@@ -164,49 +162,82 @@ void Animic::setCurrentScene(int index)
 				sc->clearSelection();
 				sc->disconnectObject();
 				sc->disconnect();
-				ui.playButton->disconnect(sc);
-				ui.pauseButton->disconnect(sc);
-				ui.stopButton->disconnect(sc);
-				mainSlider->disconnect(sc);
-				propHandler->getVideoPropertiesWidget()->disconnect(sc);
+				//propHandler->getVideoPropertiesWidget()->disconnect(sc);
+				disconnect(ui.playButton, &QPushButton::clicked, sc, &AnimicScene::playAll);
+				disconnect(ui.pauseButton, &QPushButton::clicked, sc, &AnimicScene::pauseAll);
+				disconnect(ui.stopButton, &QPushButton::clicked, sc, &AnimicScene::stopAll);
+				disconnect(mainSlider, SIGNAL(valueChanged(int)), sc, SLOT(setVideoFrameTime(int)));
+				propHandler->getScenePropertiesWidget()->onDisconnectScene(sc);
 			}
 		}
 	}
 
-	//propHandler->getVideoPropertiesWidget()->clearProperties();
 	if (index >= 0)
 	{
 		currentTab = index;
 		AnimicView* view = ui.SceneWindow->currentWidget()->findChild<AnimicView*>();
 		if (view != nullptr)
 		{
-			AnimicScene* scc = dynamic_cast<AnimicScene*>(view->scene());
+			AnimicScene* scc = qobject_cast<AnimicScene*>(view->scene());
 			if (scc != nullptr)
 			{
 				if (scc->getMaxPlayer() != nullptr)
 				{
-					qDebug() << scc->getMaxPlayer()->duration();
 					mainSlider->setMaximum(scc->getMaxPlayer()->duration());
 				}
 
+				qDebug() << scc->getName();
+
+				propHandler->getScenePropertiesWidget()->updateProperties(scc->getName(), scc->isEntry());
 				connect(ui.playButton, &QPushButton::clicked, scc, &AnimicScene::playAll);
 				connect(ui.pauseButton, &QPushButton::clicked, scc, &AnimicScene::pauseAll);
 				connect(ui.stopButton, &QPushButton::clicked, scc, &AnimicScene::stopAll);
 				connect(mainSlider, SIGNAL(valueChanged(int)), scc, SLOT(setVideoFrameTime(int)));
-				connect(scc, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
-				connect(scc, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
 				connect(scc, &AnimicScene::deletingVideo, this, &Animic::safeRemoveVideo);
+				connect(scc, SIGNAL(objectInserted(qint64)), mainSlider, SLOT(onInsertVideo(qint64)));
 				connect(scc, &AnimicScene::foundNewMax, mainSlider, &AnimicSlider::onRemoveVideo);
-
-				//update properties window, maybe need to clear only
-				//connect scene to properties window
-					//model edit name to label set text
+				connect(scc, &AnimicScene::focusItemChanged, propHandler, &PropertiesHandler::objectFocusChanged);
+				
+				emit sceneChanged(scc);
 
 				//connect layer list
 			}
 		}
 	}
 }
+
+void Animic::onDeleteScene(AnimicScene* sc)
+{
+	for (int i = 0; i < ui.SceneWindow->count(); i++)
+	{
+		AnimicView* view = ui.SceneWindow->widget(i)->findChild<AnimicView*>();
+
+		if (view != nullptr)
+		{
+			if (view->scene() == qobject_cast<AnimicScene*>(sc))
+			{
+				view->setScene(nullptr);
+				ui.SceneWindow->removeTab(i);
+				break;
+			}
+		}
+	}
+	sceneModel->removeRows(mainList->currentIndex().row(), 1, QModelIndex());
+	sc->disconnectObject();
+	sc->disconnect();
+	mainSlider->disconnect();
+	propHandler->getVideoPropertiesWidget()->resetItem();
+	propHandler->getScenePropertiesWidget()->onDisconnectScene(sc);
+	sc->clear();
+}
+
+void Animic::safeRemoveVideo()
+{
+	mainSlider->disconnect();
+	mainSlider->setMaximum(0);
+	propHandler->getVideoPropertiesWidget()->resetItem();
+}
+
 #pragma endregion 
 
 #pragma region Ui Functions
@@ -247,13 +278,13 @@ void Animic::closeTab(int index)
 
 void Animic::on_stitchButton_clicked()
 {
-	for (int i = 0; i < ui.SceneWindow->count(); i++)							//prevent app freeze
+	for (int i = 0; i < ui.SceneWindow->count(); i++)							
 	{
 		AnimicView* view = ui.SceneWindow->widget(i)->findChild<AnimicView*>();
 
 		if (view != nullptr)
 		{
-			view->setScene(nullptr);
+			view->setScene(nullptr);   //prevent app freeze
 		}
 	}
 
@@ -332,40 +363,7 @@ void Animic::on_removeSceneButton_clicked()
 }
 #pragma endregion
 
-void Animic::onDeleteScene(AnimicScene* sc)
-{
-	for (int i = 0; i < ui.SceneWindow->count(); i++)
-	{
-		qDebug() << "Checking Scene";
-		AnimicView* view = ui.SceneWindow->widget(i)->findChild<AnimicView*>();
-
-		if (view != nullptr) 
-		{
-			if (view->scene() == qobject_cast<AnimicScene*>(sc))
-			{
-				view->setScene(nullptr);
-				ui.SceneWindow->removeTab(i);
-				break;
-			}
-		}
-	}
-	sceneModel->removeRows(mainList->currentIndex().row(), 1, QModelIndex());
-	sc->disconnectObject();
-	sc->disconnect();
-	mainSlider->disconnect();
-	propHandler->getVideoPropertiesWidget()->resetItem();
-	sc->clear();
-}
-
 void Animic::debug()
 {
 
-}
-
-void Animic::safeRemoveVideo()
-{
-	qDebug() << "safe Disconnecting";
-	mainSlider->disconnect();
-	mainSlider->setMaximum(0);
-	propHandler->getVideoPropertiesWidget()->resetItem();
 }

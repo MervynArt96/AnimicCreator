@@ -29,7 +29,49 @@ void SceneProperties::connectComponent()
 
 }
 
-void SceneProperties::onChangeScene()
+void SceneProperties::onChangeScene(AnimicScene* sc)
 {
 	
+	if (scene != nullptr)
+	{
+		disconnect(entryToggle, &QCheckBox::toggled, scene, &AnimicScene::onSetEntry);
+		disconnect(scene, &AnimicScene::nameChanged, nameLabel, &QLabel::setText);
+		scene = nullptr;
+	}
+	
+
+	if (sc != nullptr) 
+	{
+		nameLabel->setText(sc->getName());
+		entryToggle->setChecked(sc->isEntry());
+
+		connect(entryToggle, &QCheckBox::toggled, sc, &AnimicScene::onSetEntry);
+		connect(sc, &AnimicScene::nameChanged, nameLabel, &QLabel::setText);
+		scene = sc;
+	}
+}
+
+void SceneProperties::onDisconnectScene(AnimicScene* sc)
+{
+	if (scene != nullptr && scene == sc)
+	{
+		disconnect(entryToggle, &QCheckBox::toggled, scene, &AnimicScene::onSetEntry);
+		disconnect(scene, &AnimicScene::nameChanged, nameLabel, &QLabel::setText);
+		scene = nullptr;
+	}
+
+	//updateProperties("", false);
+}
+
+void SceneProperties::updateProperties(const QString str, bool x)
+{
+	nameLabel->setText(str);
+	entryToggle->setChecked(x);
+}
+
+void SceneProperties::manualConnect(AnimicScene* sc)
+{
+	connect(entryToggle, &QCheckBox::toggled, sc, &AnimicScene::onSetEntry);
+	connect(sc, &AnimicScene::nameChanged, nameLabel, &QLabel::setText);
+	scene = sc;
 }

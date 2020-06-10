@@ -24,8 +24,6 @@ TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView
 	urlLabel = new QLabel("URL: ");
 	scaleLabel = new QLabel("Scale: ");
 
-	muteToggle = new QCheckBox("Mute Toggle", nullptr);
-
 	//set double invalidator for each line edit
 
 	QGridLayout* layout = new QGridLayout();
@@ -35,7 +33,7 @@ TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView
 	layout->addWidget(urlLabel, 2, 0); layout->addWidget(urlEdit, 2, 1);
 	layout->addWidget(sceneDefaultLabel, 3, 0); layout->addWidget(sceneDefaultComboBox, 3, 1);
 	layout->addWidget(sceneAltLabel, 4, 0); layout->addWidget(sceneAltComboBox, 4, 1);
-	layout->addWidget(muteToggle, 5, 0);
+	//layout->addWidget(muteToggle, 5, 0);
 
 	this->setLayout(layout);
 	//scale
@@ -68,12 +66,6 @@ void TwoWayTriggerProperties::onChangeTrigger(TwoWayTrigger* tr)
 	//connect trigger?
 }
 
-void TwoWayTriggerProperties::onToggleLoop()
-{
-	if (trigger != nullptr)
-		trigger->toggleLoop();
-}
-
 void TwoWayTriggerProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
 {
 	disconnectTrigger();
@@ -88,7 +80,6 @@ void TwoWayTriggerProperties::onFocusChanged(QGraphicsItem* target, QGraphicsIte
 			scaleEdit->setText(QString::number(tr->scale()));
 
 			urlEdit->setText(tr->getUrl());
-			muteToggle->setChecked(tr->getPlayer()->isMuted());
 
 			connect(tr, &TwoWayTrigger::xChanged, this, &TwoWayTriggerProperties::onChangePosX);	//object change Line Edit
 			connect(tr, &TwoWayTrigger::yChanged, this, &TwoWayTriggerProperties::onChangePosY);

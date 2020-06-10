@@ -44,8 +44,6 @@ private:
 	QLabel* urlLabel;
 	QLabel* scaleLabel;
 
-	QCheckBox* muteToggle;
-
 signals:
 	void returnDefaultScene(AnimicScene*);
 	void returnAltScene(AnimicScene*);
@@ -55,8 +53,6 @@ public slots:
 	void onChangePosX();
 	void onChangePosY();
 	void onChangeScale();
-
-	void onToggleLoop();
 
 	void onFocusChanged(QGraphicsItem* , QGraphicsItem*, Qt::FocusReason);
 	void onChangeTrigger(TwoWayTrigger*);
