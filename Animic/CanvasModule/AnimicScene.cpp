@@ -6,20 +6,20 @@
 
 AnimicScene::AnimicScene()
 {
-	bgmList = new QMediaPlaylist();
+	bgmList = new QMediaPlaylist();		//for bgm, not used at all, wrong concept and should be removed entirely in the future
 	bgmPlayer = new QMediaPlayer();
 	bgmPlayer->setPlaylist(bgmList);
 }
 
 AnimicScene::~AnimicScene()
 {
-	delete bgmList;
+	delete bgmList;	//to be removed
 	delete bgmPlayer;
 }
 
 QString AnimicScene::getName()
 {
-	return name;
+	return name;	//scene name for display purposes
 }
 
 void AnimicScene::setName(QString k)
@@ -29,13 +29,13 @@ void AnimicScene::setName(QString k)
 }
 
 
-VideoObject* AnimicScene::selectedItem()
+VideoObject* AnimicScene::selectedItem()	//get selected video object
 {
 	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
 
 	for (QGraphicsItem* item : itemList)
 	{
-		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);
+		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);		//cast qt provided QGraphicsItem to custom VideoObject, returns nullptr if no conversion available
 		if (obj != nullptr)
 		{
 			return obj;
@@ -44,23 +44,23 @@ VideoObject* AnimicScene::selectedItem()
 	return nullptr;
 }
 
-void AnimicScene::onDeleteItem()
+void AnimicScene::onDeleteItem()	//for safe deletion
 {
 	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
 
 	for (int i = 0; i < itemList.size(); i++)
 	{
-		emit deletingVideo();
+		emit deletingVideo();													//prepare the system for safe deletion
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(itemList.at(i));
 		if(obj != nullptr)
 		{
-			if (max == obj->getPlayer())
+			if (max == obj->getPlayer())		//check for the video player that holds the long duration video
 			{
-				max = nullptr;
+				max = nullptr;		
 				maxDuration = 0;
 			}
-			removeItem(obj);
-			delete(obj);
+			removeItem(obj);			//remove video object from scene
+			delete(obj);				//delete videoObject and free memory
 		}
 	}
 	QList<QGraphicsItem*> list = QGraphicsScene::items();
@@ -68,30 +68,28 @@ void AnimicScene::onDeleteItem()
 	qint64 tempDuration = 0;
 	bool found = false;
 
-
-	for (int i = 0; i < list.size(); i++)
+	for (int i = 0; i < list.size(); i++)									//find a new maximum duration for the timeline 
 	{
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(list.at(i));
 		if (obj != nullptr)
 		{
-			if (obj->getPlayer()->duration() > tempDuration)
+			if (obj->getPlayer()->duration() > tempDuration)		//find the largest value of duration
 			{
-				qDebug() << obj;
 				found = true;
 				max = obj->getPlayer();
-				maxDuration = obj->getPlayer()->duration();
+				maxDuration = obj->getPlayer()->duration();	//get duration from media player
 				tempDuration = maxDuration;
 			}
 		}
 	}
 	if (found == true)
 	{
-		emit foundNewMax(maxDuration);
+		emit foundNewMax(maxDuration);		//set the timeline slider maximum here
 	}
 	else emit foundNewMax(0);
 }
 
-void AnimicScene::onDeleteTrigger()
+void AnimicScene::onDeleteTrigger()	//safe deletion of triggers, not working yet, will crash
 {
 	QList<QGraphicsItem*> itemList = QGraphicsScene::selectedItems();
 
@@ -101,7 +99,7 @@ void AnimicScene::onDeleteTrigger()
 		TwoWayTrigger* tw = qgraphicsitem_cast<TwoWayTrigger*>(itemList.at(i));
 		TimedMashTrigger* tm = qgraphicsitem_cast<TimedMashTrigger*>(itemList.at(i));
 		OneWayTrigger* ow = qgraphicsitem_cast<OneWayTrigger*>(itemList.at(i));
-		if (tw != nullptr)
+		if (tw != nullptr)		//for two way trigger
 		{
 			if (max == tw->getPlayer())
 			{
@@ -112,7 +110,7 @@ void AnimicScene::onDeleteTrigger()
 			delete(tw);
 			acceptTrigger = true;
 		}
-		else if (tm != nullptr)
+		else if (tm != nullptr)	//for timed mash trigger
 		{
 			if (max == tm->getPlayer())
 			{
@@ -123,7 +121,7 @@ void AnimicScene::onDeleteTrigger()
 			delete(tm);
 			acceptTrigger = true;
 		}
-		else if (ow != nullptr)
+		else if (ow != nullptr) // for one way trigger
 		{
 			if (max == ow->getPlayer())
 			{
@@ -147,7 +145,7 @@ void AnimicScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	QGraphicsScene::mousePressEvent(event);
 }
 
-void AnimicScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
+void AnimicScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)	// to accept drag and drop from asset list widgets 
 {
 	QGraphicsScene::dragEnterEvent(event);
 	if (event->mimeData()->hasUrls())
@@ -156,42 +154,42 @@ void AnimicScene::dragEnterEvent(QGraphicsSceneDragDropEvent* event)
 	}
 }
 
-void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
+void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)	
 {
 	const QMimeData* mimedata = event->mimeData();
 
-	if (dynamic_cast<AssetHandler*>(event->source()))
+	if (dynamic_cast<AssetHandler*>(event->source()))	//if source is NORMAL VIDEO asset List Widget
 	{
 		for (QUrl url : mimedata->urls())
 		{
-			VideoObject* video = new VideoObject(this, &url);
+			VideoObject* video = new VideoObject(this, &url);	//create a new video object here and add to this scene
 			video->setPos(event->scenePos());
 			this->addItem(video);
 
-			temp = video->getPlayer();
-			connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));
+			temp = video->getPlayer();			//get reference to the video player
+			connect(video->getPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(onVideoLoaded(qint64)));	// this is to get the correct video duration
 			
-			pauseAll();
+			pauseAll();	// pause all video object in the scene
 		}
 	}
-	else if (dynamic_cast<TriggerAssetHandler*>(event->source()))
+	else if (dynamic_cast<TriggerAssetHandler*>(event->source())) //if source is TRIGGER Asset List Widget
 	{
-		if (acceptTrigger) 
+		if (acceptTrigger) //to ensure only 1 trigger is present in each scene, may require a different implementation approach in the future
 		{
 			for (QUrl url : mimedata->urls())
 			{
 				if (triggerToBeInserted == 0)
 				{
-					TwoWayTrigger* trigger = new TwoWayTrigger(this, &url);
+					TwoWayTrigger* trigger = new TwoWayTrigger(this, &url);	//creates a trigger here and add to scene
 					trigger->setPos(event->scenePos());
 					this->addItem(trigger);
-					emit triggerInserted();
+					emit triggerInserted();		//to connect with other UI components such as timeline slider in stitching dialog, trigger properties, etc.
 					acceptTrigger = false;
-					trigger->setZValue(100);
+					trigger->setZValue(100);	//set z value to as high as possible to always show on top of the normal videos 
 					pauseAll();
 					return;
 				}
-				else if (triggerToBeInserted == 1)
+				else if (triggerToBeInserted == 1)	//refer above
 				{
 					TimedMashTrigger* trigger = new TimedMashTrigger(this, &url);
 					trigger->setPos(event->scenePos());
@@ -202,7 +200,7 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 					pauseAll();
 					return;
 				}
-				else if (triggerToBeInserted == 2)
+				else if (triggerToBeInserted == 2)	//refer above
 				{
 					OneWayTrigger* trigger = new OneWayTrigger(this, &url);
 					trigger->setPos(event->scenePos());
@@ -217,7 +215,7 @@ void AnimicScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 		}
 		else
 		{
-			qDebug() << "Another Trigger Is Found";
+			qDebug() << "Another Trigger Is Found";	// currently scene cannot accpet more than 1 trigger
 		}
 	}
 	
@@ -234,7 +232,7 @@ void AnimicScene::dragLeaveEvent(QGraphicsSceneDragDropEvent* event)
 	Q_UNUSED(event);
 }
 
-void AnimicScene::playAll()
+void AnimicScene::playAll()	//play all video object in the scene
 {
 	bool found = false;
 	bool first = false;
@@ -265,7 +263,7 @@ void AnimicScene::playAll()
 	bgmPlayer->play();
 }
 
-void AnimicScene::pauseAll()
+void AnimicScene::pauseAll()	// pause all video object in the scene
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -280,7 +278,7 @@ void AnimicScene::pauseAll()
 	bgmPlayer->pause();
 }
 
-void AnimicScene::stopAll()
+void AnimicScene::stopAll()	//stop all
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -295,7 +293,7 @@ void AnimicScene::stopAll()
 	bgmPlayer->stop();
 }
 
-void AnimicScene::disableObjectDragging()
+void AnimicScene::disableObjectDragging()	//make video object unable to be moved, selected or focussed 
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -311,7 +309,7 @@ void AnimicScene::disableObjectDragging()
 	}
 }
 
-void AnimicScene::enableObjectDragging()
+void AnimicScene::enableObjectDragging()	//refer above
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -327,7 +325,7 @@ void AnimicScene::enableObjectDragging()
 	}
 }
 
-void AnimicScene::disconnectObject()
+void AnimicScene::disconnectObject()	//disconnect all signals that a video object emits
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -341,13 +339,13 @@ void AnimicScene::disconnectObject()
 	}
 }
 
-void AnimicScene::disconnectScene()
+void AnimicScene::disconnectScene()	//disconnect all signals that this scene emits 
 {
 	this->disconnect();
 }
 
 
-void AnimicScene::setVideoFrameTime(int pos)
+void AnimicScene::setVideoFrameTime(int pos)	// jump directly to this frame when user release the timeline slider
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -361,12 +359,12 @@ void AnimicScene::setVideoFrameTime(int pos)
 	}
 }
 
-QMediaPlayer* AnimicScene::getMaxPlayer()
+QMediaPlayer* AnimicScene::getMaxPlayer()	//get the media player that has the longest duration video
 {
 	return max;
 }
 
-void AnimicScene::onVideoLoaded(qint64 length)
+void AnimicScene::onVideoLoaded(qint64 length)	// this is to get the correct video duraiton for the timeline slider 
 {
 	if (length > maxDuration)
 	{
@@ -377,13 +375,13 @@ void AnimicScene::onVideoLoaded(qint64 length)
 	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onVideoLoaded(qint64))));
 }
 
-void AnimicScene::onTriggerLoaded(qint64 length)
+void AnimicScene::onTriggerLoaded(qint64 length)	
 {
 	emit triggerInserted();
 	disconnect(temp, SIGNAL(durationChanged(qint64), this, SLOT(onTriggerLoaded(qint64))));
 }
 
-bool AnimicScene::checkForTrigger()	//might skip
+bool AnimicScene::checkForTrigger()	//this is not needed in latest build, initially thinking to use to check if a trigger is present
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -409,11 +407,11 @@ bool AnimicScene::checkForTrigger()	//might skip
 	return false;
 }
 
-int AnimicScene::getTriggerType() //0 = TW, 1 = TM, 2 = OW
+int AnimicScene::getTriggerType() //0 = Two way trigger , 1 = Timed mash trigger, 2 = One way trigger
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	for (QGraphicsItem* item : allItems)
+	for (QGraphicsItem* item : allItems)	//return what type of trigger is in the scene
 	{
 		TwoWayTrigger* TWTrigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
 		TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
@@ -432,10 +430,10 @@ int AnimicScene::getTriggerType() //0 = TW, 1 = TM, 2 = OW
 			return 2;
 		}
 	}
-	return -1;
+	return -1;	//-1 = no trigger flag
 }
 
-QGraphicsItem* AnimicScene::getTrigger()
+QGraphicsItem* AnimicScene::getTrigger()	//return trigger in the scene
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -461,7 +459,7 @@ QGraphicsItem* AnimicScene::getTrigger()
 	return nullptr;
 }
 
-void AnimicScene::playTrigger()
+void AnimicScene::playTrigger()	//play trigger
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -474,19 +472,22 @@ void AnimicScene::playTrigger()
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->playMedia();
+			return;		// this return statement ensures only the first trigger is affected
 		}
 		else if (TMTrigger != nullptr)
 		{
 			TMTrigger->playMedia();
+			return;
 		}
 		else if (OWTrigger != nullptr)
 		{
 			OWTrigger->playMedia();
+			return;
 		}
 	}
 }
 
-void AnimicScene::pauseTrigger()
+void AnimicScene::pauseTrigger() //pause trigger
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -499,19 +500,22 @@ void AnimicScene::pauseTrigger()
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->pauseMedia();
+			return;		
 		}
 		else if (TMTrigger != nullptr)
 		{
 			TMTrigger->pauseMedia();
+			return;
 		}
 		else if (OWTrigger != nullptr)
 		{
 			OWTrigger->pauseMedia();
+			return;
 		}
 	}
 }
 
-void AnimicScene::stopTrigger()
+void AnimicScene::stopTrigger() //stop trigger
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -524,19 +528,22 @@ void AnimicScene::stopTrigger()
 		if (TWTrigger != nullptr)
 		{
 			TWTrigger->stopMedia();
+			return;
 		}
 		else if (TMTrigger != nullptr)
 		{
 			TMTrigger->stopMedia();
+			return;
 		}
 		else if (OWTrigger != nullptr)
 		{
 			OWTrigger->stopMedia();
+			return;
 		}
 	}
 }
 
-void AnimicScene::enableTrigger()
+void AnimicScene::enableTrigger()	//enable trigger = edit mode for triggers 
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -564,7 +571,7 @@ void AnimicScene::enableTrigger()
 	}
 }
 
-void AnimicScene::disableTrigger()
+void AnimicScene::disableTrigger()	//refer above
 {
 	QList<QGraphicsItem*> allItems = items();
 
@@ -603,7 +610,7 @@ void AnimicScene::disableTrigger()
 
 void AnimicScene::resetTriggerNextScene(AnimicScene* sc)		//Remove pointer to a scene that is about to be deleted
 {
-	QList<QGraphicsItem*> allItems = items();
+	QList<QGraphicsItem*> allItems = items();	
 
 	for (QGraphicsItem* item : allItems)
 	{
@@ -626,13 +633,13 @@ void AnimicScene::resetTriggerNextScene(AnimicScene* sc)		//Remove pointer to a 
 	}
 }
 
-void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
+void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)	//active trigger = preview mode, trigger will react to the user input 
 {
 	if (status == QMediaPlayer::EndOfMedia) 
 	{
 		playbackMode = true;
 		QList<QGraphicsItem*> allItems = items();
-		engageLoopVideo();
+		engageLoopVideo();							//add the placeholder video into all videoobject's playlist
 
 		for (QGraphicsItem* item : allItems)
 		{
@@ -640,25 +647,25 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 			TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
 			OneWayTrigger* OWTrigger = qgraphicsitem_cast<OneWayTrigger*>(item);
 
-			if (TWTrigger != nullptr)
+			if (TWTrigger != nullptr)	//if found two way trigger
 			{
 				TWTrigger->setVisible(true);
-				TWTrigger->setActiveTrigger(true);
-				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);
+				TWTrigger->setActiveTrigger(true);			//activate trigger here
+				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsMovable, false);	
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsSelectable, false);
 				TWTrigger->setFlag(QGraphicsVideoItem::ItemIsFocusable);
 
 				if (TWTrigger->getDefaultScene() == nullptr)
 				{
-					connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+					connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);	// if the default next scene is empty, end the preview
 				}
-				else connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
+				else connect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene); //else go to the next designated scene
 
 				if (TWTrigger->getAltScene() == nullptr)
 				{
-					connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onLastScene);
+					connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onLastScene);	// if the alternate next scene is empty, end the preview
 				}
-				else connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onNextScene);
+				else connect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onNextScene); //else go to the next designated scene
 
 				TWTrigger->playMedia();
 
@@ -674,7 +681,7 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 				
 				if (TMTrigger->getDefaultScene() == nullptr)
 				{
-					connect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+					connect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onLastScene); //refer above
 				}
 				else connect(TMTrigger, &TimedMashTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 
@@ -699,7 +706,7 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 				
 				if (OWTrigger->getDefaultScene() == nullptr)
 				{
-					connect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+					connect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene); //refer above
 				}
 				else connect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 
@@ -709,11 +716,11 @@ void AnimicScene::activateTrigger(QMediaPlayer::MediaStatus status)
 			}
 		}
 		qDebug() << "No Trigger Found, Terminating Scene";
-		onLastScene();	//if can't find a single trigger, terminate early.
+		onLastScene();	//if can't find any trigger, terminate early.
 	}
 }
 
-void AnimicScene::deactivateTrigger()		//going back to stitching dialog
+void AnimicScene::deactivateTrigger()		//going back to stitching dialog from preview mode, change all triggers to edit mode
 {
 	playbackMode = false;
 	QList<QGraphicsItem*> allItems = items();
@@ -730,9 +737,9 @@ void AnimicScene::deactivateTrigger()		//going back to stitching dialog
 			TWTrigger->setActiveTrigger(false);
 			TWTrigger->stopMedia();
 			TWTrigger->setFlags(QGraphicsVideoItem::ItemIsMovable | QGraphicsVideoItem::ItemIsFocusable | QGraphicsVideoItem::ItemIsSelectable);
-			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);
+			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onLastScene);		//disconnect the trigger from user input  
 			disconnect(TWTrigger, &TwoWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
-			disconnect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onNextScene);
+			disconnect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onNextScene);		
 			disconnect(TWTrigger, &TwoWayTrigger::sendAltScene, this, &AnimicScene::onLastScene);
 
 			return;
@@ -765,25 +772,25 @@ void AnimicScene::deactivateTrigger()		//going back to stitching dialog
 
 void AnimicScene::playThrough()
 {
-	if(items().count() == 0)	// if empty scene then ignore, and send terminate signal
+	if(items().count() == 0)	// if empty scene, then ignore and end preview early
 	{	
-		emit lastScene();
-		return;
+		emit lastScene();	
+		return;	//exit function
 	}
 
-	playAll();
+	playAll();		//start playing all videos in the scene
 	if(max != nullptr)
-		connect(max, &QMediaPlayer::mediaStatusChanged, this, &AnimicScene::activateTrigger);
+		connect(max, &QMediaPlayer::mediaStatusChanged, this, &AnimicScene::activateTrigger);	//activate the trigger onces the longest duration video finish playing
 }
 
 void AnimicScene::switchTriggerType(int i)
 {
-	triggerToBeInserted = i;
+	triggerToBeInserted = i;	// control what type of trigger to be inserted by referring to which check box is ticked 
 }
 
 bool AnimicScene::isEntry()
 {
-	return entryScene;
+	return entryScene;		// is this the first scene in the list?
 }
 void AnimicScene::setEntry(bool x)
 {
@@ -801,14 +808,14 @@ void AnimicScene::setPlaybackMode(bool x)
 }
 
 
-void AnimicScene::onNextScene(AnimicScene* sc)		//only used during playback mode
+void AnimicScene::onNextScene(AnimicScene* sc)		//returns the next scene to be played 
 {
-	stopAll();
-	disengageLoopingVideo();
-	playbackMode = false;
+	stopAll();	//stop current scene
+	disengageLoopingVideo();	//reset all video objects
+	playbackMode = false;	
 	QList<QGraphicsItem*> allItems = items();
 
-	for (QGraphicsItem* item : allItems)
+	for (QGraphicsItem* item : allItems)	//reset the trigger
 	{
 		TwoWayTrigger* TWTrigger = qgraphicsitem_cast<TwoWayTrigger*>(item);
 		TimedMashTrigger* TMTrigger = qgraphicsitem_cast<TimedMashTrigger*>(item);
@@ -837,11 +844,11 @@ void AnimicScene::onNextScene(AnimicScene* sc)		//only used during playback mode
 			disconnect(OWTrigger, &OneWayTrigger::sendDefaultScene, this, &AnimicScene::onNextScene);
 		}
 	}
-	disconnectMax();
-	emit nextScene(sc);
+	disconnectMax();	
+	emit nextScene(sc); //returns the next scene here
 }
 
-void AnimicScene::onLastScene()
+void AnimicScene::onLastScene()	//preview termination here
 {
 	playbackMode = false;
 	stopAll();
@@ -863,7 +870,7 @@ void AnimicScene::engageLoopVideo()
 {
 	QList<QGraphicsItem*> allItems = items();
 
-	for (QGraphicsItem* item : allItems)
+	for (QGraphicsItem* item : allItems)		//add placeholder video to each videoObject
 	{
 		VideoObject* obj = qgraphicsitem_cast<VideoObject*>(item);
 		if (obj != nullptr)
@@ -878,7 +885,7 @@ void AnimicScene::engageLoopVideo()
 
 void AnimicScene::disengageLoopingVideo()
 {
-	QList<QGraphicsItem*> allItems = items();
+	QList<QGraphicsItem*> allItems = items();		//refer above
 	qDebug() << "Inside Disengage Loop";
 	for (QGraphicsItem* item : allItems)
 	{
@@ -891,13 +898,12 @@ void AnimicScene::disengageLoopingVideo()
 	}
 }
 
-void AnimicScene::disconnectMax()
+void AnimicScene::disconnectMax()		//disconnect all signal that the mediaplayer with the longest duration video will emit
 {
 	disconnect(max, nullptr, this, nullptr);
 }
 
-void AnimicScene::onSetEntry(bool x)
+void AnimicScene::onSetEntry(bool x)	//set this as the first scene, controlled from a check box in properties widget
 {
-	qDebug() << "Toggling Scene";
 	entryScene = x;
 }

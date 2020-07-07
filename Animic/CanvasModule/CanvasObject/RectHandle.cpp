@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "RectHandle.h"
 
-RectHandle::RectHandle(QPointF pos, int size, HandleShape shape, HandleType type)
+RectHandle::RectHandle(QPointF pos, int size, HandleShape shape, HandleType type)	//the sqaure handles around a graphic object that is in focus
 {
 	this->position = pos;
-	this->type = type;
-	this->shape = shape;
+	this->type = type;		//type of handle: scale, rotate, origin
+	this->shape = shape;	// square, round
 	this->size = size;
 	this->handleRect.setRect(pos.x() - (size/2), pos.y() - (size/2), size, size);
 }

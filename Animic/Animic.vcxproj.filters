@@ -42,9 +42,6 @@
     <ClCompile Include="PropertiesModule\PropertiesHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectManagementModule\AnimicProjectExporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,12 +54,6 @@
     <ClCompile Include="AssetHandlerModule\AssetHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CanvasModule\CanvasObject\RectHandle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasModule\AnimicScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectManagementModule\ProjectHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,9 +61,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StitchingModule\StitchingDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasModule\AnimicView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TimelineModule\AnimicSlider.cpp">
@@ -132,12 +120,21 @@
     <ClCompile Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CanvasModule\CanvasObject\RectHandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasModule\CanvasObject\VideoObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasModule\AnimicScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasModule\AnimicView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CanvasModule\CanvasObject\BaseObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProjectManagementModule\AnimicProjectExporter.h">
@@ -152,13 +149,16 @@
     <ClInclude Include="ProjectManagementModule\AnimicProjectStructure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CanvasModule\CanvasObject\RectHandle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ProjectManagementModule\ProjectHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerModule\LayerListItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasModule\CanvasObject\BaseObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasModule\CanvasObject\RectHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -166,22 +166,13 @@
     <QtMoc Include="animic.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="AssetHandlerModule\AssetHandler.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="CanvasModule\AnimicScene.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ProjectManagementModule\Dialogs\NewProjectDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StitchingModule\StitchingDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="CanvasModule\AnimicView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TimelineModule\AnimicSlider.h">
@@ -239,6 +230,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="PreviewerModule\PlaybackEngine\PlaybackEngineCore.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\CanvasObject\VideoObject.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\AnimicScene.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="CanvasModule\AnimicView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

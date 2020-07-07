@@ -136,7 +136,7 @@ void TwoWayTriggerProperties::getDefaultScene(int i)
 {
 	if (i <= 0)
 		return;
-	emit returnDefaultScene(qobject_cast<SceneListModel*>(list->model())->getList()->at(i-1));
+	emit returnDefaultScene(qobject_cast<SceneListModel*>(list->model())->getList()->at(i-1)); //signal emitted during run time 
 }
 
 void TwoWayTriggerProperties::getAltScene(int i)

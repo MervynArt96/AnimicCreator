@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "AnimicListView.h"
 
-AnimicListView::AnimicListView()
+AnimicListView::AnimicListView() 	//One of the Model-View Controller component, this is the view
 {
-	setMovement(QListView::Free);
-	setEditTriggers(EditTrigger::EditKeyPressed);
-	setContextMenuPolicy(Qt::CustomContextMenu);
-	setSelectionMode(QAbstractItemView::SingleSelection);
+	setMovement(QListView::Free);	//can be rearranged
+	setEditTriggers(EditTrigger::EditKeyPressed);	//allows for editing list item
+	setContextMenuPolicy(Qt::CustomContextMenu);	//right click context menu
+	setSelectionMode(QAbstractItemView::SingleSelection);	//can only select one item at a time
 
-	connect(this, &AnimicListView::doubleClicked, this, &AnimicListView::onDoubleClicked);
-	connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)));
+	connect(this, &AnimicListView::doubleClicked, this, &AnimicListView::onDoubleClicked);		//listen for double click
+	connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)));	//listen for right click
 }
 
 AnimicListView::~AnimicListView()
@@ -19,22 +19,22 @@ AnimicListView::~AnimicListView()
 
 void AnimicListView::setListMode(bool x)
 {
-	mode = x; //true = main, false = stitch
+	mode = x; //true = list view at the main window, false = list view at the stitching dialog
 }
 
 void AnimicListView::onDoubleClicked(const QModelIndex& index)
 {
-	if (mode)
+	if (mode) //for main window
 	{
-		emit openNewSceneTab(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index);
+		emit openNewSceneTab(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index);	//tell the model to open the scene in a new tab based on index
 	}
-	else
+	else // for stitching dialog 
 	{
-		emit switchScene(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index);
+		emit switchScene(qvariant_cast<AnimicScene*>(model()->data(index, Qt::BackgroundRole)), index); //tell the model to switch the old scene in a hard coded viewport to this current one
 	}
 }
 
-void AnimicListView::showContextMenu(const QPoint& pos)
+void AnimicListView::showContextMenu(const QPoint& pos) //right click menu here
 {
 	if (mode)
 	{
@@ -53,7 +53,7 @@ void AnimicListView::showContextMenu(const QPoint& pos)
 }
 
 
-void AnimicListView::onRenameScene()
+void AnimicListView::onRenameScene()	//rename a scene in the list
 {
 	if (selectedIndexes().size() > 0)
 	{
@@ -65,7 +65,7 @@ void AnimicListView::onRenameScene()
 	}
 }
 
-void AnimicListView::onDeleteScene()
+void AnimicListView::onDeleteScene()	//delete a scene from the list
 {
 	if (selectedIndexes().size() > 0)
 	{
@@ -74,7 +74,7 @@ void AnimicListView::onDeleteScene()
 }
 
 
-void AnimicListView::getScene(int i)
+void AnimicListView::getScene(int i)	//return a scene from the list
 {
 	emit returnSceneToTrigger(qobject_cast<SceneListModel*>(this->model())->getList()->at(i));
 }

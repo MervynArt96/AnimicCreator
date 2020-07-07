@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "AnimicView.h"
 
-AnimicView::AnimicView(QWidget* parent, int md): QGraphicsView(parent)
+AnimicView::AnimicView(QWidget* parent, int md): QGraphicsView(parent)  //custom viewport to hold scenes
 {
-    mode = md;
-    this->viewport()->installEventFilter(this);
-    this->setMouseTracking(true);
-    setDragMode(QGraphicsView::NoDrag);
-    modifiers = Qt::ControlModifier;
-    zoom_factor_base = 1.0015;
-    this->setFocusPolicy(Qt::ClickFocus);
+    mode = md;                                      //mode determine if the input key will affect the video object, used to distinguish preview mode and edit mode
+    this->viewport()->installEventFilter(this);     
+    this->setMouseTracking(true);                   //track mouse movement
+    setDragMode(QGraphicsView::NoDrag);             // wont support drag to create a selection box 
+    modifiers = Qt::ControlModifier;                // ctrl key modifier for zooming
+    zoom_factor_base = 1.0015;                      
+    this->setFocusPolicy(Qt::ClickFocus);           //requires mouse click focus on the viewport before reacting to user input
 }
 
 AnimicView::~AnimicView()
@@ -17,34 +17,34 @@ AnimicView::~AnimicView()
 
 }
 
-void AnimicView::setAnimicScene(AnimicScene* sc)
+void AnimicView::setAnimicScene(AnimicScene* sc)    
 {
     QGraphicsView::setScene(sc);
     emit sceneChanged(sc);
 }
 
 
-void AnimicView::keyPressEvent(QKeyEvent* event)
+void AnimicView::keyPressEvent(QKeyEvent* event) // accept key press input from user
 {
-    QGraphicsView::keyPressEvent(event);
-    if (mode == 0) 
+    QGraphicsView::keyPressEvent(event);    //calling inherrited function to get the default behaviour
+
+    if (mode == 0) // edit mode
     {
-        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
+        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())    //to achieve press and hold space scenario
         {
-            setDragMode(QGraphicsView::ScrollHandDrag);
-            AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
+            setDragMode(QGraphicsView::ScrollHandDrag);                         //can drag the viewport around by holding down space and mouse drag
+            AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());     
 
             if (scene != nullptr)
             {
-                scene->disableObjectDragging();
+                scene->disableObjectDragging();         //disable video object dragging in this scenario
             }
         }
     }
-    else if (mode == 1)
+    else if (mode == 1) //preview mode
     {
-        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
+        if (event->key() == Qt::Key_Space && !event->isAutoRepeat())    //start preview by pressing on space
         {
-            qDebug() << "Beginning Playback";
             emit startPreview();
         }
     }
@@ -52,7 +52,7 @@ void AnimicView::keyPressEvent(QKeyEvent* event)
 
 void AnimicView::keyReleaseEvent(QKeyEvent* event) 
 {
-    if (event->key() == Qt::Key_Space && !event->isAutoRepeat())
+    if (event->key() == Qt::Key_Space && !event->isAutoRepeat())        //reset scene to normal behaviour after releasing space
     {
         setDragMode(QGraphicsView::NoDrag);
         AnimicScene* scene = dynamic_cast<AnimicScene*>(this->scene());
@@ -64,7 +64,7 @@ void AnimicView::keyReleaseEvent(QKeyEvent* event)
     }
 }
 
-void AnimicView::gentle_zoom(double factor) 
+void AnimicView::gentle_zoom(double factor)     //zoom in and out algorithm with ctrl + mouse wheel
 {
     this->scale(factor, factor);
     this->centerOn(target_scene_pos);

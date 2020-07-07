@@ -62,11 +62,15 @@ void TwoWayTrigger::setActiveTrigger(bool x)
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
 {
     sceneDefault = sc;
+    if (sceneDefault != nullptr)
+        qDebug() << "Scene Default: " << sceneDefault->getName();
 }
 
 void TwoWayTrigger::setAltScene(AnimicScene* sc)
 {
     sceneAlt = sc;
+    if (sceneAlt != nullptr)
+        qDebug() << "Scene Alt: " << sceneAlt->getName();
 }
 
 AnimicScene* TwoWayTrigger::getDefaultScene()

@@ -2,10 +2,9 @@
 #include "AssetHandler.h"
 
 
-AssetHandler::AssetHandler()
+AssetHandler::AssetHandler()	// same exact class as TriggerAssetHandler, refer there for comments, I'm not using inheritance to avoid circular dependencies or unexpected behaviours 
 {
 	setHeaderLabels({ "Name" , "Path" });
-	//setSelectionMode(QAbstractItemView::MultiSelection);
 	setDragEnabled(true);
 	viewport()->setAcceptDrops(true);
 	setDropIndicatorShown(true);
@@ -24,7 +23,7 @@ void AssetHandler::importAsset()
 	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
 	QList<QUrl> urls = fileDialog->getOpenFileUrls(this, tr("Import Asset"), tr(""), filters);
 
-	if (!urls.isEmpty())	//dialog accepted input
+	if (!urls.isEmpty())
 	{
 		for (QUrl url : urls)
 		{
@@ -83,13 +82,13 @@ void AssetHandler::deleteAsset()
 	{
 		for (QTreeWidgetItem* item : itemList)
 		{
-			if (!item->parent()) //dir
+			if (!item->parent()) 
 			{
 				this->takeTopLevelItem(this->indexOfTopLevelItem(item));
 			}
 			else
 			{
-				if (item->parent()->isExpanded())	//child file
+				if (item->parent()->isExpanded())	
 				{
 					delete item;
 				}
@@ -101,9 +100,6 @@ void AssetHandler::deleteAsset()
 		}
 	}
 }
-
-
-//Drag Drop Functions
 
 QString AssetHandler::mimeTypes()
 {
@@ -159,10 +155,6 @@ void AssetHandler::dropEvent(QDropEvent* event)
 	{
 		const QMimeData* mimeData = event->mimeData();
 
-		QString format = event->mimeData()->formats().at(0);
-		QByteArray data = event->mimeData()->data(format);
-		QDataStream stream(&data, QIODevice::ReadOnly);
-
 		for (QUrl url : mimeData->urls())
 		{
 			QString temp = url.path();
@@ -170,9 +162,7 @@ void AssetHandler::dropEvent(QDropEvent* event)
 
 			QTreeWidgetItem* item = new QTreeWidgetItem(this);
 			item->setText(0, url.fileName());
-			item->setText(1, temp);	//trim here
-
-			//check type here
+			item->setText(1, temp);	
 		}
 	}
 }
