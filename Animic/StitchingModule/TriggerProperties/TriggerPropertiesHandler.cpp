@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "TriggerPropertiesHandler.h"
 
-TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent, AnimicListView* list) : QWidget(parent)
+TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent, AnimicListView* list) : QWidget(parent) // container widget for all type of trigger properties
 {
 	TWTriggerProperties = new TwoWayTriggerProperties(this, list);
 	TMTriggerProperties = new TimedMashTriggerProperties(this, list);
-	OWTriggerProperties = new OneWayTriggerProperties(this, list);
+	OWTriggerProperties = new OneWayTriggerProperties(this, list);		//initialize all the properties 
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(TWTriggerProperties);
@@ -17,7 +17,7 @@ TriggerPropertiesHandler::TriggerPropertiesHandler(QWidget *parent, AnimicListVi
 
 	this->setLayout(layout);
 
-	connect(this, &TriggerPropertiesHandler::TWTriggerFocused, TWTriggerProperties, &TwoWayTriggerProperties::onFocusChanged);
+	connect(this, &TriggerPropertiesHandler::TWTriggerFocused, TWTriggerProperties, &TwoWayTriggerProperties::onFocusChanged);		//handle focus change event
 	connect(this, &TriggerPropertiesHandler::TMTriggerFocused, TMTriggerProperties, &TimedMashTriggerProperties::onFocusChanged);
 	connect(this, &TriggerPropertiesHandler::OWTriggerFocused, OWTriggerProperties, &OneWayTriggerProperties::onFocusChanged);
 
@@ -28,7 +28,7 @@ TriggerPropertiesHandler::~TriggerPropertiesHandler()
 
 }
 
-TwoWayTriggerProperties* TriggerPropertiesHandler::getTWTriggerProperties()
+TwoWayTriggerProperties* TriggerPropertiesHandler::getTWTriggerProperties()		//get the properties widgets
 {
 	return TWTriggerProperties;
 }
@@ -43,13 +43,14 @@ OneWayTriggerProperties* TriggerPropertiesHandler::getOWTriggerProperties()
 	return OWTriggerProperties;
 }
 
-void TriggerPropertiesHandler::onSceneChanged(AnimicScene* sc)
+void TriggerPropertiesHandler::onSceneChanged(AnimicScene* sc)					
 {
 	disconnect();
 	connect(sc, &QGraphicsScene::focusItemChanged, this, &TriggerPropertiesHandler::onFocusChanged);
 }
 
-void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
+void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)	//change which properties panel will be active, 
+																														//depending on which trigger type is focused
 {
 	TwoWayTrigger* TWtrigger = qgraphicsitem_cast<TwoWayTrigger*>(target);
 	OneWayTrigger* OWtrigger = qgraphicsitem_cast<OneWayTrigger*>(target);
@@ -72,7 +73,7 @@ void TriggerPropertiesHandler::onFocusChanged(QGraphicsItem* target, QGraphicsIt
 	}
 }
 
-void TriggerPropertiesHandler::activateTwoWayProperties()
+void TriggerPropertiesHandler::activateTwoWayProperties()		//panel activation
 {
 	TWTriggerProperties->setVisible(true);
 	TMTriggerProperties->setVisible(false);

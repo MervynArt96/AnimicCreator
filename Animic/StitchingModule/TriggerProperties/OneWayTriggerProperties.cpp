@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "OneWayTriggerProperties.h"
 
-OneWayTriggerProperties::OneWayTriggerProperties(QWidget* parent, AnimicListView* view) : QWidget(parent)
+OneWayTriggerProperties::OneWayTriggerProperties(QWidget* parent, AnimicListView* view) : QWidget(parent)	//properties panel for one way triggers
 {
-	trigger = nullptr;
+	trigger = nullptr;	//local reference of the trigger
 	list = view;
 
-	posXEdit = new QLineEdit();
+	posXEdit = new QLineEdit();		//initialize ui widgets 
 	posYEdit = new QLineEdit();
 
 	scaleEdit = new QLineEdit();
@@ -53,10 +53,10 @@ void OneWayTriggerProperties::onChangeTrigger(OneWayTrigger* tr)
 
 void OneWayTriggerProperties::onFocusChanged(QGraphicsItem* target, QGraphicsItem* oldItem, Qt::FocusReason reason)
 {
-	disconnectTrigger();
+	disconnectTrigger();	//disconnect the ui widgets from old item
 	if (target != nullptr)
 	{
-		OneWayTrigger* tr = qgraphicsitem_cast<OneWayTrigger*>(target);
+		OneWayTrigger* tr = qgraphicsitem_cast<OneWayTrigger*>(target);		//connect to the new item
 		if (tr != nullptr)
 		{
 			this->trigger = tr;
@@ -99,7 +99,7 @@ void OneWayTriggerProperties::disconnectTrigger()
 void OneWayTriggerProperties::onChangePosX()
 {
 	if (trigger != nullptr)
-		posXEdit->setText(QString::number(trigger->x()));
+		posXEdit->setText(QString::number(trigger->x()));		//change text field based on the item properties
 }
 
 void OneWayTriggerProperties::onChangePosY()

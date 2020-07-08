@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "PropertiesHandler.h"
 
-PropertiesHandler::PropertiesHandler()
+PropertiesHandler::PropertiesHandler()		// a container widget for both scene properties and video properties,a middle man to connect the objects and this properties
 {
-	sceneProperties = new SceneProperties(nullptr);
+	sceneProperties = new SceneProperties(nullptr);		//initializatin
 	videoProperties = new VideoProperties(nullptr);
 	QGridLayout* baseLayout = new QGridLayout();
 
@@ -14,7 +14,7 @@ PropertiesHandler::PropertiesHandler()
 
 	setLayout(baseLayout);
 
-	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);
+	connect(this, &PropertiesHandler::objectFocusChanged, videoProperties, &VideoProperties::onFocusChanged);	//the middle man connection
 	connect(this, &PropertiesHandler::sceneChanged, sceneProperties, &SceneProperties::onChangeScene);
 
 }

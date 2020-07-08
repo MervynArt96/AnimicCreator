@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TwoWayTriggerProperties.h"
 
-TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView* view): QWidget(parent)
+TwoWayTriggerProperties::TwoWayTriggerProperties(QWidget *parent, AnimicListView* view): QWidget(parent)	//properties panel for two way trigger, refer to one way trigger for comments
 {
 	trigger = nullptr;
 	list = view;

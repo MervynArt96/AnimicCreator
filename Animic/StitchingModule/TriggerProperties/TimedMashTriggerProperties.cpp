@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TimedMashTriggerProperties.h"
 
-TimedMashTriggerProperties::TimedMashTriggerProperties(QWidget* parent, AnimicListView* view) : QWidget(parent)
+TimedMashTriggerProperties::TimedMashTriggerProperties(QWidget* parent, AnimicListView* view) : QWidget(parent) //properties panel for timed mash trigger, refer to one way trigger for comments
 {
 	trigger = nullptr;
 	list = view;

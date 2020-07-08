@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TimedMashTrigger.h"
 
-TimedMashTrigger::TimedMashTrigger(QObject* parent, QUrl* filePath)
+TimedMashTrigger::TimedMashTrigger(QObject* parent, QUrl* filePath) //same as video object but without placeholder video, has additional keypress event support
 {
     if (QFile::exists(filePath->path()))
     {
@@ -30,7 +30,7 @@ TimedMashTrigger::~TimedMashTrigger()
 
 }
 
-void TimedMashTrigger::keyPressEvent(QKeyEvent* event)
+void TimedMashTrigger::keyPressEvent(QKeyEvent* event)          //user required to mash the E key to go to the default scene
 {
     QGraphicsItem::keyPressEvent(event);
     qDebug() << "Timed Mash Key Pressed: " << event->text();
@@ -38,13 +38,10 @@ void TimedMashTrigger::keyPressEvent(QKeyEvent* event)
     {
         if (event->key() == Qt::Key_E)
         {
-            keyPressCount++;
+            keyPressCount++;                        // if key press reaches threshold play the next scene
             if (keyPressCount >= keyMax)
             {
                 qDebug() << "Succeeded";
-                //timer->disconnect();
-                //timer->stop();
-                //qDebug() << timer->isActive();
                 emit sendDefaultScene(sceneDefault);
                 activeTrigger = false;
             }

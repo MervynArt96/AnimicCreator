@@ -1,15 +1,12 @@
 #include "stdafx.h"
 #include "SceneProperties.h"
 
-SceneProperties::SceneProperties(QWidget *parent): QWidget(parent)
+SceneProperties::SceneProperties(QWidget *parent): QWidget(parent)	//properties widget for scene
 {
 	QGridLayout* baseLayout = new QGridLayout();
 
-	baseLayout->addWidget(nameLabel, 0 ,0);
-	baseLayout->addWidget(entryToggle, 1, 0);
-	//baseLayout->addWidget(bgmLabel, 1, 0);
-	//baseLayout->addWidget(bgmName, 1, 1);
-	//baseLayout->addWidget(bgmUrl, 2, 0);
+	baseLayout->addWidget(nameLabel, 0 ,0);		//name of scene
+	baseLayout->addWidget(entryToggle, 1, 0);	//toggle if the scene should be the first scene
 
 	this->setLayout(baseLayout);
 }
@@ -29,18 +26,18 @@ void SceneProperties::connectComponent()
 
 }
 
-void SceneProperties::onChangeScene(AnimicScene* sc)
+void SceneProperties::onChangeScene(AnimicScene* sc)		//user clicks on a different tab or close a tab
 {
 	
-	if (scene != nullptr)
+	if (scene != nullptr)													//disconnect the previous scene form ui controls
 	{
-		disconnect(entryToggle, &QCheckBox::toggled, scene, &AnimicScene::onSetEntry);
+		disconnect(entryToggle, &QCheckBox::toggled, scene, &AnimicScene::onSetEntry);		
 		disconnect(scene, &AnimicScene::nameChanged, nameLabel, &QLabel::setText);
 		scene = nullptr;
 	}
 	
 
-	if (sc != nullptr) 
+	if (sc != nullptr)														//update the text field according to the new scene
 	{
 		nameLabel->setText(sc->getName());
 		entryToggle->setChecked(sc->isEntry());
@@ -51,7 +48,7 @@ void SceneProperties::onChangeScene(AnimicScene* sc)
 	}
 }
 
-void SceneProperties::onDisconnectScene(AnimicScene* sc)
+void SceneProperties::onDisconnectScene(AnimicScene* sc)					
 {
 	if (scene != nullptr && scene == sc)
 	{
@@ -60,7 +57,6 @@ void SceneProperties::onDisconnectScene(AnimicScene* sc)
 		scene = nullptr;
 	}
 
-	//updateProperties("", false);
 }
 
 void SceneProperties::updateProperties(const QString str, bool x)

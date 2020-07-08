@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TwoWayTrigger.h"
 
-TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)
+TwoWayTrigger::TwoWayTrigger(QObject *parent, QUrl* filePath)   //same as video object but without placeholder video, has additional keypress event support
 {
     if (QFile::exists(filePath->path()))
     {
@@ -30,18 +30,18 @@ TwoWayTrigger::~TwoWayTrigger()
 
 }
 
-void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
+void TwoWayTrigger::keyPressEvent(QKeyEvent* event) // key press event here
 {
     QGraphicsItem::keyPressEvent(event);
     qDebug() << "Trigger Key Pressed: " << event->text();
     if (activeTrigger)
     {
-        if (event->key() == Qt::Key_E)
+        if (event->key() == Qt::Key_E)      //Press E for default scene
         {
             emit sendDefaultScene(sceneDefault);
             activeTrigger = false;
         }
-        else if (event->key() == Qt::Key_Q)
+        else if (event->key() == Qt::Key_Q) //Press Q for alternate scene
         {
             emit sendAltScene(sceneAlt);
             activeTrigger = false;
@@ -49,7 +49,7 @@ void TwoWayTrigger::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void TwoWayTrigger::setActiveTrigger(bool x)
+void TwoWayTrigger::setActiveTrigger(bool x)    //active trigger will start receiving keypress event from user 
 {
     activeTrigger = x;
     if (activeTrigger)
@@ -62,15 +62,11 @@ void TwoWayTrigger::setActiveTrigger(bool x)
 void TwoWayTrigger::setDefaultScene(AnimicScene* sc)
 {
     sceneDefault = sc;
-    if (sceneDefault != nullptr)
-        qDebug() << "Scene Default: " << sceneDefault->getName();
 }
 
 void TwoWayTrigger::setAltScene(AnimicScene* sc)
 {
     sceneAlt = sc;
-    if (sceneAlt != nullptr)
-        qDebug() << "Scene Alt: " << sceneAlt->getName();
 }
 
 AnimicScene* TwoWayTrigger::getDefaultScene()

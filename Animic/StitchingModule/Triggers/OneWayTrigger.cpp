@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "OneWayTrigger.h"
 
-OneWayTrigger::OneWayTrigger(QObject* parent, QUrl* filePath)
+OneWayTrigger::OneWayTrigger(QObject* parent, QUrl* filePath)   //same as video object but without placeholder video, has additional keypress event support
 {
     if (QFile::exists(filePath->path()))
     {
@@ -38,7 +38,7 @@ void OneWayTrigger::keyPressEvent(QKeyEvent* event)
     qDebug() << "Timed Mash Key Pressed: " << event->text();
     if (activeTrigger)
     {
-        if (event->key() == Qt::Key_E)
+        if (event->key() == Qt::Key_E)              //only has a default scene, can set time limit to be 0 to auto transition to next scene, or press E 
         {
             if(timeLimit > 0) 
                 timer->stop();
@@ -48,7 +48,7 @@ void OneWayTrigger::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void OneWayTrigger::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+void OneWayTrigger::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)     //right click menu
 {
     QMenu menu;
     QAction* removeAction = menu.addAction("Remove Item");
